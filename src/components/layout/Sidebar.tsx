@@ -12,27 +12,63 @@ import {
   Briefcase,
   ClipboardList,
   Building,
-  MessageSquare
+  MessageSquare,
+  FilePlus,
+  Receipt,
+  CreditCard,
+  Shield,
+  Calendar,
+  Gavel,
+  AlertTriangle,
+  Database,
+  TrendingUp,
+  Lock
 } from 'lucide-react';
 import AmanahLogo from '../icons/AmanahLogo';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
   
-  const menuItems = [
-    { path: '/', label: 'Dashboard', icon: <Home className="h-5 w-5" /> },
-    { path: '/customers', label: 'Customers', icon: <Users className="h-5 w-5" /> },
-    { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
-    { path: '/applications', label: 'Applications', icon: <ClipboardList className="h-5 w-5" /> },
-    { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
-    { path: '/reports', label: 'Reports', icon: <FileText className="h-5 w-5" /> },
-    { path: '/analytics', label: 'Analytics', icon: <BarChart3 className="h-5 w-5" /> },
-    { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-5 w-5" /> },
+  const moduleGroups = [
+    {
+      label: 'Core Modules',
+      items: [
+        { path: '/', label: 'Dashboard', icon: <Home className="h-5 w-5" /> },
+        { path: '/customers', label: 'Customers', icon: <Users className="h-5 w-5" /> },
+        { path: '/applications', label: 'Applications', icon: <FilePlus className="h-5 w-5" /> },
+        { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
+        { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
+      ]
+    },
+    {
+      label: 'Finance Operations',
+      items: [
+        { path: '/risk', label: 'Risk Assessment', icon: <Shield className="h-5 w-5" /> },
+        { path: '/disbursement', label: 'Disbursement', icon: <CreditCard className="h-5 w-5" /> },
+        { path: '/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
+        { path: '/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-5 w-5" /> },
+        { path: '/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-5 w-5" /> },
+      ]
+    },
+    {
+      label: 'Other Modules',
+      items: [
+        { path: '/documents', label: 'Document Center', icon: <Receipt className="h-5 w-5" /> },
+        { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-5 w-5" /> },
+        { path: '/integrations', label: 'Integrations', icon: <Database className="h-5 w-5" /> },
+        { path: '/reports', label: 'Reports', icon: <FileText className="h-5 w-5" /> },
+        { path: '/analytics', label: 'Analytics', icon: <TrendingUp className="h-5 w-5" /> },
+      ]
+    },
+  ];
+
+  const adminItems = [
+    { path: '/security', label: 'Security', icon: <Lock className="h-5 w-5" /> },
     { path: '/settings', label: 'Settings', icon: <Settings className="h-5 w-5" /> },
   ];
 
   return (
-    <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0">
+    <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0 overflow-y-auto">
       <div className="space-y-6">
         <div className="flex items-center justify-center md:justify-start p-2">
           <Link to="/" className="flex items-center space-x-2">
@@ -40,22 +76,50 @@ const Sidebar: React.FC = () => {
           </Link>
         </div>
 
-        <nav className="space-y-1">
-          {menuItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                location.pathname === item.path
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-              )}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </Link>
+        <nav className="space-y-6">
+          {moduleGroups.map((group, idx) => (
+            <div key={idx} className="space-y-1">
+              <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wide px-3 mb-2">
+                {group.label}
+              </p>
+              {group.items.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    location.pathname === item.path
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                      : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                  )}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>
           ))}
+
+          <div className="space-y-1">
+            <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wide px-3 mb-2">
+              Administration
+            </p>
+            {adminItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                  location.pathname === item.path
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                )}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </div>
         </nav>
       </div>
 
