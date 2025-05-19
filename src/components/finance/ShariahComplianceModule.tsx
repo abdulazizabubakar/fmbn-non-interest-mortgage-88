@@ -1,9 +1,12 @@
+<think>
+
+</think>
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Gavel, CheckCircle, FileCheck, Calendar } from "lucide-react";
-import { StatCard } from "../dashboard/StatCard";
+import StatCard from "../dashboard/StatCard";
 
 const ShariahComplianceModule = () => {
   const stats = [
@@ -31,7 +34,7 @@ const ShariahComplianceModule = () => {
     <div className="space-y-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat, index) => (
-          <StatCard key={index} {...stat} />
+          <StatCard key={index} data={stat} />
         ))}
       </div>
       
