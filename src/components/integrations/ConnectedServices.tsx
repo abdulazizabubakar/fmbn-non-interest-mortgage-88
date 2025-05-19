@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { mockConnectedServices } from '@/data/mockIntegrations';
-import { Plug, Settings, X, Check, AlertTriangle } from 'lucide-react';
+import { Plug, Settings, X, Check, AlertTriangle, Eye } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
