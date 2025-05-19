@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import PageContainer from '@/components/layout/PageContainer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import FinanceTypeSelector from '@/components/mortgages/FinanceTypeSelector';
 
 const Applications = () => {
+  const [selectedFinanceType, setSelectedFinanceType] = useState('murabaha');
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'draft':
@@ -17,11 +18,11 @@ const Applications = () => {
       case 'pending-review':
         return <Badge variant="secondary">Pending Review</Badge>;
       case 'under-assessment':
-        return <Badge variant="warning" className="bg-amber-100 text-amber-800 hover:bg-amber-100">Under Assessment</Badge>;
+        return <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">Under Assessment</Badge>;
       case 'approved':
-        return <Badge variant="success" className="bg-green-100 text-green-800 hover:bg-green-100">Approved</Badge>;
+        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Approved</Badge>;
       case 'active':
-        return <Badge variant="default" className="bg-blue-100 text-blue-800 hover:bg-blue-100">Active</Badge>;
+        return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">Active</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Rejected</Badge>;
       default:
@@ -251,7 +252,10 @@ const Applications = () => {
               <CardDescription>Choose the right Shariah-compliant financing product</CardDescription>
             </CardHeader>
             <CardContent>
-              <FinanceTypeSelector />
+              <FinanceTypeSelector 
+                value={selectedFinanceType} 
+                onChange={setSelectedFinanceType} 
+              />
             </CardContent>
           </Card>
           
