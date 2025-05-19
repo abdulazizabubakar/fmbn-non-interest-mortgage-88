@@ -93,3 +93,163 @@ export interface Notification {
   read: boolean;
   createdAt: string;
 }
+
+// KYC and Onboarding types
+export type CustomerType = 'individual' | 'cooperative' | 'institution';
+
+export interface KycDocument {
+  id: string;
+  customerId: string;
+  type: 'id' | 'payslip' | 'utility_bill' | 'bvn' | 'employment_letter' | 'business_registration';
+  status: 'pending' | 'verified' | 'rejected';
+  documentUrl: string;
+  uploadDate: string;
+  verificationDate?: string;
+  verifiedBy?: string;
+}
+
+// Credit Assessment types
+export interface CreditAssessment {
+  id: string;
+  mortgageId: string;
+  customerId: string;
+  creditScore: number;
+  incomeToFinancingRatio: number;
+  debtBurdenRatio: number;
+  riskCategory: 'low' | 'medium' | 'high';
+  assessedBy: string;
+  assessmentDate: string;
+  decision: 'approved' | 'rejected' | 'pending';
+  notes: string;
+}
+
+// Guarantor types
+export interface Guarantor {
+  id: string;
+  mortgageId: string;
+  name: string;
+  relationship: string;
+  email: string;
+  phone: string;
+  address: string;
+  employmentStatus: string;
+  monthlyIncome: number;
+  bvn: string;
+  status: 'pending' | 'verified' | 'rejected';
+}
+
+// Disbursement types
+export type DisbursementType = 'full' | 'milestone';
+
+export interface Disbursement {
+  id: string;
+  mortgageId: string;
+  amount: number;
+  type: DisbursementType;
+  recipient: 'vendor' | 'developer' | 'property_owner';
+  recipientName: string;
+  recipientAccount: string;
+  recipientBank: string;
+  date: string;
+  status: 'pending' | 'completed' | 'failed';
+  notes: string;
+}
+
+export interface Milestone {
+  id: string;
+  mortgageId: string;
+  description: string;
+  amount: number;
+  completionPercentage: number;
+  status: 'pending' | 'in-progress' | 'verified' | 'completed';
+  verificationDate?: string;
+  verifiedBy?: string;
+  disbursementId?: string;
+}
+
+// Repayment types
+export interface RepaymentSchedule {
+  id: string;
+  mortgageId: string;
+  totalAmount: number;
+  installmentAmount: number;
+  frequency: 'monthly' | 'quarterly' | 'bi-annually';
+  nextPaymentDate: string;
+  finalPaymentDate: string;
+  remainingInstallments: number;
+}
+
+export interface Payment {
+  id: string;
+  mortgageId: string;
+  scheduleId: string;
+  amount: number;
+  date: string;
+  method: 'bank_transfer' | 'direct_debit' | 'wallet' | 'cash';
+  reference: string;
+  status: 'pending' | 'completed' | 'failed';
+}
+
+// Shariah Compliance types
+export interface ShariahReview {
+  id: string;
+  mortgageId: string;
+  reviewDate: string;
+  reviewedBy: string;
+  status: 'compliant' | 'non-compliant' | 'pending_changes';
+  notes: string;
+  contractDocumentUrl?: string;
+}
+
+// Delinquency Management types
+export interface DelinquencyCase {
+  id: string;
+  mortgageId: string;
+  customerId: string;
+  openDate: string;
+  status: 'new' | 'under_resolution' | 'restructured' | 'resolved' | 'defaulted';
+  missedPayments: number;
+  totalOverdueAmount: number;
+  assignedTo?: string;
+  resolutionPlan?: string;
+  closeDate?: string;
+}
+
+// Integration Types
+export interface ExternalVerification {
+  id: string;
+  customerId: string;
+  type: 'bvn' | 'nin' | 'credit_bureau';
+  provider: string;
+  requestDate: string;
+  responseDate?: string;
+  status: 'pending' | 'verified' | 'failed';
+  referenceId: string;
+  responseData: any;
+}
+
+// Reporting Types
+export interface Report {
+  id: string;
+  title: string;
+  type: 'portfolio' | 'performance' | 'compliance' | 'operational' | 'financial';
+  createdBy: string;
+  createdAt: string;
+  parameters: any;
+  fileUrl?: string;
+  scheduledReport: boolean;
+  frequency?: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+}
+
+// Audit Types
+export interface AuditLog {
+  id: string;
+  userId: string;
+  userName: string;
+  action: string;
+  entityType: string;
+  entityId: string;
+  timestamp: string;
+  ipAddress: string;
+  changes?: any;
+}
