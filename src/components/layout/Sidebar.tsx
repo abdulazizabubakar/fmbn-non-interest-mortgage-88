@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -47,6 +48,9 @@ const Sidebar: React.FC = () => {
         { path: '/finance/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
         { path: '/finance/subsidies', label: 'Subsidies', icon: <Receipt className="h-5 w-5" /> },
         { path: '/finance/exceptions', label: 'Exceptions', icon: <AlertTriangle className="h-5 w-5" /> },
+        { path: '/finance/risk', label: 'Risk Assessment', icon: <Shield className="h-5 w-5" /> },
+        { path: '/finance/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-5 w-5" /> },
+        { path: '/finance/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-5 w-5" /> },
       ]
     },
     {

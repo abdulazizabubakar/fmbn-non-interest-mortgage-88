@@ -12,13 +12,6 @@ import Applications from "./pages/Applications";
 import Properties from "./pages/Properties";
 import Finance from "./pages/Finance";
 
-// Finance submodules
-import DisbursementModule from "./components/finance/DisbursementModule";
-import RepaymentModule from "./components/finance/RepaymentModule";
-import SubsidyModule from "./components/finance/SubsidyModule";
-import ExceptionsModule from "./components/finance/ExceptionsModule";
-import FinanceDashboard from "./components/finance/FinanceDashboard";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -33,14 +26,17 @@ const App = () => (
           <Route path="/customers" element={<Customers />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/properties" element={<Properties />} />
-          <Route path="/finance" element={<Finance />} />
           
-          {/* Finance submodules routes */}
+          {/* Finance module and submodule routes */}
+          <Route path="/finance" element={<Finance />} />
           <Route path="/finance/dashboard" element={<Finance />} />
           <Route path="/finance/disbursements" element={<Finance />} />
           <Route path="/finance/repayments" element={<Finance />} />
           <Route path="/finance/subsidies" element={<Finance />} />
           <Route path="/finance/exceptions" element={<Finance />} />
+          <Route path="/finance/risk" element={<Finance />} />
+          <Route path="/finance/compliance" element={<Finance />} />
+          <Route path="/finance/delinquency" element={<Finance />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
