@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -43,11 +42,11 @@ const Sidebar: React.FC = () => {
     {
       label: 'Finance Operations',
       items: [
-        { path: '/risk', label: 'Risk Assessment', icon: <Shield className="h-5 w-5" /> },
-        { path: '/disbursement', label: 'Disbursement', icon: <CreditCard className="h-5 w-5" /> },
-        { path: '/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
-        { path: '/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-5 w-5" /> },
-        { path: '/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-5 w-5" /> },
+        { path: '/finance', label: 'Finance Dashboard', icon: <BarChart3 className="h-5 w-5" /> },
+        { path: '/finance/disbursements', label: 'Disbursements', icon: <CreditCard className="h-5 w-5" /> },
+        { path: '/finance/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
+        { path: '/finance/subsidies', label: 'Subsidies', icon: <Receipt className="h-5 w-5" /> },
+        { path: '/finance/exceptions', label: 'Exceptions', icon: <AlertTriangle className="h-5 w-5" /> },
       ]
     },
     {
@@ -88,7 +87,8 @@ const Sidebar: React.FC = () => {
                   to={item.path}
                   className={cn(
                     "flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                    location.pathname === item.path
+                    location.pathname === item.path || 
+                    (item.path !== '/' && location.pathname.startsWith(item.path))
                       ? "bg-sidebar-accent text-sidebar-accent-foreground"
                       : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
                   )}
