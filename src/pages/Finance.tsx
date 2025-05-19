@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DisbursementModule from '@/components/finance/DisbursementModule';
@@ -9,6 +10,32 @@ import ExceptionsModule from '@/components/finance/ExceptionsModule';
 import FinanceDashboard from '@/components/finance/FinanceDashboard';
 
 const Finance = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Extract the tab from the URL path
+  const getTabFromPath = () => {
+    const path = location.pathname;
+    if (path.includes('/finance/disbursements')) return 'disbursements';
+    if (path.includes('/finance/repayments')) return 'repayments';
+    if (path.includes('/finance/subsidies')) return 'subsidies';
+    if (path.includes('/finance/exceptions')) return 'exceptions';
+    return 'dashboard'; // Default tab
+  };
+  
+  const [activeTab, setActiveTab] = useState(getTabFromPath());
+  
+  // Update URL when tab changes
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    navigate(`/finance/${value === 'dashboard' ? '' : value}`);
+  };
+  
+  // Update active tab when URL changes
+  useEffect(() => {
+    setActiveTab(getTabFromPath());
+  }, [location.pathname]);
+
   return (
     <PageContainer>
       <div className="space-y-6">
@@ -19,7 +46,7 @@ const Finance = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="dashboard" className="space-y-4">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-4">
           <TabsList className="grid grid-cols-2 sm:grid-cols-5 h-auto">
             <TabsTrigger value="dashboard" className="py-2">Dashboard</TabsTrigger>
             <TabsTrigger value="disbursements" className="py-2">Disbursements</TabsTrigger>
