@@ -8,7 +8,8 @@ import {
   FileX,
   Download,
   ExternalLink,
-  MoreHorizontal
+  MoreHorizontal,
+  Search
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +38,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { mockDocuments } from '@/data/mockDocuments';
-import { Document, DocumentCategory, DocumentStatus } from '@/types/documents';
+import { Document, DocumentCategory, DocumentStatus, DocumentType } from '@/types/documents';
 
 interface DocumentListProps {
   selectedCategory: DocumentCategory;
