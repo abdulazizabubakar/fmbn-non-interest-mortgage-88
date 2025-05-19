@@ -41,11 +41,16 @@ export interface Mortgage {
 }
 
 // Analytics and reporting types
+export interface IconData {
+  icon: any; // Using any for simplicity, ideally would be a more specific Lucide icon type
+  className: string;
+}
+
 export interface StatCard {
   title: string;
   value: string | number;
   change?: number;
-  icon: React.ReactNode;
+  icon: IconData;
 }
 
 export interface ChartData {

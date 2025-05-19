@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { StatCard as StatCardType } from '@/types';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {
   data: StatCardType;
@@ -12,6 +13,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ data, className }) => {
   const { title, value, change, icon } = data;
+  const IconComponent = icon.icon;
   
   return (
     <Card className={cn("overflow-hidden", className)}>
@@ -44,7 +46,7 @@ const StatCard: React.FC<StatCardProps> = ({ data, className }) => {
           </div>
           
           <div className="p-2 bg-muted rounded-md">
-            {icon}
+            <IconComponent className={icon.className} />
           </div>
         </div>
       </CardContent>

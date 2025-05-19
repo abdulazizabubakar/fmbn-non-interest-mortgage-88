@@ -1,4 +1,3 @@
-
 import { Mortgage, Customer, Property, Notification, User, StatCard } from '@/types';
 import { BarChart3, CreditCard, Home, Users, PieChart, Calendar, TrendingUp, AlertTriangle } from 'lucide-react';
 
@@ -272,31 +271,37 @@ export const mockNotifications: Notification[] = [
   },
 ];
 
+// Create icon factories instead of using JSX directly
+const createHomeIcon = () => ({ icon: Home, className: "h-6 w-6 text-nimms-primary" });
+const createUsersIcon = () => ({ icon: Users, className: "h-6 w-6 text-nimms-secondary" });
+const createCreditCardIcon = () => ({ icon: CreditCard, className: "h-6 w-6 text-nimms-accent" });
+const createPieChartIcon = () => ({ icon: PieChart, className: "h-6 w-6 text-nimms-primary" });
+
 // Mock dashboard stat cards
 export const mockStatCards: StatCard[] = [
   {
     title: 'Total Mortgages',
     value: 5,
     change: 20,
-    icon: <Home className="h-6 w-6 text-nimms-primary" />,
+    icon: createHomeIcon(),
   },
   {
     title: 'Active Customers',
     value: 5,
     change: 15,
-    icon: <Users className="h-6 w-6 text-nimms-secondary" />,
+    icon: createUsersIcon(),
   },
   {
     title: 'Total Financing',
     value: '₦118.5M',
     change: 25,
-    icon: <CreditCard className="h-6 w-6 text-nimms-accent" />,
+    icon: createCreditCardIcon(),
   },
   {
     title: 'Disbursement Rate',
     value: '40%',
     change: -5,
-    icon: <PieChart className="h-6 w-6 text-nimms-primary" />,
+    icon: createPieChartIcon(),
   },
 ];
 
