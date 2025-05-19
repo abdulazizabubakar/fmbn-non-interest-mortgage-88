@@ -11,6 +11,7 @@ import Customers from "./pages/Customers";
 import Applications from "./pages/Applications";
 import Properties from "./pages/Properties";
 import Finance from "./pages/Finance";
+import Documents from "./pages/Documents";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/customers" element={<Customers />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/documents" element={<Documents />} />
           
           {/* Finance module and submodule routes */}
           <Route path="/finance" element={<Finance />} />
