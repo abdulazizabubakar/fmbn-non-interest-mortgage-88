@@ -12,6 +12,10 @@ import Applications from "./pages/Applications";
 import Properties from "./pages/Properties";
 import Finance from "./pages/Finance";
 import Documents from "./pages/Documents";
+import Messages from "./pages/Messages";
+import Integrations from "./pages/Integrations";
+import Reports from "./pages/Reports";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +32,10 @@ const App = () => (
           <Route path="/applications" element={<Applications />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/integrations" element={<Integrations />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/analytics" element={<Analytics />} />
           
           {/* Finance module and submodule routes */}
           <Route path="/finance" element={<Finance />} />
