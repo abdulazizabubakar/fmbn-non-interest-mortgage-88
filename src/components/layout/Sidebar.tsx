@@ -73,9 +73,9 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0 overflow-y-auto">
       <div className="space-y-6">
-        <div className="flex items-center justify-center md:justify-start p-2">
-          <Link to="/" className="flex items-center space-x-2">
-            <AmanahLogo />
+        <div className="flex items-center justify-center p-2">
+          <Link to="/" className="flex items-center flex-col">
+            <AmanahLogo className="h-16 w-auto" />
           </Link>
         </div>
 

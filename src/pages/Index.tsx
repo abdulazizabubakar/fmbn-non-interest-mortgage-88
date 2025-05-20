@@ -14,10 +14,10 @@ const Index = () => {
   return (
     <PageContainer>
       <div className="space-y-8">
-        <div>
+        <div className="text-center md:text-left">
           <h1 className="nimms-heading">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Welcome to Amanah Mortgage Hub - Non-Interest Mortgage Management System
+          <p className="text-muted-foreground mt-1 md:text-lg">
+            Welcome to Federal Mortgage Bank of Nigeria - Non-Interest Mortgage Management System
           </p>
         </div>
 
