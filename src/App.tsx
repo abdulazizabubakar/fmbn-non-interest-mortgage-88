@@ -16,6 +16,7 @@ import Messages from "./pages/Messages";
 import Integrations from "./pages/Integrations";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
           
           {/* Finance module and submodule routes */}
           <Route path="/finance" element={<Finance />} />
