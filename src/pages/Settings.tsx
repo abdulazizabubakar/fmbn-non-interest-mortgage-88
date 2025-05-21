@@ -6,6 +6,7 @@ import GeneralSettings from '@/components/settings/GeneralSettings';
 import UserManagement from '@/components/settings/UserManagement';
 import ProductManagement from '@/components/settings/ProductManagement';
 import SystemConfigurations from '@/components/settings/SystemConfigurations';
+import IAMSettings from '@/components/settings/IAMSettings';
 
 const Settings = () => {
   return (
@@ -19,11 +20,12 @@ const Settings = () => {
         </div>
 
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-4">
+          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-4">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
             <TabsTrigger value="products">Product Management</TabsTrigger>
             <TabsTrigger value="system">System Configurations</TabsTrigger>
+            <TabsTrigger value="iam">IAM</TabsTrigger>
           </TabsList>
           
           <TabsContent value="general">
@@ -40,6 +42,10 @@ const Settings = () => {
           
           <TabsContent value="system">
             <SystemConfigurations />
+          </TabsContent>
+          
+          <TabsContent value="iam">
+            <IAMSettings />
           </TabsContent>
         </Tabs>
       </div>
