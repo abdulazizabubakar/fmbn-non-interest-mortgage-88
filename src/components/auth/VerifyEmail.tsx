@@ -25,7 +25,9 @@ const VerifyEmail = () => {
   
   useEffect(() => {
     if (!email) {
-      navigate('/register');
+      // For testing purposes, don't redirect immediately to allow viewing the component
+      // Uncomment this line in production:
+      // navigate('/register');
     }
 
     let interval: NodeJS.Timeout;
@@ -117,7 +119,7 @@ const VerifyEmail = () => {
               render={({ slots }) => (
                 <InputOTPGroup>
                   {slots.map((slot, index) => (
-                    <InputOTPSlot key={index} {...slot} index={index} />
+                    <InputOTPSlot key={index} index={index} />
                   ))}
                 </InputOTPGroup>
               )} 
