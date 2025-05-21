@@ -17,6 +17,10 @@ import Integrations from "./pages/Integrations";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import VerifyEmail from "./components/auth/VerifyEmail";
+import ForgotPassword from "./components/auth/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +31,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          
+          {/* Main Application Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/mortgages" element={<Mortgages />} />
           <Route path="/customers" element={<Customers />} />

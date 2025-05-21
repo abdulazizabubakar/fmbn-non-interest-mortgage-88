@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RoleManagement from './iam/RoleManagement';
 import PermissionManagement from './iam/PermissionManagement';
 import AccessControl from './iam/AccessControl';
+import UserVerification from './iam/UserVerification';
 
 const IAMSettings = () => {
   return (
@@ -17,10 +18,11 @@ const IAMSettings = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="roles" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-6">
+          <TabsList className="grid grid-cols-4 mb-6">
             <TabsTrigger value="roles">Roles</TabsTrigger>
             <TabsTrigger value="permissions">Permissions</TabsTrigger>
             <TabsTrigger value="access">Access Control</TabsTrigger>
+            <TabsTrigger value="verification">User Verification</TabsTrigger>
           </TabsList>
           
           <TabsContent value="roles">
@@ -33,6 +35,10 @@ const IAMSettings = () => {
           
           <TabsContent value="access">
             <AccessControl />
+          </TabsContent>
+          
+          <TabsContent value="verification">
+            <UserVerification />
           </TabsContent>
         </Tabs>
       </CardContent>
