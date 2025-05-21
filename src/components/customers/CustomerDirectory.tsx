@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { 
   Card, 
@@ -178,7 +177,7 @@ const CustomerDirectory: React.FC<CustomerDirectoryProps> = ({ customers, onSele
             default:
               return (
                 <Badge key={tag} variant="outline" className="text-xs">
-                  {tag.replace('_', ' ')}
+                  {tag.toString().replace(/_/g, ' ')}
                 </Badge>
               );
           }
@@ -286,7 +285,7 @@ const CustomerDirectory: React.FC<CustomerDirectoryProps> = ({ customers, onSele
                       </div>
                     </TableCell>
                     <TableCell className="hidden lg:table-cell capitalize">
-                      {customer.customerType.replace('_', ' ')}
+                      {customer.customerType.replace(/_/g, ' ')}
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">{customer.state}</TableCell>
                     <TableCell>

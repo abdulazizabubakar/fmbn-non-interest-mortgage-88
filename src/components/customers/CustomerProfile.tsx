@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { 
@@ -29,7 +28,8 @@ import {
   Check,
   AlertTriangle,
   Clock,
-  Users
+  Users,
+  Briefcase
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -231,7 +231,7 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
             default:
               return (
                 <Badge key={tag} variant="outline">
-                  {tag.replace('_', ' ')}
+                  {tag.toString().replace(/_/g, ' ')}
                 </Badge>
               );
           }

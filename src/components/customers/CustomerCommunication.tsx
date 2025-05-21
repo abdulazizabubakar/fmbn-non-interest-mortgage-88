@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Card, 
@@ -31,7 +30,8 @@ import {
   AlertTriangle,
   Send,
   Filter,
-  Download
+  Download,
+  History as HistoryIcon
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Customer, CustomerCommunication } from '@/types/customer';
@@ -266,7 +266,7 @@ const CustomerCommunicationComponent: React.FC<CustomerCommunicationProps> = ({ 
       <Card className="lg:col-span-2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <History className="h-5 w-5" /> Communication History
+            <HistoryIcon className="h-5 w-5" /> Communication History
           </CardTitle>
           <div className="flex items-center justify-between">
             <CardDescription>

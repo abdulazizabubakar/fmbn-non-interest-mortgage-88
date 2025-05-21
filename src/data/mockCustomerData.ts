@@ -1,4 +1,3 @@
-
 import { Customer, CustomerComplaint, CustomerCommunication, CustomerLease, CustomerType, CustomerTag } from '@/types/customer';
 
 // Generate 20 realistic mock customers for our customer management module
@@ -385,7 +384,7 @@ export const mockCustomers: Customer[] = [
     employmentStartDate: "2005-03-10",
     
     customerType: "government_worker",
-    status: "defaulting",
+    status: "suspended",
     tags: ["in_arrears", "high_risk"],
     nhfContributorId: "NHF-678901",
     nhfRegistrationDate: "2005-04-01",
