@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
@@ -15,9 +16,13 @@ import Messages from './pages/Messages';
 import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/sonner"
 
-// Add the new mortgage application routes
+// Mortgage application routes
 import MortgageApplications from './pages/MortgageApplications';
 import MortgageApplicationDetails from './pages/MortgageApplicationDetails';
+
+// New Mortgage Management routes
+import MortgageManagement from './pages/MortgageManagement';
+import MortgageAccountDetails from './pages/MortgageAccountDetails';
 
 function App() {
   return (
@@ -37,9 +42,13 @@ function App() {
           <Route path="/finance" element={<Finance />} />
           <Route path="/messages" element={<Messages />} />
           
-          {/* New Mortgage Application Routes */}
+          {/* Mortgage Application Routes */}
           <Route path="/mortgage-applications" element={<MortgageApplications />} />
           <Route path="/mortgage-applications/:id" element={<MortgageApplicationDetails />} />
+          
+          {/* New Mortgage Management Routes */}
+          <Route path="/mortgage-management" element={<MortgageManagement />} />
+          <Route path="/mortgage-management/accounts/:id" element={<MortgageAccountDetails />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

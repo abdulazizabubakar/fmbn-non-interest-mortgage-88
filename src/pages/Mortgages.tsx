@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
 import { mockMortgages } from '@/data/mockData';
 import { Mortgage } from '@/types';
@@ -8,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, Filter, Plus, ChevronRight } from 'lucide-react';
+import { Search, Filter, Plus, ChevronRight, Settings, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 
 const Mortgages = () => {
@@ -74,7 +75,30 @@ const Mortgages = () => {
             New Mortgage
           </Button>
         </div>
-
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="col-span-1 md:col-span-3">
+            <CardContent className="p-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-blue-50 rounded-lg">
+                  <Settings className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Mortgage Management Module</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Advanced tools for mortgage servicing, payment tracking, and ownership transfers
+                  </p>
+                </div>
+              </div>
+              <Link to="/mortgage-management">
+                <Button>
+                  Access Module <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="relative col-span-2">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -173,9 +197,82 @@ const Mortgages = () => {
             ))
           )}
         </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="p-3 bg-green-50 rounded-lg">
+                <FileText className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="font-medium">Mortgage Applications</h3>
+                <p className="text-sm text-muted-foreground">
+                  Process and approve new applications
+                </p>
+                <Link to="/mortgage-applications" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
+                  View Applications →
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="p-3 bg-purple-50 rounded-lg">
+                <Calendar className="h-6 w-6 text-purple-600" />
+              </div>
+              <div>
+                <h3 className="font-medium">Payment Schedules</h3>
+                <p className="text-sm text-muted-foreground">
+                  View and manage repayment schedules
+                </p>
+                <Link to="/mortgage-management" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
+                  View Schedules →
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="p-3 bg-amber-50 rounded-lg">
+                <AlertTriangle className="h-6 w-6 text-amber-600" />
+              </div>
+              <div>
+                <h3 className="font-medium">Default Management</h3>
+                <p className="text-sm text-muted-foreground">
+                  Handle overdue payments and defaults
+                </p>
+                <Link to="/mortgage-management" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
+                  View Defaults →
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </PageContainer>
   );
 };
+
+// Import this since it's not included in our limited icon set
+const AlertTriangle = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+    <path d="M12 9v4" />
+    <path d="M12 17h.01" />
+  </svg>
+);
 
 export default Mortgages;
