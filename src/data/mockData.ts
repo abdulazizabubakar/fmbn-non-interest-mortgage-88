@@ -1,5 +1,8 @@
 
-import { Mortgage, Customer, Property, Notification, User, StatCard } from '@/types';
+import { Mortgage, User, StatCard } from '@/types';
+import { Property } from '@/types/property';
+import { Customer } from '@/types/customer';
+import { Notification } from '@/types/notification';
 import { BarChart3, CreditCard, Home, Users, PieChart, Calendar, TrendingUp, AlertTriangle } from 'lucide-react';
 
 // Mock users
