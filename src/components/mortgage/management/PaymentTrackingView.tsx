@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Search, Plus, Wallet, Calendar, Filter, Download } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DateRange } from 'react-day-picker';
-import { DatePickerWithRange } from '@/components/ui/date-range-picker';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { format } from 'date-fns';
 
 const PaymentTrackingView: React.FC = () => {
@@ -102,7 +102,7 @@ const PaymentTrackingView: React.FC = () => {
                 </SelectContent>
               </Select>
               
-              <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+              <DateRangePicker date={dateRange} setDate={setDateRange} />
               
               <Button variant="outline">
                 <Download className="h-4 w-4 mr-2" />

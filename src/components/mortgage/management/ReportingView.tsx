@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DateRange } from 'react-day-picker';
-import { DatePickerWithRange } from '@/components/ui/date-range-picker';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { Search, FileDown, Download, BarChart, AlertTriangle as AlertTriangleIcon, FileCheck as FileCheckIcon } from 'lucide-react';
 
 const ReportingView: React.FC = () => {
@@ -106,7 +106,7 @@ const ReportingView: React.FC = () => {
                 </SelectContent>
               </Select>
               
-              <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+              <DateRangePicker date={dateRange} setDate={setDateRange} />
             </div>
           </div>
           

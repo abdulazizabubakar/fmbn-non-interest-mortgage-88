@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -6,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Download, Calendar } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-import { DatePickerWithRange } from '@/components/ui/date-range-picker';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { ScheduleItem, PaymentStatus, MortgageAccount } from '@/types/mortgage-account';
 
 interface PaymentScheduleProps {
@@ -201,7 +202,7 @@ const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ account }) => {
               </SelectContent>
             </Select>
             
-            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+            <DateRangePicker date={dateRange} setDate={setDateRange} />
             
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
