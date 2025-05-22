@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { 
   Card, 
@@ -177,7 +178,7 @@ const CustomerDirectory: React.FC<CustomerDirectoryProps> = ({ customers, onSele
             default:
               return (
                 <Badge key={tag} variant="outline" className="text-xs">
-                  {tag.toString().replace(/_/g, ' ')}
+                  {tag.replace(/_/g, ' ')}
                 </Badge>
               );
           }

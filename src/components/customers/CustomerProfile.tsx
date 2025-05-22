@@ -231,7 +231,7 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
             default:
               return (
                 <Badge key={tag} variant="outline">
-                  {tag.toString().replace(/_/g, ' ')}
+                  {tag.replace(/_/g, ' ')}
                 </Badge>
               );
           }
