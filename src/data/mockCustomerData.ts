@@ -1,3 +1,4 @@
+
 import { Customer, CustomerComplaint, CustomerCommunication, CustomerLease, CustomerType, CustomerTag } from '@/types/customer';
 
 // Generate 20 realistic mock customers for our customer management module
@@ -870,6 +871,7 @@ export const mockCustomerComplaints: CustomerComplaint[] = [
         description: "Screenshot of bank transfer confirmation",
         type: "image",
         category: "financial",
+        fileUrl: "/documents/complaints/bank_transfer_receipt.jpg", // Added the missing fileUrl property
         owner: "cust-002",
         uploadDate: "2023-05-08",
         expiryDate: null,
@@ -896,6 +898,7 @@ export const mockCustomerComplaints: CustomerComplaint[] = [
         description: "Photos showing water damage",
         type: "image",
         category: "property",
+        fileUrl: "/documents/complaints/water_leakage_photos.jpg", // Added the missing fileUrl property
         owner: "cust-006",
         uploadDate: "2023-05-15",
         expiryDate: null,
