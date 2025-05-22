@@ -61,10 +61,16 @@ export interface CustomerComplaintDocument {
   id: string;
   title: string;
   type: string;
-  description?: string; // Added to match the usage in mockCustomerData
+  description?: string;
+  category?: string;
   fileUrl: string;
   fileSize: number;
   uploadDate: string;
+  owner?: string;
+  expiryDate?: string | null;
+  status?: string;
+  tags?: string[];
+  filePath?: string;
 }
 
 export interface CustomerComplaint {
@@ -78,14 +84,14 @@ export interface CustomerComplaint {
   assignedTo?: string;
   createdAt: string;
   resolvedAt?: string;
-  resolvedBy?: string; // Added to match the usage in mockCustomerData
+  resolvedBy?: string;
   documents?: CustomerComplaintDocument[];
 }
 
 export interface CustomerCommunication {
   id: string;
   customerId: string;
-  type: 'email' | 'sms' | 'in_app' | 'letter'; // Added 'letter' to match the usage in mockCustomerData
+  type: 'email' | 'sms' | 'in_app' | 'letter';
   subject: string;
   message: string;
   sentBy: string;
@@ -137,7 +143,7 @@ export interface Customer {
   occupation: string;
   monthlyIncome: number;
   employmentStartDate: string;
-  employmentStatus?: string; // Added to match the usage in mockData
+  employmentStatus?: string;
   
   customerType: CustomerType;
   status: CustomerStatus;
