@@ -1,10 +1,11 @@
+
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
 import { mockMortgageApplications } from '@/data/mockMortgageApplications';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Calendar, Clipboard, FileText, Home, User } from 'lucide-react';
+import { ArrowLeft, Calendar, Clipboard, FileText, Home, User, CheckCircle, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MortgageApplication, MortgageApplicationStatus } from '@/types/mortgage-application';
@@ -198,7 +199,12 @@ const MortgageApplicationDetails = () => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
             <div>
               <div className="text-sm text-muted-foreground">Application Status</div>
-              <Badge variant={statusBadge.variant} className="mt-1">{statusBadge.label}</Badge>
+              {(() => {
+                const statusInfo = getStatusBadge(application.status);
+                return (
+                  <Badge variant={statusInfo.variant} className="mt-1">{statusInfo.label}</Badge>
+                );
+              })()}
             </div>
             
             <div>
