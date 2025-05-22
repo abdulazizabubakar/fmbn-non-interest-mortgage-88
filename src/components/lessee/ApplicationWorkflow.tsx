@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Steps, Step } from '@/components/lessee/Steps';
@@ -15,7 +14,7 @@ const ApplicationWorkflow = () => {
   const [savedStep, setSavedStep] = useState(-1);
   
   // Mock application status - in a real app, this would come from an API
-  const applicationStatus = "draft"; // possible values: draft, submitted, under-review, approved, rejected
+  const applicationStatus = "draft" as string; // cast as string to ensure TypeScript knows it's a string
   
   const steps = [
     { id: 'property', title: 'Property Selection' },

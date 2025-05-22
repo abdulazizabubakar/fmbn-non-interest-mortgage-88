@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -167,9 +166,10 @@ export const DocumentUpload = () => {
                         input.type = 'file';
                         input.accept = '.pdf,.png,.jpg,.jpeg';
                         input.onchange = (e) => {
-                          // Cast the event to the correct type
-                          const inputEvent = e as React.ChangeEvent<HTMLInputElement>;
-                          handleFileChange(inputEvent, doc.type);
+                          // Properly convert Event to ChangeEvent<HTMLInputElement>
+                          // First convert to unknown, then to the specific type
+                          const event = e as unknown;
+                          handleFileChange(event as React.ChangeEvent<HTMLInputElement>, doc.type);
                         };
                         input.click();
                       }}
