@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,7 +26,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const location = useLocation();
+  const { login, hasRole } = useAuth();
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -40,11 +41,22 @@ const Login = () => {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await login(values.email, values.password);
+      const user = await login(values.email, values.password);
       toast.success("Login successful!");
-      navigate('/');
+      
+      // Get the intended destination from location state or use default based on role
+      const from = (location.state as any)?.from?.pathname || determineRedirectPath(user.roles[0]);
+      navigate(from, { replace: true });
     } catch (error) {
       toast.error("Login failed. Please check your credentials.");
+    }
+  };
+
+  const determineRedirectPath = (role: string) => {
+    if (role === 'lessee') {
+      return '/lessee-portal';
+    } else {
+      return '/dashboard';
     }
   };
 

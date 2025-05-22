@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Customers from './pages/Customers';
@@ -18,6 +18,7 @@ import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/hooks/useAuth";
 import LesseePortal from './pages/LesseePortal';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Mortgage application routes
 import MortgageApplications from './pages/MortgageApplications';
@@ -33,38 +34,42 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
+            {/* Make Login the default landing page */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Index />} />
-            <Route path="/customers" element={<Customers />} />
-            <Route path="/mortgages" element={<Mortgages />} />
-            <Route path="/properties" element={<Properties />} />
-            <Route path="/documents" element={<Documents />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/integrations" element={<Integrations />} />
-            <Route path="/applications" element={<Applications />} />
-            <Route path="/finance" element={<Finance />} />
-            <Route path="/finance/operations" element={<Finance />} />
-            <Route path="/finance/disbursements" element={<Finance />} />
-            <Route path="/finance/repayments" element={<Finance />} />
-            <Route path="/finance/subsidies" element={<Finance />} />
-            <Route path="/finance/exceptions" element={<Finance />} />
-            <Route path="/finance/risk" element={<Finance />} />
-            <Route path="/finance/compliance" element={<Finance />} />
-            <Route path="/finance/delinquency" element={<Finance />} />
-            <Route path="/messages" element={<Messages />} />
+            
+            {/* Protected routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+            <Route path="/mortgages" element={<ProtectedRoute><Mortgages /></ProtectedRoute>} />
+            <Route path="/properties" element={<ProtectedRoute><Properties /></ProtectedRoute>} />
+            <Route path="/documents" element={<ProtectedRoute><Documents /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/integrations" element={<ProtectedRoute><Integrations /></ProtectedRoute>} />
+            <Route path="/applications" element={<ProtectedRoute><Applications /></ProtectedRoute>} />
+            <Route path="/finance" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/operations" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/disbursements" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/repayments" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/subsidies" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/exceptions" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/risk" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/compliance" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/finance/delinquency" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
+            <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
             
             {/* Lessee Portal Route */}
-            <Route path="/lessee-portal/*" element={<LesseePortal />} />
+            <Route path="/lessee-portal/*" element={<ProtectedRoute requiredRole="lessee"><LesseePortal /></ProtectedRoute>} />
             
             {/* Mortgage Application Routes */}
-            <Route path="/mortgage-applications" element={<MortgageApplications />} />
-            <Route path="/mortgage-applications/:id" element={<MortgageApplicationDetails />} />
+            <Route path="/mortgage-applications" element={<ProtectedRoute><MortgageApplications /></ProtectedRoute>} />
+            <Route path="/mortgage-applications/:id" element={<ProtectedRoute><MortgageApplicationDetails /></ProtectedRoute>} />
             
             {/* New Mortgage Management Routes */}
-            <Route path="/mortgage-management" element={<MortgageManagement />} />
-            <Route path="/mortgage-management/accounts/:id" element={<MortgageAccountDetails />} />
+            <Route path="/mortgage-management" element={<ProtectedRoute><MortgageManagement /></ProtectedRoute>} />
+            <Route path="/mortgage-management/accounts/:id" element={<ProtectedRoute><MortgageAccountDetails /></ProtectedRoute>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

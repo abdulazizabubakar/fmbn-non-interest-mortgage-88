@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { User, Permission, UserRole, ModuleAccess, PermissionAction } from '@/types/user';
 
 // Mock user for development - in a real app, this would come from authentication
@@ -97,15 +97,36 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(mockCurrentUser);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!mockCurrentUser);
+  // We'll start with null user to simulate being logged out
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const login = async (email: string, password: string): Promise<User> => {
     // This would normally call an API to authenticate
-    // For demo purposes, we'll just set the user directly
-    setUser(mockCurrentUser);
+    // For demo purposes, we'll determine the role based on the email
+    let userToReturn = {...mockCurrentUser};
+    
+    if (email.startsWith('lessee')) {
+      userToReturn = {
+        ...mockCurrentUser,
+        roles: ['lessee'],
+        email: email,
+        name: 'Lessee User',
+      };
+    } else if (email.includes('@')) {
+      const role = email.split('@')[0].trim();
+      if (role) {
+        userToReturn = {
+          ...mockCurrentUser,
+          roles: [role as UserRole],
+          email: email,
+        };
+      }
+    }
+    
+    setUser(userToReturn);
     setIsAuthenticated(true);
-    return mockCurrentUser;
+    return userToReturn;
   };
 
   const logout = () => {
