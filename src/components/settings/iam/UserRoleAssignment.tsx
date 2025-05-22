@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { User, Role } from '@/types/user';
+import { User, Role, UserRole } from '@/types/user';
 import { toast } from 'sonner';
 import { Plus, Search, UserPlus, Shield, Globe, Map } from 'lucide-react';
 
@@ -18,7 +18,7 @@ const mockUsers: User[] = [
     id: '1', 
     name: 'John Doe', 
     email: 'john.doe@fmbn.gov.ng', 
-    roles: ['admin'], 
+    roles: ['admin' as UserRole], 
     scope: 'global',
     status: 'active'
   },
@@ -26,7 +26,7 @@ const mockUsers: User[] = [
     id: '2', 
     name: 'Jane Smith', 
     email: 'jane.smith@fmbn.gov.ng', 
-    roles: ['application_officer'], 
+    roles: ['application_officer' as UserRole], 
     scope: 'zonal',
     region: 'North Central',
     status: 'active'
@@ -35,7 +35,7 @@ const mockUsers: User[] = [
     id: '3', 
     name: 'Ahmed Ibrahim', 
     email: 'ahmed.ibrahim@fmbn.gov.ng', 
-    roles: ['finance_officer', 'auditor'], 
+    roles: ['finance_officer' as UserRole, 'auditor' as UserRole], 
     scope: 'global',
     status: 'active'
   },
@@ -43,7 +43,7 @@ const mockUsers: User[] = [
     id: '4', 
     name: 'Fatima Hassan', 
     email: 'fatima.hassan@fmbn.gov.ng', 
-    roles: ['shariah_reviewer'], 
+    roles: ['shariah_reviewer' as UserRole], 
     scope: 'global',
     status: 'active'
   },
@@ -51,7 +51,7 @@ const mockUsers: User[] = [
     id: '5', 
     name: 'Michael Obi', 
     email: 'michael.obi@fmbn.gov.ng', 
-    roles: ['zonal_admin'], 
+    roles: ['zonal_admin' as UserRole], 
     scope: 'zonal',
     region: 'South West',
     status: 'active'
@@ -69,6 +69,16 @@ const mockRoles: Role[] = [
   { id: '7', name: 'Shariah Reviewer', description: 'Ensures Islamic finance compliance', isSystemRole: false, permissions: [] },
 ];
 
+// Map from role name to UserRole type for conversion
+const roleNameToUserRole = (roleName: string): UserRole => {
+  return roleName.toLowerCase().replace(' ', '_') as UserRole;
+};
+
+// Map from UserRole type to readable name for display
+const userRoleToDisplayName = (role: UserRole): string => {
+  return role.replace('_', ' ');
+};
+
 const regions = [
   'North Central',
   'North East',
@@ -84,7 +94,7 @@ const UserRoleAssignment: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState<UserRole[]>([]);
   const [selectedScope, setSelectedScope] = useState<'global' | 'zonal' | 'self'>('global');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   
@@ -110,13 +120,17 @@ const UserRoleAssignment: React.FC = () => {
   };
 
   const handleRoleToggle = (roleId: string) => {
-    // Convert from role name to role ID for this example
-    const role = mockRoles.find(r => r.id === roleId)?.name.toLowerCase().replace(' ', '_') as string;
+    // Find the role by ID
+    const role = mockRoles.find(r => r.id === roleId);
+    if (!role) return;
     
-    if (selectedRoles.includes(role)) {
-      setSelectedRoles(selectedRoles.filter(r => r !== role));
+    // Convert the role name to UserRole type
+    const userRole = roleNameToUserRole(role.name);
+    
+    if (selectedRoles.includes(userRole)) {
+      setSelectedRoles(selectedRoles.filter(r => r !== userRole));
     } else {
-      setSelectedRoles([...selectedRoles, role]);
+      setSelectedRoles([...selectedRoles, userRole]);
     }
   };
 
@@ -163,6 +177,12 @@ const UserRoleAssignment: React.FC = () => {
     }
   };
 
+  // Function to determine if a role is selected
+  const isRoleSelected = (roleName: string): boolean => {
+    const userRole = roleNameToUserRole(roleName);
+    return selectedRoles.includes(userRole);
+  };
+
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -207,7 +227,7 @@ const UserRoleAssignment: React.FC = () => {
                     <div className="flex flex-wrap gap-1.5">
                       {user.roles.map((role, index) => (
                         <Badge key={index} variant="outline" className="capitalize">
-                          {role.replace('_', ' ')}
+                          {userRoleToDisplayName(role)}
                         </Badge>
                       ))}
                     </div>
@@ -268,7 +288,7 @@ const UserRoleAssignment: React.FC = () => {
                     <div key={role.id} className="flex items-center space-x-2">
                       <Checkbox 
                         id={`role-${role.id}`}
-                        checked={selectedRoles.includes(role.name.toLowerCase().replace(' ', '_'))}
+                        checked={isRoleSelected(role.name)}
                         onCheckedChange={() => handleRoleToggle(role.id)}
                       />
                       <div>

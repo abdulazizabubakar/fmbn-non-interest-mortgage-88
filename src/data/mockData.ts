@@ -1,8 +1,9 @@
 
-import { Mortgage, User, StatCard } from '@/types';
+import { Mortgage, StatCard } from '@/types';
 import { Property } from '@/types/property';
 import { Customer } from '@/types/customer';
 import { Notification } from '@/types/notification';
+import { User, UserRole } from '@/types/user';
 import { BarChart3, CreditCard, Home, Users, PieChart, Calendar, TrendingUp, AlertTriangle } from 'lucide-react';
 
 // Mock users
@@ -11,28 +12,36 @@ export const mockUsers: User[] = [
     id: '1',
     name: 'Admin User',
     email: 'admin@fmbn.gov.ng',
-    role: 'admin',
+    roles: ['admin' as UserRole],
+    scope: 'global',
+    status: 'active',
     avatarUrl: '/placeholder.svg',
   },
   {
     id: '2',
     name: 'Manager User',
     email: 'manager@fmbn.gov.ng',
-    role: 'manager',
+    roles: ['manager' as UserRole],
+    scope: 'global',
+    status: 'active',
     avatarUrl: '/placeholder.svg',
   },
   {
     id: '3',
     name: 'Credit Officer',
     email: 'officer@fmbn.gov.ng',
-    role: 'officer',
+    roles: ['officer' as UserRole],
+    scope: 'global',
+    status: 'active',
     avatarUrl: '/placeholder.svg',
   },
   {
     id: '4',
     name: 'Ibrahim Ahmed',
     email: 'ibrahim@example.com',
-    role: 'customer',
+    roles: ['customer' as UserRole],
+    scope: 'self',
+    status: 'active',
     avatarUrl: '/placeholder.svg',
   },
 ];
