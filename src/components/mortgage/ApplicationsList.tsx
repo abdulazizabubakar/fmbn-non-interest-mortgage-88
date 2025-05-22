@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { format } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
@@ -39,7 +38,7 @@ const ApplicationsList: React.FC<ApplicationsListProps> = ({ applications }) => 
         return {
           variant: 'outline' as const,
           icon: <Clock className="h-3.5 w-3.5 mr-1" />,
-          label: status === 'in_review' ? 'In Review' : status.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
+          label: status === 'in_review' ? 'In Review' : status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
         };
       case 'approved':
         return {
@@ -87,14 +86,14 @@ const ApplicationsList: React.FC<ApplicationsListProps> = ({ applications }) => 
         return {
           variant: 'outline' as const,
           icon: null,
-          label: status.replace('_', ' ')
+          label: String(status).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
         };
     }
   };
 
   // Format customer type
   const formatCustomerType = (type: string) => {
-    return type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    return String(type).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   };
   
   // Format date

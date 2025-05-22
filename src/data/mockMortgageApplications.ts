@@ -1,4 +1,3 @@
-
 import { MortgageApplication } from '@/types/mortgage-application';
 
 export const mockMortgageApplications: MortgageApplication[] = [
@@ -50,7 +49,8 @@ export const mockMortgageApplications: MortgageApplication[] = [
         status: "pending",
         assignedDate: "2025-04-01T11:00:00Z"
       }
-    ]
+    ],
+    createdBy: "online-portal"
   },
   {
     id: "app-002",

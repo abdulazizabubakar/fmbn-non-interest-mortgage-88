@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
@@ -59,7 +58,7 @@ const MortgageApplicationDetails = () => {
       case 'board_approval':
         return { 
           variant: 'outline' as const, 
-          label: status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+          label: String(status).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
         };
       case 'approved':
         return { variant: 'default' as const, label: 'Approved' };
@@ -77,9 +76,9 @@ const MortgageApplicationDetails = () => {
       case 'cancelled':
       case 'offer_rejected':
       case 'offer_expired':
-        return { variant: 'destructive' as const, label: status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) };
+        return { variant: 'destructive' as const, label: String(status).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) };
       default:
-        return { variant: 'outline' as const, label: status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) };
+        return { variant: 'outline' as const, label: String(status).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) };
     }
   };
   
