@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -8,10 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, Download, Calendar } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { DatePickerWithRange } from '@/components/ui/date-range-picker';
-import { ScheduleItem, PaymentStatus } from '@/types/mortgage-account';
+import { ScheduleItem, PaymentStatus, MortgageAccount } from '@/types/mortgage-account';
 
 interface PaymentScheduleProps {
-  accountId: string;
+  account: MortgageAccount;
 }
 
 // Mock data for development
@@ -117,7 +116,7 @@ const getStatusBadgeClass = (status: PaymentStatus) => {
   }
 };
 
-const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ accountId }) => {
+const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ account }) => {
   const [loading, setLoading] = useState(true);
   const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<ScheduleItem[]>([]);
@@ -126,14 +125,14 @@ const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ accountId }) => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   useEffect(() => {
-    // In a real app, fetch the schedule items from an API based on accountId
+    // In a real app, fetch the schedule items from an API based on account.id
     setLoading(true);
     setTimeout(() => {
       setScheduleItems(mockScheduleItems);
       setFilteredItems(mockScheduleItems);
       setLoading(false);
     }, 500);
-  }, [accountId]);
+  }, [account.id]);
 
   useEffect(() => {
     let filtered = [...scheduleItems];
