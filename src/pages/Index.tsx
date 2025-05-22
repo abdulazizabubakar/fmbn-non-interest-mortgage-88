@@ -19,7 +19,10 @@ const Index = () => {
   return (
     <PageContainer>
       {hasDashboardAccess ? (
-        <DashboardModule userRole={userRole as UserRole} userRegion={userRegion} />
+        <DashboardModule 
+          userRole={userRole} 
+          userRegion={userRegion} 
+        />
       ) : (
         <Alert variant="destructive" className="mt-6 max-w-lg mx-auto">
           <AlertTriangle className="h-4 w-4" />
