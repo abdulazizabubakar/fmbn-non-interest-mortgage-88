@@ -57,6 +57,16 @@ export interface RiskProfile {
   recommendations: string[];
 }
 
+export interface CustomerComplaintDocument {
+  id: string;
+  title: string;
+  type: string;
+  description?: string; // Added to match the usage in mockCustomerData
+  fileUrl: string;
+  fileSize: number;
+  uploadDate: string;
+}
+
 export interface CustomerComplaint {
   id: string;
   customerId: string;
@@ -68,20 +78,14 @@ export interface CustomerComplaint {
   assignedTo?: string;
   createdAt: string;
   resolvedAt?: string;
-  documents?: {
-    id: string;
-    title: string;
-    type: string;
-    fileUrl: string;
-    fileSize: number;
-    uploadDate: string;
-  }[];
+  resolvedBy?: string; // Added to match the usage in mockCustomerData
+  documents?: CustomerComplaintDocument[];
 }
 
 export interface CustomerCommunication {
   id: string;
   customerId: string;
-  type: 'email' | 'sms' | 'in_app';
+  type: 'email' | 'sms' | 'in_app' | 'letter'; // Added 'letter' to match the usage in mockCustomerData
   subject: string;
   message: string;
   sentBy: string;
@@ -133,6 +137,7 @@ export interface Customer {
   occupation: string;
   monthlyIncome: number;
   employmentStartDate: string;
+  employmentStatus?: string; // Added to match the usage in mockData
   
   customerType: CustomerType;
   status: CustomerStatus;

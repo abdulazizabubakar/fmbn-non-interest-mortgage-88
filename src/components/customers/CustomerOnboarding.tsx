@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -192,6 +191,7 @@ const CustomerOnboarding: React.FC<CustomerOnboardingProps> = ({ onCustomerCreat
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           createdBy: "current-user",
+          updatedBy: "current-user", // Added the missing property
           notes: data.classification.notes
         };
         

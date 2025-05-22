@@ -1,4 +1,3 @@
-
 import { Mortgage, User, StatCard } from '@/types';
 import { Property } from '@/types/property';
 import { Customer } from '@/types/customer';
@@ -131,9 +130,28 @@ export const mockCustomers: Customer[] = [
     nationalId: '12345678901',
     bvn: '12345678901',
     address: '25 Ahmadu Bello Way, Abuja',
-    employmentStatus: 'Employed',
+    city: 'Abuja',
+    state: 'FCT',
+    postalCode: '900001',
+    employer: 'Federal Ministry',
+    employerAddress: '10 Ministry Road',
+    occupation: 'Civil Servant',
     monthlyIncome: 500000,
+    employmentStartDate: '2019-01-01',
+    customerType: 'government_worker',
+    status: 'active',
+    tags: ['good_standing'],
+    documents: [],
+    verification: {
+      ninVerified: true,
+      bvnVerified: true,
+      employmentVerified: true,
+      addressVerified: true
+    },
     createdAt: '2024-01-15',
+    updatedAt: '2024-01-15',
+    createdBy: 'system',
+    updatedBy: 'system'
   },
   {
     id: '5',
@@ -143,9 +161,28 @@ export const mockCustomers: Customer[] = [
     nationalId: '23456789012',
     bvn: '23456789012',
     address: '7 Ibrahim Babangida Boulevard, Kano',
-    employmentStatus: 'Self-employed',
+    city: 'Kano',
+    state: 'Kano',
+    postalCode: '700001',
+    employer: 'Self-employed',
+    employerAddress: 'Same as residential',
+    occupation: 'Business Owner',
     monthlyIncome: 650000,
+    employmentStartDate: '2018-05-20',
+    customerType: 'private_sector',
+    status: 'active',
+    tags: ['good_standing'],
+    documents: [],
+    verification: {
+      ninVerified: true,
+      bvnVerified: true,
+      employmentVerified: true,
+      addressVerified: true
+    },
     createdAt: '2024-02-20',
+    updatedAt: '2024-02-20',
+    createdBy: 'system',
+    updatedBy: 'system'
   },
   {
     id: '6',
@@ -155,9 +192,28 @@ export const mockCustomers: Customer[] = [
     nationalId: '34567890123',
     bvn: '34567890123',
     address: '12 Awolowo Road, Lagos',
-    employmentStatus: 'Employed',
+    city: 'Lagos',
+    state: 'Lagos',
+    postalCode: '101001',
+    employer: 'Lagos State University',
+    employerAddress: 'LASU Main Campus',
+    occupation: 'Professor',
     monthlyIncome: 750000,
+    employmentStartDate: '2010-09-01',
+    customerType: 'government_worker',
+    status: 'active',
+    tags: ['good_standing'],
+    documents: [],
+    verification: {
+      ninVerified: true,
+      bvnVerified: true,
+      employmentVerified: true,
+      addressVerified: true
+    },
     createdAt: '2024-03-10',
+    updatedAt: '2024-03-10',
+    createdBy: 'system',
+    updatedBy: 'system'
   },
   {
     id: '7',
@@ -167,9 +223,28 @@ export const mockCustomers: Customer[] = [
     nationalId: '45678901234',
     bvn: '45678901234',
     address: '45 Yakubu Gowon Street, Port Harcourt',
-    employmentStatus: 'Employed',
+    city: 'Port Harcourt',
+    state: 'Rivers',
+    postalCode: '500001',
+    employer: 'Shell Nigeria',
+    employerAddress: 'Shell Industrial Area',
+    occupation: 'Petroleum Engineer',
     monthlyIncome: 450000,
+    employmentStartDate: '2020-03-15',
+    customerType: 'private_sector',
+    status: 'active',
+    tags: ['good_standing'],
+    documents: [],
+    verification: {
+      ninVerified: true,
+      bvnVerified: true,
+      employmentVerified: true,
+      addressVerified: true
+    },
     createdAt: '2024-04-05',
+    updatedAt: '2024-04-05',
+    createdBy: 'system',
+    updatedBy: 'system'
   },
   {
     id: '8',
@@ -179,9 +254,28 @@ export const mockCustomers: Customer[] = [
     nationalId: '56789012345',
     bvn: '56789012345',
     address: '9 Shehu Shagari Way, Sokoto',
-    employmentStatus: 'Self-employed',
+    city: 'Sokoto',
+    state: 'Sokoto',
+    postalCode: '840001',
+    employer: 'Private Business',
+    employerAddress: 'Central Market, Sokoto',
+    occupation: 'Trader',
     monthlyIncome: 600000,
+    employmentStartDate: '2015-11-10',
+    customerType: 'private_sector',
+    status: 'active',
+    tags: ['good_standing'],
+    documents: [],
+    verification: {
+      ninVerified: true,
+      bvnVerified: true,
+      employmentVerified: true,
+      addressVerified: true
+    },
     createdAt: '2024-04-25',
+    updatedAt: '2024-04-25',
+    createdBy: 'system',
+    updatedBy: 'system'
   },
 ];
 
