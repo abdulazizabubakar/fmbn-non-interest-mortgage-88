@@ -17,7 +17,7 @@ import Messages from './pages/Messages';
 import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/hooks/useAuth";
-import LesseePortal from './pages/LesseePortal';
+import LesseePortal from './components/lessee/LesseePortal';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Mortgage application routes
@@ -60,7 +60,7 @@ function App() {
             <Route path="/finance/delinquency" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
             
-            {/* Lessee Portal Route */}
+            {/* Lessee Portal Route - Updated to point directly to the component */}
             <Route path="/lessee-portal/*" element={<ProtectedRoute requiredRole="lessee"><LesseePortal /></ProtectedRoute>} />
             
             {/* Mortgage Application Routes */}

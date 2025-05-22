@@ -1,102 +1,105 @@
 
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockProperties } from '@/data/mockData';
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
-export const PropertySelection = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedProperty, setSelectedProperty] = useState('');
-  
-  // Filter properties based on search term and selected state
-  const filteredProperties = mockProperties.filter(property => {
-    const matchesSearch = !searchTerm || 
-      property.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      property.address.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesState = !selectedState || property.state === selectedState;
-    
-    return matchesSearch && matchesState;
-  });
-  
-  // Get unique states from properties
-  const uniqueStates = Array.from(new Set(mockProperties.map(p => p.state)));
-  
+const PropertySelection = () => {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-lg font-semibold">Select Property</h2>
-        <p className="text-sm text-muted-foreground">
-          Browse available properties or select from our partnered estates
-        </p>
+      <div>
+        <h2 className="text-xl font-semibold">Select a Property</h2>
+        <p className="text-muted-foreground">Browse available properties or select from pre-approved options</p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2">
-          <Input
-            placeholder="Search by property name or address"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div>
-          <Select value={selectedState} onValueChange={setSelectedState}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filter by state" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All States</SelectItem>
-              {uniqueStates.map(state => (
-                <SelectItem key={state} value={state}>{state}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      
-      <div className="space-y-4">
-        <RadioGroup value={selectedProperty} onValueChange={setSelectedProperty}>
-          {filteredProperties.map(property => (
-            <Card 
-              key={property.id}
-              className={`border ${selectedProperty === property.id ? 'border-primary' : 'border-border'}`}
-            >
-              <CardContent className="p-4 flex items-center gap-4">
-                <RadioGroupItem value={property.id} id={property.id} />
-                <Label htmlFor={property.id} className="flex-1 cursor-pointer">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <div className="md:col-span-2">
-                      <h3 className="font-medium">{property.name}</h3>
-                      <p className="text-sm text-muted-foreground">{property.address}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">₦{property.value.toLocaleString()}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {property.type} • {property.area}m<sup>2</sup>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    <p className="text-xs text-muted-foreground">
-                      Features: {property.features.join(', ')}
-                    </p>
-                  </div>
-                </Label>
-              </CardContent>
-            </Card>
-          ))}
-        </RadioGroup>
-        
-        {filteredProperties.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            No properties found matching your criteria.
+      <Card>
+        <CardHeader>
+          <CardTitle>Property Preferences</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="location">Preferred Location</Label>
+              <Select>
+                <SelectTrigger id="location">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="abuja">Abuja</SelectItem>
+                    <SelectItem value="lagos">Lagos</SelectItem>
+                    <SelectItem value="kano">Kano</SelectItem>
+                    <SelectItem value="port-harcourt">Port Harcourt</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="propertyType">Property Type</Label>
+              <Select>
+                <SelectTrigger id="propertyType">
+                  <SelectValue placeholder="Select property type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="apartment">Apartment</SelectItem>
+                    <SelectItem value="duplex">Duplex</SelectItem>
+                    <SelectItem value="bungalow">Bungalow</SelectItem>
+                    <SelectItem value="terrace">Terrace</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="bedrooms">Number of Bedrooms</Label>
+              <Select>
+                <SelectTrigger id="bedrooms">
+                  <SelectValue placeholder="Select number of bedrooms" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="1">1 Bedroom</SelectItem>
+                    <SelectItem value="2">2 Bedrooms</SelectItem>
+                    <SelectItem value="3">3 Bedrooms</SelectItem>
+                    <SelectItem value="4">4 Bedrooms</SelectItem>
+                    <SelectItem value="5+">5+ Bedrooms</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="budget">Budget Range</Label>
+              <Select>
+                <SelectTrigger id="budget">
+                  <SelectValue placeholder="Select budget range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="5-10">₦5M - ₦10M</SelectItem>
+                    <SelectItem value="10-15">₦10M - ₦15M</SelectItem>
+                    <SelectItem value="15-20">₦15M - ₦20M</SelectItem>
+                    <SelectItem value="20-30">₦20M - ₦30M</SelectItem>
+                    <SelectItem value="30+">Above ₦30M</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        )}
-      </div>
+          
+          <div className="flex justify-end space-x-2">
+            <Button variant="secondary">Browse Properties</Button>
+            <Button>Continue</Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
+
+export default PropertySelection;
