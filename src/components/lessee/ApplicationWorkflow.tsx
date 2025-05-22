@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Steps, Step } from '@/components/lessee/Steps';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { PropertySelection } from '@/components/lessee/application/PropertySelection';
+import PropertySelection from '@/components/lessee/application/PropertySelection';
 import { DocumentUpload } from '@/components/lessee/application/DocumentUpload';
 import { EmployerDetails } from '@/components/lessee/application/EmployerDetails';
 import { ApplicationReview } from '@/components/lessee/application/ApplicationReview';

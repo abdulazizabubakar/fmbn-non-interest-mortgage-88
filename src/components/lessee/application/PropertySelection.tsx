@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
+// Changed to export default instead of named export
 const PropertySelection = () => {
   return (
     <div className="space-y-6">
@@ -102,4 +103,5 @@ const PropertySelection = () => {
   );
 };
 
+// Export as default
 export default PropertySelection;
