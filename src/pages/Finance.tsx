@@ -11,6 +11,7 @@ import FinanceDashboard from '@/components/finance/FinanceDashboard';
 import RiskAssessmentModule from '@/components/finance/RiskAssessmentModule';
 import ShariahComplianceModule from '@/components/finance/ShariahComplianceModule';
 import DelinquencyModule from '@/components/finance/DelinquencyModule';
+import FinanceOperationsDashboard from '@/components/finance/operations/FinanceOperationsDashboard';
 
 const Finance = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Finance = () => {
   // Extract the tab from the URL path
   const getTabFromPath = () => {
     const path = location.pathname;
+    if (path.includes('/finance/operations')) return 'operations';
     if (path.includes('/finance/disbursements')) return 'disbursements';
     if (path.includes('/finance/repayments')) return 'repayments';
     if (path.includes('/finance/subsidies')) return 'subsidies';
@@ -53,8 +55,9 @@ const Finance = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-4">
-          <TabsList className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 h-auto">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-9 h-auto">
             <TabsTrigger value="dashboard" className="py-2">Dashboard</TabsTrigger>
+            <TabsTrigger value="operations" className="py-2">Operations</TabsTrigger>
             <TabsTrigger value="disbursements" className="py-2">Disbursements</TabsTrigger>
             <TabsTrigger value="repayments" className="py-2">Repayments</TabsTrigger>
             <TabsTrigger value="subsidies" className="py-2">Subsidies</TabsTrigger>
@@ -66,6 +69,10 @@ const Finance = () => {
           
           <TabsContent value="dashboard" className="space-y-4">
             <FinanceDashboard />
+          </TabsContent>
+          
+          <TabsContent value="operations" className="space-y-4">
+            <FinanceOperationsDashboard />
           </TabsContent>
           
           <TabsContent value="disbursements" className="space-y-4">
