@@ -12,22 +12,25 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-interface Role {
-  id: string;
-  name: string;
-  description: string;
-  users: number;
-  isSystemRole: boolean;
-}
+import { Role } from '@/types/user';
+import { useAuth } from '@/hooks/useAuth';
 
 // Sample roles data
 const mockRoles: Role[] = [
-  { id: '1', name: 'Super Admin', description: 'Has complete access to all system features', users: 3, isSystemRole: true },
-  { id: '2', name: 'Admin', description: 'Can manage users and most system settings', users: 5, isSystemRole: true },
-  { id: '3', name: 'Manager', description: 'Can manage mortgages and applications', users: 12, isSystemRole: false },
-  { id: '4', name: 'Finance Officer', description: 'Can manage financial transactions and records', users: 8, isSystemRole: false },
-  { id: '5', name: 'Customer Service', description: 'Can view customer information and assist with inquiries', users: 15, isSystemRole: false },
+  { id: '1', name: 'Super Admin', description: 'Has complete access to all system features with no restrictions', isSystemRole: true, permissions: [] },
+  { id: '2', name: 'Admin', description: 'Can manage users and most system settings', isSystemRole: true, permissions: [] },
+  { id: '3', name: 'Application Officer', description: 'Processes and manages mortgage applications', isSystemRole: false, permissions: [] },
+  { id: '4', name: 'Legal Officer', description: 'Reviews and approves legal aspects of mortgage applications', isSystemRole: false, permissions: [] },
+  { id: '5', name: 'Finance Officer', description: 'Manages financial transactions and records', isSystemRole: false, permissions: [] },
+  { id: '6', name: 'Treasury Officer', description: 'Oversees disbursements and collections', isSystemRole: false, permissions: [] },
+  { id: '7', name: 'Property Officer', description: 'Manages property listings and valuations', isSystemRole: false, permissions: [] },
+  { id: '8', name: 'Developer', description: 'External property developer with limited system access', isSystemRole: false, permissions: [] },
+  { id: '9', name: 'Employer', description: 'Organizations that enroll employees in the NHF scheme', isSystemRole: false, permissions: [] },
+  { id: '10', name: 'Lessee', description: 'NHF contributor applying for or managing a mortgage', isSystemRole: false, permissions: [] },
+  { id: '11', name: 'Auditor', description: 'Reviews transactions for compliance and accuracy', isSystemRole: false, permissions: [] },
+  { id: '12', name: 'Support Staff', description: 'Handles customer inquiries and basic system operations', isSystemRole: false, permissions: [] },
+  { id: '13', name: 'Zonal Admin', description: 'Manages operations for a specific geographic zone', isSystemRole: false, permissions: [] },
+  { id: '14', name: 'Shariah Reviewer', description: 'Ensures compliance with Islamic finance principles', isSystemRole: false, permissions: [] },
 ];
 
 const formSchema = z.object({
@@ -38,6 +41,11 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const RoleManagement: React.FC = () => {
+  const { hasPermission } = useAuth();
+  const canManageRoles = hasPermission('roles', 'update');
+  const canCreateRoles = hasPermission('roles', 'create');
+  const canDeleteRoles = hasPermission('roles', 'delete');
+  
   const [roles, setRoles] = useState<Role[]>(mockRoles);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -104,8 +112,8 @@ const RoleManagement: React.FC = () => {
         id: (roles.length + 1).toString(),
         name: values.name,
         description: values.description,
-        users: 0,
-        isSystemRole: false
+        isSystemRole: false,
+        permissions: []
       };
       setRoles([...roles, newRole]);
       toast.success("New role added successfully");
@@ -124,9 +132,11 @@ const RoleManagement: React.FC = () => {
             className="w-full"
           />
         </div>
-        <Button onClick={openAddDialog}>
-          <Plus className="mr-2 h-4 w-4" /> Add Role
-        </Button>
+        {canCreateRoles && (
+          <Button onClick={openAddDialog}>
+            <Plus className="mr-2 h-4 w-4" /> Add Role
+          </Button>
+        )}
       </div>
 
       <div className="rounded-md border overflow-hidden">
@@ -149,8 +159,8 @@ const RoleManagement: React.FC = () => {
                     {role.name}
                   </div>
                 </TableCell>
-                <TableCell>{role.description}</TableCell>
-                <TableCell>{role.users}</TableCell>
+                <TableCell className="max-w-sm truncate">{role.description}</TableCell>
+                <TableCell>{role.users || 0}</TableCell>
                 <TableCell>
                   <Badge variant={role.isSystemRole ? "secondary" : "default"}>
                     {role.isSystemRole ? "System" : "Custom"}
@@ -158,12 +168,16 @@ const RoleManagement: React.FC = () => {
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button variant="outline" size="sm" onClick={() => openEditDialog(role)}>
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleDeleteRole(role.id)}>
-                      <Trash className="h-4 w-4" />
-                    </Button>
+                    {canManageRoles && (
+                      <Button variant="outline" size="sm" onClick={() => openEditDialog(role)}>
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {canDeleteRoles && (
+                      <Button variant="outline" size="sm" onClick={() => handleDeleteRole(role.id)}>
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
