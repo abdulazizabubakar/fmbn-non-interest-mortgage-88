@@ -40,6 +40,14 @@ function App() {
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/finance" element={<Finance />} />
+          <Route path="/finance/operations" element={<Finance />} />
+          <Route path="/finance/disbursements" element={<Finance />} />
+          <Route path="/finance/repayments" element={<Finance />} />
+          <Route path="/finance/subsidies" element={<Finance />} />
+          <Route path="/finance/exceptions" element={<Finance />} />
+          <Route path="/finance/risk" element={<Finance />} />
+          <Route path="/finance/compliance" element={<Finance />} />
+          <Route path="/finance/delinquency" element={<Finance />} />
           <Route path="/messages" element={<Messages />} />
           
           {/* Mortgage Application Routes */}

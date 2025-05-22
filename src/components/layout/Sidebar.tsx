@@ -44,6 +44,7 @@ const Sidebar: React.FC = () => {
       label: 'Finance Operations',
       items: [
         { path: '/finance', label: 'Finance Dashboard', icon: <BarChart3 className="h-5 w-5" /> },
+        { path: '/finance/operations', label: 'Operations', icon: <CreditCard className="h-5 w-5" /> },
         { path: '/finance/disbursements', label: 'Disbursements', icon: <CreditCard className="h-5 w-5" /> },
         { path: '/finance/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
         { path: '/finance/subsidies', label: 'Subsidies', icon: <Receipt className="h-5 w-5" /> },
