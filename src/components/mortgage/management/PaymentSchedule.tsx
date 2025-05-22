@@ -1,311 +1,275 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, Download, Search, Filter, Wallet } from 'lucide-react';
-import { 
-  MortgageAccount, 
-  ScheduleItem,
-  PaymentStatus 
-} from '@/types/mortgage-account';
-import { generateMockPaymentSchedule } from '@/data/mockMortgageAccounts';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
+import { Search, Download, Calendar } from 'lucide-react';
+import { DateRange } from 'react-day-picker';
+import { DatePickerWithRange } from '@/components/ui/date-range-picker';
+import { ScheduleItem, PaymentStatus } from '@/types/mortgage-account';
 
 interface PaymentScheduleProps {
-  account: MortgageAccount;
+  accountId: string;
 }
 
-const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ account }) => {
-  const [paymentSchedule, setPaymentSchedule] = useState<ScheduleItem[]>([]);
+// Mock data for development
+const mockScheduleItems: ScheduleItem[] = [
+  {
+    id: 'schd-001',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-02-10',
+    amount: 250000,
+    principal: 100000,
+    rent: 150000,
+    cumulativePrincipal: 100000,
+    remainingBalance: 49900000,
+    status: 'paid',
+    paymentDate: '2024-02-09',
+    paymentAmount: 250000,
+    paymentMethod: 'bank_transfer',
+    reference: 'TRF-123456',
+  },
+  {
+    id: 'schd-002',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-03-10',
+    amount: 250000,
+    principal: 101500,
+    rent: 148500,
+    cumulativePrincipal: 201500,
+    remainingBalance: 49798500,
+    status: 'paid',
+    paymentDate: '2024-03-10',
+    paymentAmount: 250000,
+    paymentMethod: 'direct_debit',
+    reference: 'DD-123457',
+  },
+  {
+    id: 'schd-003',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-04-10',
+    amount: 250000,
+    principal: 103000,
+    rent: 147000,
+    cumulativePrincipal: 304500,
+    remainingBalance: 49695500,
+    status: 'paid',
+    paymentDate: '2024-04-08',
+    paymentAmount: 250000,
+    paymentMethod: 'online',
+    reference: 'ONL-123458',
+  },
+  {
+    id: 'schd-004',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-05-10',
+    amount: 250000,
+    principal: 104500,
+    rent: 145500,
+    cumulativePrincipal: 409000,
+    remainingBalance: 49591000,
+    status: 'paid',
+    paymentDate: '2024-05-10',
+    paymentAmount: 250000,
+    paymentMethod: 'direct_debit',
+    reference: 'DD-123459',
+  },
+  {
+    id: 'schd-005',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-06-10',
+    amount: 250000,
+    principal: 106000,
+    rent: 144000,
+    cumulativePrincipal: 515000,
+    remainingBalance: 49485000,
+    status: 'upcoming',
+  },
+  {
+    id: 'schd-006',
+    mortgageId: 'mort-1234',
+    dueDate: '2024-07-10',
+    amount: 250000,
+    principal: 107500,
+    rent: 142500,
+    cumulativePrincipal: 622500,
+    remainingBalance: 49377500,
+    status: 'upcoming',
+  }
+];
+
+const getStatusBadgeClass = (status: PaymentStatus) => {
+  switch (status) {
+    case 'paid':
+      return 'bg-green-100 text-green-800 border-green-200';
+    case 'partially_paid':
+      return 'bg-amber-100 text-amber-800 border-amber-200';
+    case 'overdue':
+      return 'bg-red-100 text-red-800 border-red-200';
+    case 'upcoming':
+      return 'bg-blue-100 text-blue-800 border-blue-200';
+    case 'waived':
+      return 'bg-purple-100 text-purple-800 border-purple-200';
+    default:
+      return 'bg-gray-100 text-gray-800 border-gray-200';
+  }
+};
+
+const PaymentSchedule: React.FC<PaymentScheduleProps> = ({ accountId }) => {
+  const [loading, setLoading] = useState(true);
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<ScheduleItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [selectedPayment, setSelectedPayment] = useState<ScheduleItem | null>(null);
-  const [showPaymentDialog, setShowPaymentDialog] = useState(false);
-  const [paymentAmount, setPaymentAmount] = useState('');
-  
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+
   useEffect(() => {
-    // In a real app, this would be an API call
-    // For now, we'll generate mock data
-    const startDate = account.activationDate 
-      ? new Date(account.activationDate) 
-      : new Date(account.creationDate);
+    // In a real app, fetch the schedule items from an API based on accountId
+    setLoading(true);
+    setTimeout(() => {
+      setScheduleItems(mockScheduleItems);
+      setFilteredItems(mockScheduleItems);
+      setLoading(false);
+    }, 500);
+  }, [accountId]);
+
+  useEffect(() => {
+    let filtered = [...scheduleItems];
     
-    const isIslamic = account.financingType === 'ijara' || account.financingType === 'musharaka';
-    
-    const schedule = generateMockPaymentSchedule(
-      account.id,
-      account.principalAmount,
-      account.monthlyPayment,
-      account.tenor,
-      startDate,
-      isIslamic
-    );
-    
-    setPaymentSchedule(schedule);
-  }, [account]);
-  
-  // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-  
-  // Format date
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-NG', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-  
-  // Status badge
-  const getStatusBadge = (status: PaymentStatus) => {
-    switch(status) {
-      case 'paid':
-        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Paid</Badge>;
-      case 'partially_paid':
-        return <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-300">Partially Paid</Badge>;
-      case 'overdue':
-        return <Badge variant="destructive">Overdue</Badge>;
-      case 'upcoming':
-        return <Badge variant="outline">Upcoming</Badge>;
-      case 'waived':
-        return <Badge variant="secondary">Waived</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
+    // Filter by status
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(item => item.status === statusFilter);
     }
+    
+    // Filter by date range
+    if (dateRange && dateRange.from) {
+      filtered = filtered.filter(item => {
+        const dueDate = new Date(item.dueDate);
+        if (dateRange.to) {
+          return dueDate >= dateRange.from && dueDate <= dateRange.to;
+        }
+        return dueDate >= dateRange.from;
+      });
+    }
+    
+    // Filter by search term
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(item => 
+        item.id.toLowerCase().includes(term) || 
+        (item.reference && item.reference.toLowerCase().includes(term))
+      );
+    }
+    
+    setFilteredItems(filtered);
+  }, [scheduleItems, statusFilter, dateRange, searchTerm]);
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount);
   };
-  
-  // Filter payment schedule
-  const filteredSchedule = paymentSchedule.filter((item) => {
-    const matchesSearch = 
-      item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      formatDate(item.dueDate).toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
-    
-    return matchesSearch && matchesStatus;
-  });
-  
-  // Handle record payment button
-  const handleRecordPayment = (item: ScheduleItem) => {
-    setSelectedPayment(item);
-    setPaymentAmount(item.amount.toString());
-    setShowPaymentDialog(true);
-  };
-  
-  // Handle submit payment
-  const handleSubmitPayment = () => {
-    // In a real app, this would make an API call
-    if (!selectedPayment) return;
-    
-    toast.success(`Payment of ${formatCurrency(Number(paymentAmount))} recorded for ${formatDate(selectedPayment.dueDate)}`);
-    setShowPaymentDialog(false);
-    
-    // Update the payment schedule item (in a real app, this would come from the API response)
-    const updatedSchedule = paymentSchedule.map(item => {
-      if (item.id === selectedPayment.id) {
-        const paymentAmountNumber = Number(paymentAmount);
-        return {
-          ...item,
-          status: paymentAmountNumber >= item.amount ? 'paid' : 'partially_paid',
-          paymentDate: new Date().toISOString(),
-          paymentAmount: paymentAmountNumber,
-          paymentMethod: 'bank_transfer',
-          reference: `REF-${Math.floor(Math.random() * 1000000)}`
-        };
-      }
-      return item;
-    });
-    
-    setPaymentSchedule(updatedSchedule);
-  };
-  
+
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-lg">Payment Schedule</CardTitle>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              <Calendar className="h-4 w-4 mr-1" />
-              Repayment Calendar
-            </Button>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-1" />
-              Export Schedule
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search by ID or date..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="partially_paid">Partially Paid</SelectItem>
-                  <SelectItem value="overdue">Overdue</SelectItem>
-                  <SelectItem value="upcoming">Upcoming</SelectItem>
-                  <SelectItem value="waived">Waived</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Payment Schedule</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="relative flex-grow">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search by ID or reference..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
           </div>
           
-          <div className="border rounded-md overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b bg-muted/50">
-                    <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">No.</th>
-                    <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">Due Date</th>
-                    <th className="h-10 px-4 text-right align-middle font-medium text-muted-foreground">Principal</th>
-                    <th className="h-10 px-4 text-right align-middle font-medium text-muted-foreground">
-                      {account.financingType === 'ijara' || account.financingType === 'musharaka' ? 'Rent' : 'Profit'}
-                    </th>
-                    <th className="h-10 px-4 text-right align-middle font-medium text-muted-foreground">Total</th>
-                    <th className="h-10 px-4 text-center align-middle font-medium text-muted-foreground">Status</th>
-                    <th className="h-10 px-4 text-center align-middle font-medium text-muted-foreground">Paid Date</th>
-                    <th className="h-10 px-4 text-right align-middle font-medium text-muted-foreground">Paid Amount</th>
-                    <th className="h-10 px-4 text-right align-middle font-medium text-muted-foreground">Balance</th>
-                    <th className="h-10 px-4 text-center align-middle font-medium text-muted-foreground">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredSchedule.length === 0 ? (
-                    <tr>
-                      <td colSpan={10} className="px-4 py-10 text-center text-muted-foreground">
-                        No payment schedule items match your filters.
-                      </td>
-                    </tr>
-                  ) : (
-                    filteredSchedule.map((item, index) => (
-                      <tr key={item.id} className="border-b hover:bg-muted/50">
-                        <td className="px-4 py-3 align-middle">{index + 1}</td>
-                        <td className="px-4 py-3 align-middle">{formatDate(item.dueDate)}</td>
-                        <td className="px-4 py-3 align-middle text-right">{formatCurrency(item.principal)}</td>
-                        <td className="px-4 py-3 align-middle text-right">{formatCurrency(item.rent || item.profit || 0)}</td>
-                        <td className="px-4 py-3 align-middle text-right font-medium">{formatCurrency(item.amount)}</td>
-                        <td className="px-4 py-3 align-middle text-center">{getStatusBadge(item.status)}</td>
-                        <td className="px-4 py-3 align-middle text-center">
-                          {item.paymentDate ? formatDate(item.paymentDate) : '-'}
-                        </td>
-                        <td className="px-4 py-3 align-middle text-right">
-                          {item.paymentAmount ? formatCurrency(item.paymentAmount) : '-'}
-                        </td>
-                        <td className="px-4 py-3 align-middle text-right">
-                          {formatCurrency(item.remainingBalance)}
-                        </td>
-                        <td className="px-4 py-3 align-middle text-center">
-                          {(item.status === 'upcoming' || item.status === 'overdue' || item.status === 'partially_paid') && (
-                            <Button variant="ghost" size="sm" onClick={() => handleRecordPayment(item)}>
-                              <Wallet className="h-4 w-4 mr-1" />
-                              Record Payment
-                            </Button>
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          
-          <div className="mt-2 text-sm text-muted-foreground">
-            Showing {filteredSchedule.length} of {paymentSchedule.length} payments
-          </div>
-        </CardContent>
-      </Card>
-      
-      <Dialog open={showPaymentDialog} onOpenChange={setShowPaymentDialog}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>Record Payment</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="dueDate">Due Date</Label>
-              <Input id="dueDate" value={selectedPayment ? formatDate(selectedPayment.dueDate) : ''} disabled />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="dueAmount">Due Amount</Label>
-              <Input id="dueAmount" value={selectedPayment ? formatCurrency(selectedPayment.amount) : ''} disabled />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="paymentAmount">Payment Amount</Label>
-              <Input 
-                id="paymentAmount" 
-                value={paymentAmount} 
-                onChange={(e) => setPaymentAmount(e.target.value)}
-                type="number"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="paymentDate">Payment Date</Label>
-              <Input 
-                id="paymentDate" 
-                type="date" 
-                defaultValue={new Date().toISOString().split('T')[0]} 
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="paymentMethod">Payment Method</Label>
-              <Select defaultValue="bank_transfer">
-                <SelectTrigger id="paymentMethod">
-                  <SelectValue placeholder="Select payment method" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                  <SelectItem value="direct_debit">Direct Debit</SelectItem>
-                  <SelectItem value="cash">Cash</SelectItem>
-                  <SelectItem value="online">Online Payment</SelectItem>
-                  <SelectItem value="mobile_wallet">Mobile Wallet</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="reference">Reference Number</Label>
-              <Input id="reference" placeholder="Enter payment reference" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="notes">Notes</Label>
-              <Input id="notes" placeholder="Additional notes (optional)" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setShowPaymentDialog(false)}>
-              Cancel
+          <div className="flex flex-wrap gap-2">
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="paid">Paid</SelectItem>
+                <SelectItem value="partially_paid">Partially Paid</SelectItem>
+                <SelectItem value="overdue">Overdue</SelectItem>
+                <SelectItem value="upcoming">Upcoming</SelectItem>
+                <SelectItem value="waived">Waived</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+            
+            <Button variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              Export
             </Button>
-            <Button type="button" onClick={handleSubmitPayment}>
-              Record Payment
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </div>
+        </div>
+        
+        {loading ? (
+          <div className="py-16 text-center">
+            <p>Loading payment schedule...</p>
+          </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="py-16 text-center">
+            <p>No schedule items found matching your filters</p>
+          </div>
+        ) : (
+          <div className="border rounded-md">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>#</TableHead>
+                  <TableHead>Due Date</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead className="hidden md:table-cell">Principal</TableHead>
+                  <TableHead className="hidden md:table-cell">Rent</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Payment Date</TableHead>
+                  <TableHead className="hidden md:table-cell">Reference</TableHead>
+                  <TableHead className="hidden lg:table-cell">Balance</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredItems.map((item, index) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-medium">{index + 1}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                        {new Date(item.dueDate).toLocaleDateString()}
+                      </div>
+                    </TableCell>
+                    <TableCell>{formatCurrency(item.amount)}</TableCell>
+                    <TableCell className="hidden md:table-cell">{formatCurrency(item.principal)}</TableCell>
+                    <TableCell className="hidden md:table-cell">{formatCurrency(item.rent)}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadgeClass(item.status)}`}>
+                        {item.status.replace('_', ' ')}
+                      </span>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {item.paymentDate ? new Date(item.paymentDate).toLocaleDateString() : '-'}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {item.reference || '-'}
+                    </TableCell>
+                    <TableCell className="hidden lg:table-cell">
+                      {formatCurrency(item.remainingBalance)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

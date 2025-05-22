@@ -1,278 +1,372 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
-import { mockMortgages } from '@/data/mockData';
-import { Mortgage } from '@/types';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Search, Filter, Plus, ChevronRight, Settings, FileText } from 'lucide-react';
-import { format } from 'date-fns';
+import { Plus, Download, Search, Filter, Calendar as CalendarIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+// Mock data for the portfolio summary
+const portfolioData = {
+  totalMortgages: 964,
+  activeMortgages: 782,
+  completedMortgages: 158,
+  defaultingMortgages: 24,
+  totalValue: "₦45.2B",
+  activeValue: "₦36.8B",
+  averageTenor: "15 years",
+  averageFinancing: "₦47.1M",
+};
+
+// Mock data for mortgage lists
+const mortgagesByStatus = [
+  {
+    id: "mort-1",
+    customerName: "Ibrahim Mohammed",
+    propertyAddress: "15 Ahmadu Bello Way, Lagos",
+    amount: "₦52,500,000",
+    startDate: "Jan 15, 2024",
+    endDate: "Jan 15, 2039",
+    status: "active",
+  },
+  {
+    id: "mort-2",
+    customerName: "Fatima Okonkwo",
+    propertyAddress: "27 Broad Street, Lagos",
+    amount: "₦67,200,000",
+    startDate: "Feb 3, 2024",
+    endDate: "Feb 3, 2044",
+    status: "active",
+  },
+  {
+    id: "mort-3",
+    customerName: "Chijioke Adebayo",
+    propertyAddress: "8 Independence Ave, Abuja",
+    amount: "₦42,800,000",
+    startDate: "Dec 10, 2023",
+    endDate: "Dec 10, 2038",
+    status: "active",
+  },
+  {
+    id: "mort-4",
+    customerName: "Amina Danjuma",
+    propertyAddress: "5 Stadium Road, Port Harcourt",
+    amount: "₦38,500,000",
+    startDate: "Mar 22, 2024",
+    endDate: "Mar 22, 2039",
+    status: "active",
+  },
+];
+
+const mortgagesByProduct = [
+  {
+    id: "mort-5",
+    customerName: "Yusuf Ibrahim",
+    propertyAddress: "12 Marina, Lagos",
+    amount: "₦75,000,000",
+    startDate: "Mar 5, 2024",
+    endDate: "Mar 5, 2044",
+    product: "Ijarah (Islamic Lease)",
+  },
+  {
+    id: "mort-6",
+    customerName: "Ngozi Okafor",
+    propertyAddress: "24 Garki II, Abuja",
+    amount: "₦48,600,000",
+    startDate: "Feb 18, 2024",
+    endDate: "Feb 18, 2039",
+    product: "Diminishing Musharakah",
+  },
+  {
+    id: "mort-7",
+    customerName: "Mohammed Abubakar",
+    propertyAddress: "7 Murtala Mohammed Way, Kano",
+    amount: "₦36,200,000",
+    startDate: "Jan 30, 2024",
+    endDate: "Jan 30, 2039",
+    product: "Fixed Rate Conventional",
+  },
+  {
+    id: "mort-8",
+    customerName: "Elizabeth Chukwu",
+    propertyAddress: "18 Ogunlana Drive, Lagos",
+    amount: "₦62,400,000",
+    startDate: "Apr 8, 2024",
+    endDate: "Apr 8, 2044",
+    product: "Adjustable Rate Conventional",
+  },
+];
 
 const Mortgages = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
-
-  const getStatusBadgeVariant = (status: Mortgage['status']) => {
-    switch (status) {
-      case 'approved':
-        return 'outline';
-      case 'active':
-        return 'default';
-      case 'draft':
-        return 'secondary';
-      case 'pending-review':
-        return 'secondary';
-      case 'under-assessment':
-        return 'outline';
-      case 'completed':
-        return 'default';
-      case 'rejected':
-        return 'destructive';
-      case 'cancelled':
-        return 'destructive';
-      default:
-        return 'outline';
-    }
+  const [activeTab, setActiveTab] = useState("overview");
+  const navigate = useNavigate();
+  
+  const handleCreateMortgage = () => {
+    navigate('/mortgage-applications');
   };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
-      maximumFractionDigits: 0,
-    }).format(amount);
+  
+  const handleManageMortgages = () => {
+    navigate('/mortgage-management');
   };
-
-  const filteredMortgages = mockMortgages.filter((mortgage) => {
-    const matchesSearch = 
-      mortgage.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      mortgage.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      mortgage.propertyAddress.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = statusFilter === 'all' || mortgage.status === statusFilter;
-    const matchesType = typeFilter === 'all' || mortgage.financingType === typeFilter;
-    
-    return matchesSearch && matchesStatus && matchesType;
-  });
-
+  
   return (
     <PageContainer>
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="nimms-heading">Mortgages</h1>
-            <p className="text-muted-foreground mt-1">
-              Manage all non-interest mortgage applications and active financings
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight">Mortgages</h1>
+            <p className="text-muted-foreground">Manage your mortgage portfolio and applications</p>
           </div>
-          <Button className="sm:self-start">
-            <Plus className="h-4 w-4 mr-2" />
-            New Mortgage
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={handleManageMortgages}>
+              Manage Mortgages
+            </Button>
+            <Button onClick={handleCreateMortgage}>
+              <Plus className="mr-2 h-4 w-4" />
+              New Application
+            </Button>
+          </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="col-span-1 md:col-span-3">
-            <CardContent className="p-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-50 rounded-lg">
-                  <Settings className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Mortgage Management Module</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Advanced tools for mortgage servicing, payment tracking, and ownership transfers
-                  </p>
-                </div>
-              </div>
-              <Link to="/mortgage-management">
-                <Button>
-                  Access Module <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="relative col-span-2">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by ID, customer name, or property address..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9"
-            />
-          </div>
-          <div className="flex space-x-2">
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="pending-review">Pending Review</SelectItem>
-                <SelectItem value="under-assessment">Under Assessment</SelectItem>
-                <SelectItem value="approved">Approved</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="rejected">Rejected</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="murabaha">Murabaha</SelectItem>
-                <SelectItem value="ijara">Ijara</SelectItem>
-                <SelectItem value="musharaka">Musharaka</SelectItem>
-                <SelectItem value="istisna">Istisna</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {filteredMortgages.length === 0 ? (
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-                <Filter className="h-12 w-12 text-muted-foreground/50 mb-4" />
-                <h3 className="text-lg font-medium">No mortgages found</h3>
-                <p className="text-muted-foreground mt-1">
-                  Try adjusting your search or filters to find what you're looking for.
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredMortgages.map((mortgage) => (
-              <Card key={mortgage.id} className="overflow-hidden hover:shadow transition-shadow">
-                <CardContent className="p-0">
-                  <div className="p-4 border-l-4 border-nimms-primary flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between md:justify-start md:space-x-4">
-                        <h3 className="font-semibold">{mortgage.id}</h3>
-                        <Badge variant={getStatusBadgeVariant(mortgage.status)} className="capitalize">
-                          {mortgage.status.replace('-', ' ')}
-                        </Badge>
-                      </div>
-                      <p className="text-sm mt-1">{mortgage.customerName}</p>
-                      <p className="text-sm text-muted-foreground mt-0.5">{mortgage.propertyAddress}</p>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs">
-                        <div>
-                          <span className="text-muted-foreground">Type:</span>{' '}
-                          <span className="font-medium capitalize">{mortgage.financingType}</span>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Amount:</span>{' '}
-                          <span className="font-medium">{formatCurrency(mortgage.amount)}</span>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Term:</span>{' '}
-                          <span className="font-medium">{mortgage.tenor / 12} years</span>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Created:</span>{' '}
-                          <span className="font-medium">{format(new Date(mortgage.createdAt), 'MMM dd, yyyy')}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-shrink-0 self-start md:self-center">
-                      <Button variant="ghost" size="sm">
-                        <span>View Details</span>
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </Button>
-                    </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="overview">Portfolio Overview</TabsTrigger>
+            <TabsTrigger value="by-status">By Status</TabsTrigger>
+            <TabsTrigger value="by-product">By Product</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="overview" className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Mortgages</CardTitle>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="h-4 w-4 text-muted-foreground"
+                  >
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{portfolioData.totalMortgages}</div>
+                  <p className="text-xs text-muted-foreground">Portfolio Value: {portfolioData.totalValue}</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Active Mortgages</CardTitle>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="h-4 w-4 text-muted-foreground"
+                  >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{portfolioData.activeMortgages}</div>
+                  <p className="text-xs text-muted-foreground">Active Value: {portfolioData.activeValue}</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Completed Mortgages</CardTitle>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="h-4 w-4 text-muted-foreground"
+                  >
+                    <rect width="20" height="14" x="2" y="5" rx="2" />
+                    <path d="M2 10h20" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{portfolioData.completedMortgages}</div>
+                  <p className="text-xs text-muted-foreground">Avg. Tenor: {portfolioData.averageTenor}</p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">In Default</CardTitle>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="h-4 w-4 text-muted-foreground"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{portfolioData.defaultingMortgages}</div>
+                  <p className="text-xs text-muted-foreground">Avg. Financing: {portfolioData.averageFinancing}</p>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+              <Card className="col-span-4">
+                <CardHeader>
+                  <CardTitle>Monthly Disbursements</CardTitle>
+                </CardHeader>
+                <CardContent className="pl-2">
+                  <div className="h-[200px] flex items-center justify-center border-dashed border-2 rounded-md">
+                    <p className="text-muted-foreground">Mortgage Disbursement Chart (Coming Soon)</p>
                   </div>
                 </CardContent>
               </Card>
-            ))
-          )}
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="p-3 bg-green-50 rounded-lg">
-                <FileText className="h-6 w-6 text-green-600" />
-              </div>
-              <div>
-                <h3 className="font-medium">Mortgage Applications</h3>
-                <p className="text-sm text-muted-foreground">
-                  Process and approve new applications
-                </p>
-                <Link to="/mortgage-applications" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
-                  View Applications →
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+              <Card className="col-span-3">
+                <CardHeader>
+                  <CardTitle>Financing Type Distribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[200px] flex items-center justify-center border-dashed border-2 rounded-md">
+                    <p className="text-muted-foreground">Financing Type Chart (Coming Soon)</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
           
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="p-3 bg-purple-50 rounded-lg">
-                <Calendar className="h-6 w-6 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="font-medium">Payment Schedules</h3>
-                <p className="text-sm text-muted-foreground">
-                  View and manage repayment schedules
-                </p>
-                <Link to="/mortgage-management" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
-                  View Schedules →
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+          <TabsContent value="by-status">
+            <Card>
+              <CardHeader>
+                <CardTitle>Mortgages by Status</CardTitle>
+                <CardDescription>View and filter mortgages by their current status</CardDescription>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="relative w-64">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <input type="text" placeholder="Search mortgages..." className="pl-8 h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm">
+                      <Filter className="mr-2 h-4 w-4" />
+                      Filter
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      Date Range
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <Download className="mr-2 h-4 w-4" />
+                      Export
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-md border">
+                  <div className="grid grid-cols-[1fr_1.5fr_1fr_0.7fr_0.7fr_0.5fr] p-4 font-medium border-b">
+                    <div>Customer</div>
+                    <div>Property</div>
+                    <div>Amount</div>
+                    <div>Start Date</div>
+                    <div>End Date</div>
+                    <div>Status</div>
+                  </div>
+                  {mortgagesByStatus.map((mortgage) => (
+                    <div key={mortgage.id} className="grid grid-cols-[1fr_1.5fr_1fr_0.7fr_0.7fr_0.5fr] p-4 border-b items-center hover:bg-muted/50">
+                      <div>{mortgage.customerName}</div>
+                      <div className="text-muted-foreground">{mortgage.propertyAddress}</div>
+                      <div>{mortgage.amount}</div>
+                      <div>{mortgage.startDate}</div>
+                      <div>{mortgage.endDate}</div>
+                      <div>
+                        <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                          {mortgage.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
           
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="p-3 bg-amber-50 rounded-lg">
-                <AlertTriangle className="h-6 w-6 text-amber-600" />
-              </div>
-              <div>
-                <h3 className="font-medium">Default Management</h3>
-                <p className="text-sm text-muted-foreground">
-                  Handle overdue payments and defaults
-                </p>
-                <Link to="/mortgage-management" className="text-sm text-blue-600 hover:underline mt-1 inline-block">
-                  View Defaults →
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          <TabsContent value="by-product">
+            <Card>
+              <CardHeader>
+                <CardTitle>Mortgages by Product</CardTitle>
+                <CardDescription>View and filter mortgages by product type</CardDescription>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="relative w-64">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <input type="text" placeholder="Search mortgages..." className="pl-8 h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm">
+                      <Filter className="mr-2 h-4 w-4" />
+                      Filter
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      Date Range
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <Download className="mr-2 h-4 w-4" />
+                      Export
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-md border">
+                  <div className="grid grid-cols-[1fr_1.5fr_1fr_0.7fr_0.7fr_1fr] p-4 font-medium border-b">
+                    <div>Customer</div>
+                    <div>Property</div>
+                    <div>Amount</div>
+                    <div>Start Date</div>
+                    <div>End Date</div>
+                    <div>Product</div>
+                  </div>
+                  {mortgagesByProduct.map((mortgage) => (
+                    <div key={mortgage.id} className="grid grid-cols-[1fr_1.5fr_1fr_0.7fr_0.7fr_1fr] p-4 border-b items-center hover:bg-muted/50">
+                      <div>{mortgage.customerName}</div>
+                      <div className="text-muted-foreground">{mortgage.propertyAddress}</div>
+                      <div>{mortgage.amount}</div>
+                      <div>{mortgage.startDate}</div>
+                      <div>{mortgage.endDate}</div>
+                      <div>
+                        <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+                          {mortgage.product}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </PageContainer>
   );
 };
-
-// Import this since it's not included in our limited icon set
-const AlertTriangle = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-    <path d="M12 9v4" />
-    <path d="M12 17h.01" />
-  </svg>
-);
 
 export default Mortgages;
