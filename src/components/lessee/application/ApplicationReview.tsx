@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -87,7 +86,7 @@ export const ApplicationReview = () => {
       
       {/* Document Status */}
       {incompleteDocuments.length > 0 && (
-        <Alert variant="warning">
+        <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Missing Documents</AlertTitle>
           <AlertDescription>

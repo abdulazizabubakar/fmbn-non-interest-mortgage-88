@@ -46,7 +46,7 @@ const ApplicationWorkflow = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Application Status: {applicationStatus.replace('-', ' ').toUpperCase()}</CardTitle>
+          <CardTitle>Application Status: {applicationStatus.toUpperCase()}</CardTitle>
           <CardDescription>
             Your application was submitted on May 15, 2025
           </CardDescription>

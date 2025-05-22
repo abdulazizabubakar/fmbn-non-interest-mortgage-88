@@ -80,7 +80,7 @@ const PaymentManagement = () => {
       case 'upcoming':
         return <Badge variant="outline">Upcoming</Badge>;
       case 'paid':
-        return <Badge variant="success">Paid</Badge>;
+        return <Badge variant="secondary">Paid</Badge>;
       case 'overdue':
         return <Badge variant="destructive">Overdue</Badge>;
       default:

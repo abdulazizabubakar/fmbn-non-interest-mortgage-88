@@ -94,7 +94,7 @@ export const DocumentUpload = () => {
                           ...d, 
                           status: success ? 'completed' : 'error',
                           errorMessage: success ? undefined : 'File validation failed'
-                        };
+                        } as Document; // Add type assertion here
                       }
                       return d;
                     });
@@ -166,7 +166,11 @@ export const DocumentUpload = () => {
                         const input = document.createElement('input');
                         input.type = 'file';
                         input.accept = '.pdf,.png,.jpg,.jpeg';
-                        input.onchange = (e) => handleFileChange(e as React.ChangeEvent<HTMLInputElement>, doc.type);
+                        input.onchange = (e) => {
+                          // Cast the event to the correct type
+                          const inputEvent = e as React.ChangeEvent<HTMLInputElement>;
+                          handleFileChange(inputEvent, doc.type);
+                        };
                         input.click();
                       }}
                     >
