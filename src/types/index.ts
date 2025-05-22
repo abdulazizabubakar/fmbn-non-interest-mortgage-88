@@ -1,4 +1,3 @@
-
 // User types
 export type UserRole = 'admin' | 'manager' | 'officer' | 'customer';
 
@@ -72,17 +71,8 @@ export interface Customer {
   createdAt: string;
 }
 
-// Property types
-export interface Property {
-  id: string;
-  address: string;
-  type: string;
-  value: number;
-  buildYear: number;
-  area: number;
-  features: string[];
-  images: string[];
-}
+// Property types - now imported from property.ts
+export { Property } from './property';
 
 // Notification types
 export interface Notification {
