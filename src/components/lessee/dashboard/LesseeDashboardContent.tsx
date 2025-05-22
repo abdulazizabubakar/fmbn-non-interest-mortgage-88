@@ -3,15 +3,17 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, Calendar, Bell, AlertTriangle, Upload, FileText } from 'lucide-react';
+import { Clock, Calendar, Bell, AlertTriangle, Upload, FileText, ChevronRight, Home, FileCheck, CreditCard } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const LesseeDashboardContent = () => {
   // Mock data for the dashboard - in a real app, this would come from an API
+  const { user } = useAuth();
   const leaseStatus = "Active";
   const nextPaymentDate = "2025-06-15";
   const paymentAmount = 75000;
   const notificationCount = 3;
-  const documentsPending = 0;
+  const documentsPending = 2;
   const ownershipProgress = 35; // percentage
   
   const daysUntilNextPayment = () => {
@@ -24,12 +26,32 @@ const LesseeDashboardContent = () => {
   
   return (
     <div className="space-y-6">
+      {/* Welcome Banner */}
+      <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-none shadow-sm">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+              <h2 className="text-2xl font-bold">Welcome back, {user?.name}</h2>
+              <p className="text-muted-foreground mt-1">
+                Your non-interest lease journey with FMBN
+              </p>
+            </div>
+            <Button variant="default" className="mt-4 md:mt-0">
+              View Lease Details <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+      
       {/* Status Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Lease Status Card */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-md font-medium">Lease Status</CardTitle>
+            <CardTitle className="text-md font-medium flex items-center">
+              <Home className="h-4 w-4 mr-2 text-primary" />
+              Lease Status
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between items-center">
@@ -47,7 +69,10 @@ const LesseeDashboardContent = () => {
         {/* Payment Countdown */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-md font-medium">Next Payment</CardTitle>
+            <CardTitle className="text-md font-medium flex items-center">
+              <CreditCard className="h-4 w-4 mr-2 text-primary" />
+              Next Payment
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between items-center">
@@ -70,12 +95,14 @@ const LesseeDashboardContent = () => {
         {/* Notifications Card */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-md font-medium">Notifications</CardTitle>
+            <CardTitle className="text-md font-medium flex items-center">
+              <Bell className="h-4 w-4 mr-2 text-primary" />
+              Notifications
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <Bell className="h-4 w-4 mr-2 text-muted-foreground" />
                 <span>{notificationCount} new notifications</span>
               </div>
               {documentsPending > 0 && (
@@ -122,7 +149,10 @@ const LesseeDashboardContent = () => {
       {/* Ownership Progress */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Ownership Progress</CardTitle>
+          <CardTitle className="text-lg flex items-center">
+            <FileCheck className="h-5 w-5 mr-2 text-primary" />
+            Ownership Progress
+          </CardTitle>
           <CardDescription>Track your journey to full property ownership</CardDescription>
         </CardHeader>
         <CardContent>
