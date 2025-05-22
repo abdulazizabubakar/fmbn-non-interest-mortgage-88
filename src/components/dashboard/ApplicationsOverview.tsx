@@ -62,6 +62,23 @@ const ApplicationsOverview: React.FC<ApplicationsOverviewProps> = ({ detailed = 
     }
   };
 
+  // Custom tooltip component to fix type issues
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border rounded shadow-sm">
+          <p className="text-sm font-medium">{`${label}`}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={`item-${index}`} className="text-sm" style={{ color: entry.color }}>
+              {`${entry.name}: ${entry.value} Applications`}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className={detailed ? '' : 'col-span-1'}>
       <CardHeader>
@@ -88,14 +105,7 @@ const ApplicationsOverview: React.FC<ApplicationsOverviewProps> = ({ detailed = 
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip 
-                      content={(props) => 
-                        <ChartTooltipContent 
-                          {...props} 
-                          formatter={(value) => [value, "Applications"]} 
-                        />
-                      }
-                    />
+                    <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Bar dataKey="submitted" fill="#60A5FA" name="Submitted" />
                     <Bar dataKey="approved" fill="#34D399" name="Approved" />
@@ -121,8 +131,7 @@ const ApplicationsOverview: React.FC<ApplicationsOverviewProps> = ({ detailed = 
                   <XAxis type="number" />
                   <YAxis type="category" dataKey="name" width={80} />
                   <Tooltip 
-                    formatter={(value) => [`${value} Applications`, 'Count']}
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
+                    content={<CustomTooltip />}
                   />
                   <Bar dataKey="value" background={{ fill: '#f5f5f5' }}>
                     {applicationsByStatus.map((entry, index) => (

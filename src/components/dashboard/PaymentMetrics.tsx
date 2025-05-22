@@ -47,6 +47,35 @@ const PaymentMetrics: React.FC<PaymentMetricsProps> = ({ detailed = false }) => 
     }).format(value);
   };
 
+  // Custom tooltip component to fix type issues
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border rounded shadow-sm">
+          <p className="text-sm font-medium">{`${label}`}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={`item-${index}`} className="text-sm" style={{ color: entry.color }}>
+              {`${entry.name}: ₦${entry.value}M`}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  // Custom tooltip for pie chart
+  const CustomPieTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border rounded shadow-sm">
+          <p className="text-sm font-medium">{`${payload[0].name}: ${payload[0].value}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className={detailed ? '' : 'col-span-1'}>
       <CardHeader>
@@ -75,14 +104,7 @@ const PaymentMetrics: React.FC<PaymentMetricsProps> = ({ detailed = false }) => 
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip 
-                  content={(props) => 
-                    <ChartTooltipContent 
-                      {...props} 
-                      formatter={(value) => [`₦${value}M`, ""]} 
-                    />
-                  }
-                />
+                <Tooltip content={<CustomTooltip />} />
                 <Area 
                   type="monotone" 
                   dataKey="collections" 
@@ -126,7 +148,7 @@ const PaymentMetrics: React.FC<PaymentMetricsProps> = ({ detailed = false }) => 
                       ))}
                     </Pie>
                     <Legend verticalAlign="bottom" height={36} />
-                    <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
+                    <Tooltip content={<CustomPieTooltip />} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>

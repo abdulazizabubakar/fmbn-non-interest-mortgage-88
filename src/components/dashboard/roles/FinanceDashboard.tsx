@@ -6,6 +6,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
 
 const FinanceDashboard: React.FC = () => {
   // Mock data for finance dashboard
@@ -56,6 +57,35 @@ const FinanceDashboard: React.FC = () => {
     }).format(value * 1000000); // Scaling for millions
   };
 
+  // Custom tooltip components
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border rounded shadow-sm">
+          <p className="text-sm font-medium">{`${label}`}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={`item-${index}`} className="text-sm" style={{ color: entry.color }}>
+              {`${entry.name}: ${formatCurrency(entry.value)}`}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  // Custom tooltip for pie chart
+  const CustomPieTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border rounded shadow-sm">
+          <p className="text-sm font-medium">{`${payload[0].name}: ${payload[0].value}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="space-y-6">
       {/* Revenue Projections */}
@@ -77,9 +107,7 @@ const FinanceDashboard: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip 
-                    formatter={(value) => [formatCurrency(value as number), '']}
-                  />
+                  <Tooltip content={<CustomTooltip />} />
                   <Legend />
                   <Line 
                     type="monotone" 
@@ -125,9 +153,7 @@ const FinanceDashboard: React.FC = () => {
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip 
-                      formatter={(value) => [formatCurrency(value as number), '']}
-                    />
+                    <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Bar dataKey="inflow" name="Cash Inflow" fill="#3B82F6" />
                     <Bar dataKey="outflow" name="Cash Outflow" fill="#F59E0B" />
@@ -165,7 +191,7 @@ const FinanceDashboard: React.FC = () => {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
+                  <Tooltip content={<CustomPieTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -206,6 +232,9 @@ const FinanceDashboard: React.FC = () => {
                 const statusColor = performance >= 98 ? 'bg-green-100 text-green-800' :
                                    performance >= 90 ? 'bg-blue-100 text-blue-800' :
                                    performance >= 80 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800';
+                const progressColor = performance >= 98 ? 'bg-green-600' :
+                                     performance >= 90 ? 'bg-blue-600' :
+                                     performance >= 80 ? 'bg-amber-600' : 'bg-red-600';
                 
                 return (
                   <TableRow key={region.region}>
@@ -222,11 +251,9 @@ const FinanceDashboard: React.FC = () => {
                         <Progress
                           value={performance}
                           className="h-1.5"
-                          indicatorClassName={
-                            performance >= 98 ? 'bg-green-600' :
-                            performance >= 90 ? 'bg-blue-600' :
-                            performance >= 80 ? 'bg-amber-600' : 'bg-red-600'
-                          }
+                          style={{
+                            ["--progress-background" as any]: progressColor
+                          }}
                         />
                       </div>
                     </TableCell>
