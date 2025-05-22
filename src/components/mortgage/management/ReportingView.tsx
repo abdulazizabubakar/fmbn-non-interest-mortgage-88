@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DateRange } from 'react-day-picker';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
-import { Search, FileDown, Download, BarChart, AlertTriangle as AlertTriangleIcon, FileCheck as FileCheckIcon, Filter, ArrowRight } from 'lucide-react';
+import { Search, FileDown, Download, BarChart, AlertTriangle as AlertTriangleIcon, FileCheck, Filter, ArrowRight } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ReportingView: React.FC = () => {
