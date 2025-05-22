@@ -1,48 +1,39 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageContainer from '@/components/layout/PageContainer';
+import { mockMortgageApplications } from '@/data/mockMortgageApplications';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, Calendar, Clipboard, FileText, Home, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, Clock, AlertCircle, User, Briefcase, Home, FileText, Calendar, Wallet } from 'lucide-react';
-import { mockMortgageApplications } from '@/data/mockMortgageApplications';
+import { MortgageApplication, MortgageApplicationStatus } from '@/types/mortgage-application';
 import { format } from 'date-fns';
 import ApplicationSummary from '@/components/mortgage/ApplicationSummary';
 import ApplicationDocuments from '@/components/mortgage/ApplicationDocuments';
 import ApplicationApprovals from '@/components/mortgage/ApplicationApprovals';
-import { MortgageApplicationStatus } from '@/types/mortgage-application';
 import { toast } from 'sonner';
 
 const MortgageApplicationDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
-  // Find the application data
+  // Find the application by ID
   const application = useMemo(() => {
     return mockMortgageApplications.find(app => app.id === id);
   }, [id]);
   
-  if (!application) {
-    return (
-      <PageContainer>
-        <div className="flex flex-col items-center justify-center h-[50vh]">
-          <div className="text-center">
-            <AlertCircle className="mx-auto h-12 w-12 text-muted-foreground" />
-            <h2 className="mt-4 text-2xl font-semibold">Application Not Found</h2>
-            <p className="mt-2 text-muted-foreground">
-              The mortgage application you're looking for doesn't exist or has been removed.
-            </p>
-            <Button onClick={() => navigate('/mortgage-applications')} className="mt-6">
-              Back to Applications
-            </Button>
-          </div>
-        </div>
-      </PageContainer>
-    );
-  }
-
-  // Get status badge styling and icon
+  // Handle navigation back to application list
+  const handleBack = () => {
+    navigate('/mortgage-applications');
+  };
+  
+  // Format date
+  const formatDate = (dateString: string) => {
+    return format(new Date(dateString), 'MMM dd, yyyy');
+  };
+  
+  // Get status badge styling
   const getStatusBadge = (status: MortgageApplicationStatus) => {
     switch(status) {
       case 'draft':
@@ -50,7 +41,6 @@ const MortgageApplicationDetails = () => {
       case 'submitted':
         return { variant: 'outline' as const, label: 'Submitted' };
       case 'in_review':
-        return { variant: 'outline' as const, label: 'In Review' };
       case 'credit_assessment':
       case 'legal_review':
       case 'shariah_review':
@@ -82,8 +72,27 @@ const MortgageApplicationDetails = () => {
     }
   };
   
-  const statusBadge = getStatusBadge(application.status);
-  
+  // If application not found
+  if (!application) {
+    return (
+      <PageContainer>
+        <div className="flex flex-col items-center justify-center h-[60vh]">
+          <div className="rounded-full bg-muted p-6 mb-4">
+            <FileText className="h-10 w-10 text-muted-foreground" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2">Application Not Found</h1>
+          <p className="text-muted-foreground mb-6">
+            The application you're looking for doesn't exist or has been removed.
+          </p>
+          <Button onClick={handleBack}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Applications
+          </Button>
+        </div>
+      </PageContainer>
+    );
+  }
+
   // Action buttons based on application status
   const renderActionButtons = () => {
     switch(application.status) {
@@ -199,7 +208,7 @@ const MortgageApplicationDetails = () => {
             
             <div>
               <div className="text-sm text-muted-foreground">Submission Date</div>
-              <div className="font-medium">{format(new Date(application.submissionDate), 'MMM dd, yyyy')}</div>
+              <div className="font-medium">{formatDate(application.submissionDate)}</div>
             </div>
 
             {application.financialDetails && (
