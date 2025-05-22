@@ -186,7 +186,7 @@ export const mockProperties: Property[] = [
   {
     id: 'P001',
     address: '25 Ahmadu Bello Way, Abuja',
-    type: 'Apartment',
+    type: 'apartment',
     value: 30000000,
     buildYear: 2015,
     area: 120,
@@ -196,7 +196,7 @@ export const mockProperties: Property[] = [
   {
     id: 'P002',
     address: '7 Ibrahim Babangida Boulevard, Kano',
-    type: 'Duplex',
+    type: 'duplex',
     value: 25000000,
     buildYear: 2018,
     area: 150,
@@ -206,7 +206,7 @@ export const mockProperties: Property[] = [
   {
     id: 'P003',
     address: '12 Awolowo Road, Lagos',
-    type: 'Terraced House',
+    type: 'townhouse',
     value: 40000000,
     buildYear: 2020,
     area: 180,
@@ -216,7 +216,7 @@ export const mockProperties: Property[] = [
   {
     id: 'P004',
     address: '45 Yakubu Gowon Street, Port Harcourt',
-    type: 'Bungalow',
+    type: 'bungalow',
     value: 18000000,
     buildYear: 2010,
     area: 100,
@@ -226,7 +226,7 @@ export const mockProperties: Property[] = [
   {
     id: 'P005',
     address: '9 Shehu Shagari Way, Sokoto',
-    type: 'Duplex',
+    type: 'duplex',
     value: 35000000,
     buildYear: 2022,
     area: 200,

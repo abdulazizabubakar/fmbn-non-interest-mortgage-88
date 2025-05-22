@@ -72,7 +72,7 @@ export interface Customer {
 }
 
 // Property types - now imported from property.ts
-export { Property } from './property';
+export type { Property } from './property';
 
 // Notification types
 export interface Notification {
