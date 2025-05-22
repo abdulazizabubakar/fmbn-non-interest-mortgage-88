@@ -39,15 +39,15 @@ const ReportingView: React.FC = () => {
         </div>
       </div>
       
-      {/* Dashboard KPIs - better visual hierarchy and spacing */}
+      {/* Dashboard KPIs - Fixed layout and consistent spacing */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="shadow-sm hover:shadow-md transition-shadow border-nimms-primary/10">
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
-              <div className="bg-emerald-100 p-2.5 rounded-lg">
+              <div className="bg-emerald-100 p-2.5 rounded-lg shrink-0">
                 <BarChart className="h-5 w-5 text-emerald-600" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-muted-foreground">Active Mortgages</p>
                 <p className="text-2xl font-bold">782</p>
               </div>
@@ -58,10 +58,10 @@ const ReportingView: React.FC = () => {
         <Card className="shadow-sm hover:shadow-md transition-shadow border-nimms-primary/10">
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
-              <div className="bg-red-100 p-2.5 rounded-lg">
+              <div className="bg-red-100 p-2.5 rounded-lg shrink-0">
                 <AlertTriangle className="h-5 w-5 text-red-600" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-muted-foreground">In Default</p>
                 <p className="text-2xl font-bold">24</p>
               </div>
@@ -72,10 +72,10 @@ const ReportingView: React.FC = () => {
         <Card className="shadow-sm hover:shadow-md transition-shadow border-nimms-primary/10">
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
-              <div className="bg-blue-100 p-2.5 rounded-lg">
+              <div className="bg-blue-100 p-2.5 rounded-lg shrink-0">
                 <FileCheck className="h-5 w-5 text-blue-600" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-muted-foreground">Completed</p>
                 <p className="text-2xl font-bold">158</p>
               </div>
@@ -84,7 +84,7 @@ const ReportingView: React.FC = () => {
         </Card>
       </div>
       
-      {/* Main reports interface - more visually balanced */}
+      {/* Main reports interface - Fixed overflow and layout issues */}
       <Card className="shadow-sm border-nimms-primary/10">
         <CardHeader className="pb-2">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -132,60 +132,66 @@ const ReportingView: React.FC = () => {
             </div>
           </div>
           
-          {/* Tab contents - better visual hierarchy */}
-          <TabsContent value="available" className="mt-0">
-            <div className="text-center py-12">
-              <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
-                <FileDown className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl font-medium text-nimms-primary">Reporting Module</h3>
-              <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-                This module will provide a comprehensive set of reporting options
-                for mortgage portfolio management, risk assessment, and financial analysis.
-              </p>
-              <p className="text-sm mt-6 text-muted-foreground/80">Coming in the next sprint</p>
-              <div className="mt-4">
-                <Button variant="outline" size="sm">
-                  Request Early Access
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="saved" className="mt-0">
-            <div className="text-center py-12">
-              <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
-                <FileCheck className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl font-medium text-nimms-primary">Saved Reports</h3>
-              <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-                Your saved reports will appear here. Save a report by clicking "Save" when viewing any report.
-              </p>
-              <div className="mt-4">
-                <Button variant="outline" size="sm">
-                  Browse Available Reports
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+          {/* Tab contents with fixed height and better centering */}
+          <TabsContent value="available" className="mt-0 h-[350px]">
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center max-w-md">
+                <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
+                  <FileDown className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-xl font-medium text-nimms-primary">Reporting Module</h3>
+                <p className="text-muted-foreground mt-2">
+                  This module will provide a comprehensive set of reporting options
+                  for mortgage portfolio management, risk assessment, and financial analysis.
+                </p>
+                <p className="text-sm mt-6 text-muted-foreground/80">Coming in the next sprint</p>
+                <div className="mt-4">
+                  <Button variant="outline" size="sm">
+                    Request Early Access
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </TabsContent>
           
-          <TabsContent value="scheduled" className="mt-0">
-            <div className="text-center py-12">
-              <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
-                <BarChart className="h-8 w-8 text-muted-foreground" />
+          <TabsContent value="saved" className="mt-0 h-[350px]">
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center max-w-md">
+                <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
+                  <FileCheck className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-xl font-medium text-nimms-primary">Saved Reports</h3>
+                <p className="text-muted-foreground mt-2">
+                  Your saved reports will appear here. Save a report by clicking "Save" when viewing any report.
+                </p>
+                <div className="mt-4">
+                  <Button variant="outline" size="sm">
+                    Browse Available Reports
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-              <h3 className="text-xl font-medium text-nimms-primary">Scheduled Reports</h3>
-              <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-                Set up automated reports to be generated and delivered on a schedule.
-                Define recipients, frequency, and export format.
-              </p>
-              <div className="mt-4">
-                <Button variant="outline" size="sm">
-                  Set Up Scheduled Report
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="scheduled" className="mt-0 h-[350px]">
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center max-w-md">
+                <div className="mx-auto w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mb-4">
+                  <BarChart className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-xl font-medium text-nimms-primary">Scheduled Reports</h3>
+                <p className="text-muted-foreground mt-2">
+                  Set up automated reports to be generated and delivered on a schedule.
+                  Define recipients, frequency, and export format.
+                </p>
+                <div className="mt-4">
+                  <Button variant="outline" size="sm">
+                    Set Up Scheduled Report
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </TabsContent>
