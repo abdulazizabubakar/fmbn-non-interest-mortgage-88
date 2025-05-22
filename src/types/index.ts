@@ -14,8 +14,20 @@ export type { ExternalVerification } from './integration';
 export type { Report } from './reporting';
 export type { AuditLog } from './audit';
 
-// Re-export the Customer type
-export * from './customer';
+// Re-export the Customer type and related types
+export type {
+  Customer,
+  CustomerType as CustomerTypeEnum,
+  CustomerStatus,
+  CustomerTag,
+  CustomerDocument,
+  CustomerVerification,
+  RiskProfile,
+  RiskCategory,
+  CustomerComplaint,
+  CustomerCommunication,
+  CustomerLease
+} from './customer';
 
 // Re-export from the existing document types
 export * from './documents';
