@@ -21,7 +21,7 @@ const mockAccount: MortgageAccount = {
   customerName: 'Ibrahim Ahmed',
   propertyId: 'prop-001',
   propertyAddress: '15 Ahmadu Bello Way, Lagos',
-  financingType: 'ijarah',
+  financingType: 'ijara', // Fixed: Changed from 'ijarah' to 'ijara' to match FinancingType
   status: 'active',
   creationDate: '2023-12-15',
   activationDate: '2024-01-10',
@@ -218,15 +218,15 @@ const MortgageAccountDetails = () => {
           </TabsContent>
           
           <TabsContent value="schedule">
-            <PaymentSchedule accountId={account.id} />
+            <PaymentSchedule account={account} />
           </TabsContent>
           
           <TabsContent value="documents">
-            <AccountDocuments accountId={account.id} />
+            <AccountDocuments account={account} />
           </TabsContent>
           
           <TabsContent value="modifications">
-            <AccountModifications accountId={account.id} />
+            <AccountModifications account={account} />
           </TabsContent>
         </Tabs>
       </div>
