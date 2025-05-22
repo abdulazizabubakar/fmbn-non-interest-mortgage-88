@@ -1,3 +1,4 @@
+
 import { Mortgage, Customer, Property, Notification, User, StatCard } from '@/types';
 import { BarChart3, CreditCard, Home, Users, PieChart, Calendar, TrendingUp, AlertTriangle } from 'lucide-react';
 
@@ -185,7 +186,9 @@ export const mockCustomers: Customer[] = [
 export const mockProperties: Property[] = [
   {
     id: 'P001',
+    name: 'Ahmadu Bello Residence',
     address: '25 Ahmadu Bello Way, Abuja',
+    state: 'FCT',
     type: 'apartment',
     value: 30000000,
     buildYear: 2015,
@@ -195,7 +198,9 @@ export const mockProperties: Property[] = [
   },
   {
     id: 'P002',
+    name: 'Ibrahim Babangida Complex',
     address: '7 Ibrahim Babangida Boulevard, Kano',
+    state: 'Kano',
     type: 'duplex',
     value: 25000000,
     buildYear: 2018,
@@ -205,7 +210,9 @@ export const mockProperties: Property[] = [
   },
   {
     id: 'P003',
+    name: 'Awolowo Heights',
     address: '12 Awolowo Road, Lagos',
+    state: 'Lagos',
     type: 'townhouse',
     value: 40000000,
     buildYear: 2020,
@@ -215,7 +222,9 @@ export const mockProperties: Property[] = [
   },
   {
     id: 'P004',
+    name: 'Gowon Estate',
     address: '45 Yakubu Gowon Street, Port Harcourt',
+    state: 'Rivers',
     type: 'bungalow',
     value: 18000000,
     buildYear: 2010,
@@ -225,7 +234,9 @@ export const mockProperties: Property[] = [
   },
   {
     id: 'P005',
+    name: 'Shagari Villa',
     address: '9 Shehu Shagari Way, Sokoto',
+    state: 'Sokoto',
     type: 'duplex',
     value: 35000000,
     buildYear: 2022,
