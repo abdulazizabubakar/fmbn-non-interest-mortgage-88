@@ -2,7 +2,14 @@
 import React from 'react';
 import PageContainer from '@/components/layout/PageContainer';
 import { useAuth } from '@/hooks/useAuth';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import LesseeDashboard from '@/components/lessee/LesseeDashboard';
 import ApplicationWorkflow from '@/components/lessee/ApplicationWorkflow';
+import PaymentManagement from '@/components/lessee/PaymentManagement';
+import DocumentCenter from '@/components/lessee/DocumentCenter';
+import SupportTickets from '@/components/lessee/SupportTickets';
+import OwnershipTracker from '@/components/lessee/OwnershipTracker';
+import TakafulDetails from '@/components/lessee/TakafulDetails';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -50,9 +57,48 @@ const LesseePortal = () => {
           </p>
         </div>
         
-        <div className="w-full">
-          <ApplicationWorkflow />
-        </div>
+        <LesseeDashboard />
+        
+        <Tabs defaultValue="application" className="w-full">
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 w-full">
+            <TabsTrigger value="application">Application</TabsTrigger>
+            <TabsTrigger value="payments">Payments</TabsTrigger>
+            <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="ownership">Ownership</TabsTrigger>
+            <TabsTrigger value="takaful">Takaful</TabsTrigger>
+            <TabsTrigger value="support">Support</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="application" className="py-4">
+            <ApplicationWorkflow />
+          </TabsContent>
+          
+          <TabsContent value="payments" className="py-4">
+            <PaymentManagement />
+          </TabsContent>
+          
+          <TabsContent value="documents" className="py-4">
+            <DocumentCenter />
+          </TabsContent>
+          
+          <TabsContent value="ownership" className="py-4">
+            <OwnershipTracker />
+          </TabsContent>
+          
+          <TabsContent value="takaful" className="py-4">
+            <TakafulDetails />
+          </TabsContent>
+          
+          <TabsContent value="support" className="py-4">
+            <SupportTickets />
+          </TabsContent>
+          
+          <TabsContent value="settings" className="py-4">
+            <h2 className="text-xl font-semibold">Account Settings</h2>
+            <p className="text-muted-foreground">Update your personal information and preferences.</p>
+          </TabsContent>
+        </Tabs>
       </div>
     </PageContainer>
   );
