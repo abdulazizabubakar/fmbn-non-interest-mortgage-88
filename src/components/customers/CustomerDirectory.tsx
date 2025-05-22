@@ -178,7 +178,7 @@ const CustomerDirectory: React.FC<CustomerDirectoryProps> = ({ customers, onSele
             default:
               return (
                 <Badge key={tag} variant="outline" className="text-xs">
-                  {tag.replace(/_/g, ' ')}
+                  {(tag as string).replace(/_/g, ' ')}
                 </Badge>
               );
           }
