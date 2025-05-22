@@ -20,7 +20,7 @@ const Index = () => {
     <PageContainer>
       {hasDashboardAccess ? (
         <DashboardModule 
-          userRole={userRole} 
+          userRole={userRole as string} 
           userRegion={userRegion} 
         />
       ) : (
