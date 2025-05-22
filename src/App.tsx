@@ -17,6 +17,7 @@ import Messages from './pages/Messages';
 import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/hooks/useAuth";
+import LesseePortal from './pages/LesseePortal';
 
 // Mortgage application routes
 import MortgageApplications from './pages/MortgageApplications';
@@ -53,6 +54,9 @@ function App() {
             <Route path="/finance/compliance" element={<Finance />} />
             <Route path="/finance/delinquency" element={<Finance />} />
             <Route path="/messages" element={<Messages />} />
+            
+            {/* Lessee Portal Route */}
+            <Route path="/lessee-portal/*" element={<LesseePortal />} />
             
             {/* Mortgage Application Routes */}
             <Route path="/mortgage-applications" element={<MortgageApplications />} />
