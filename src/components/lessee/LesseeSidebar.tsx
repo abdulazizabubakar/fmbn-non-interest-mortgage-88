@@ -23,18 +23,37 @@ const LesseeSidebar: React.FC = () => {
   
   const menuItems = [
     { path: '/lessee-portal', label: 'Dashboard', icon: <Home className="h-4 w-4" /> },
-    { path: '/lessee-portal/application', label: 'My Application', icon: <FileText className="h-4 w-4" /> },
-    { path: '/lessee-portal/payments', label: 'Payments', icon: <CreditCard className="h-4 w-4" /> },
-    { path: '/lessee-portal/schedule', label: 'Payment Schedule', icon: <Calendar className="h-4 w-4" /> },
-    { path: '/lessee-portal/documents', label: 'Documents', icon: <FileText className="h-4 w-4" /> },
-    { path: '/lessee-portal/ownership', label: 'Ownership Tracker', icon: <ChevronRight className="h-4 w-4" /> },
-    { path: '/lessee-portal/takaful', label: 'Takaful Insurance', icon: <ShieldCheck className="h-4 w-4" /> },
-    { path: '/lessee-portal/statements', label: 'Statements', icon: <Receipt className="h-4 w-4" /> },
-    { path: '/lessee-portal/support', label: 'Support', icon: <MessageSquare className="h-4 w-4" /> },
+    { path: '#application', label: 'My Application', icon: <FileText className="h-4 w-4" /> },
+    { path: '#payments', label: 'Payments', icon: <CreditCard className="h-4 w-4" /> },
+    { path: '#documents', label: 'Documents', icon: <FileText className="h-4 w-4" /> },
+    { path: '#ownership', label: 'Ownership Tracker', icon: <ChevronRight className="h-4 w-4" /> },
+    { path: '#takaful', label: 'Takaful Insurance', icon: <ShieldCheck className="h-4 w-4" /> },
+    { path: '#support', label: 'Support', icon: <MessageSquare className="h-4 w-4" /> },
+    { path: '#settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
   ];
   
   const handleLogout = () => {
     logout();
+  };
+
+  // Function to handle anchor links within the page
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (path.startsWith('#')) {
+      e.preventDefault();
+      const tabId = path.substring(1); // Remove the # character
+      const tabElement = document.querySelector(`[data-value="${tabId}"]`) as HTMLElement;
+      
+      if (tabElement) {
+        // Click the tab to activate it
+        tabElement.click();
+        
+        // Scroll the tab content into view
+        const tabContent = document.querySelector(`[data-state="active"][role="tabpanel"]`);
+        if (tabContent) {
+          tabContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
   };
 
   return (
@@ -58,36 +77,17 @@ const LesseeSidebar: React.FC = () => {
                   to={item.path}
                   className={cn(
                     "flex items-center space-x-2 px-3 py-2 rounded-md text-sm transition-colors",
-                    location.pathname === item.path || 
-                    (item.path !== '/lessee-portal' && location.pathname.startsWith(item.path))
+                    (location.pathname === item.path || 
+                    (location.hash === item.path && item.path.startsWith('#')))
                       ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                       : "text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
                   )}
+                  onClick={(e) => handleNavigation(e, item.path)}
                 >
                   <span className="flex items-center justify-center w-5">{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               ))}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider px-3 mb-2">
-              Account
-            </p>
-            <div className="space-y-1">
-              <Link
-                to="/lessee-portal/settings"
-                className={cn(
-                  "flex items-center space-x-2 px-3 py-2 rounded-md text-sm transition-colors",
-                  location.pathname === '/lessee-portal/settings'
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                    : "text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-                )}
-              >
-                <span className="flex items-center justify-center w-5"><Settings className="h-4 w-4" /></span>
-                <span>Settings</span>
-              </Link>
             </div>
           </div>
         </nav>

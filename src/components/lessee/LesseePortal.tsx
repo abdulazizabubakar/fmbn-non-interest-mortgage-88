@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LesseeDashboard from '@/components/lessee/LesseeDashboard';
@@ -11,12 +11,14 @@ import OwnershipTracker from '@/components/lessee/OwnershipTracker';
 import TakafulDetails from '@/components/lessee/TakafulDetails';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LesseeSidebar from './LesseeSidebar';
 
 const LesseePortal = () => {
   const { user, hasRole } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("application");
   
   // Check if user is authenticated and has lessee role
   const isLessee = user && hasRole('lessee');
@@ -30,6 +32,14 @@ const LesseePortal = () => {
       // This will be handled by the render condition below
     }
   }, [user, isLessee, navigate]);
+  
+  // Set active tab based on hash
+  useEffect(() => {
+    if (location.hash) {
+      const hash = location.hash.substring(1); // Remove the # character
+      setActiveTab(hash);
+    }
+  }, [location.hash]);
   
   if (!user) return null; // Will redirect in useEffect
   
@@ -62,15 +72,15 @@ const LesseePortal = () => {
             
             <LesseeDashboard />
             
-            <Tabs defaultValue="application" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 w-full">
-                <TabsTrigger value="application">Application</TabsTrigger>
-                <TabsTrigger value="payments">Payments</TabsTrigger>
-                <TabsTrigger value="documents">Documents</TabsTrigger>
-                <TabsTrigger value="ownership">Ownership</TabsTrigger>
-                <TabsTrigger value="takaful">Takaful</TabsTrigger>
-                <TabsTrigger value="support">Support</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+                <TabsTrigger value="application" data-value="application">Application</TabsTrigger>
+                <TabsTrigger value="payments" data-value="payments">Payments</TabsTrigger>
+                <TabsTrigger value="documents" data-value="documents">Documents</TabsTrigger>
+                <TabsTrigger value="ownership" data-value="ownership">Ownership</TabsTrigger>
+                <TabsTrigger value="takaful" data-value="takaful">Takaful</TabsTrigger>
+                <TabsTrigger value="support" data-value="support">Support</TabsTrigger>
+                <TabsTrigger value="settings" data-value="settings">Settings</TabsTrigger>
               </TabsList>
               
               <TabsContent value="application" className="py-4">
