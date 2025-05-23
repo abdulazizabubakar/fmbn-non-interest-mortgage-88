@@ -19,19 +19,20 @@ import {
 } from "@/components/ui/select";
 
 interface DateRangePickerProps {
-  value?: { from: Date; to: Date } | undefined;
-  onValueChange: (value: { from: Date; to: Date } | undefined) => void;
-  className?: string;
+  date?: { from: Date; to: Date } | undefined;
+  setDate: (value: { from: Date; to: Date } | undefined) => void;
   placeholder?: string;
   align?: "start" | "center" | "end";
+  showCompare?: boolean;
 }
 
-export function DateRange({
-  value,
-  onValueChange,
-  className,
+// Export both DateRangePicker for backward compatibility and DateRange as the component
+export function DateRangePicker({
+  date,
+  setDate,
   placeholder = "Select date range",
   align = "start",
+  showCompare = true,
 }: DateRangePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   
@@ -41,11 +42,11 @@ export function DateRange({
     const from = new Date();
     from.setDate(from.getDate() - days);
     
-    onValueChange({ from, to });
+    setDate({ from, to });
   };
 
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className="grid gap-2">
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -54,17 +55,17 @@ export function DateRange({
             size="sm"
             className={cn(
               "w-full justify-start text-left font-normal h-10",
-              !value && "text-muted-foreground"
+              !date && "text-muted-foreground"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {value?.from ? (
-              value.to ? (
+            {date?.from ? (
+              date.to ? (
                 <>
-                  {format(value.from, "LLL dd, y")} - {format(value.to, "LLL dd, y")}
+                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
                 </>
               ) : (
-                format(value.from, "LLL dd, y")
+                format(date.from, "LLL dd, y")
               )
             ) : (
               placeholder
@@ -97,7 +98,7 @@ export function DateRange({
             <Button 
               variant="outline" 
               size="sm" 
-              onClick={() => onValueChange(undefined)}
+              onClick={() => setDate(undefined)}
             >
               Clear
             </Button>
@@ -106,30 +107,57 @@ export function DateRange({
             <Calendar
               initialFocus
               mode="range"
-              defaultMonth={value?.from}
+              defaultMonth={date?.from}
               selected={{
-                from: value?.from || undefined,
-                to: value?.to || undefined,
+                from: date?.from || undefined,
+                to: date?.to || undefined,
               }}
               onSelect={(selected) => {
                 if (selected?.from && selected.to) {
-                  onValueChange({ 
+                  setDate({ 
                     from: selected.from, 
                     to: selected.to
                   });
                   setIsOpen(false);
                 } else if (selected?.from) {
-                  onValueChange({ 
+                  setDate({ 
                     from: selected.from, 
                     to: selected.from 
                   });
                 }
               }}
               numberOfMonths={2}
+              className="pointer-events-auto"
             />
           </div>
         </PopoverContent>
       </Popover>
+    </div>
+  );
+}
+
+// Export DateRange component for existing code that uses it
+export function DateRange({
+  value,
+  onValueChange,
+  className,
+  placeholder = "Select date range",
+  align = "start",
+}: {
+  value?: { from: Date; to: Date } | undefined;
+  onValueChange: (value: { from: Date; to: Date } | undefined) => void;
+  className?: string;
+  placeholder?: string;
+  align?: "start" | "center" | "end";
+}) {
+  return (
+    <div className={cn("grid gap-2", className)}>
+      <DateRangePicker
+        date={value}
+        setDate={onValueChange}
+        placeholder={placeholder}
+        align={align}
+      />
     </div>
   );
 }

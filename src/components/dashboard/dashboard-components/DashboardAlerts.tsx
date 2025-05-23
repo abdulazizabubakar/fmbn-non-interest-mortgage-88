@@ -15,7 +15,7 @@ interface DashboardAlertsProps {
 const mockAlerts = [
   {
     id: '1',
-    type: 'warning',
+    type: 'default',  // Changed from 'warning' to 'default'
     title: 'Payment Due Reminder',
     description: '15 lessees have payments due in the next 7 days',
     roles: ['admin', 'finance_officer', 'zonal_admin'],
@@ -24,7 +24,7 @@ const mockAlerts = [
   },
   {
     id: '2',
-    type: 'info',
+    type: 'default',  // Changed from 'info' to 'default'
     title: 'New Applications',
     description: '8 new applications require review',
     roles: ['admin', 'super_admin', 'legal_officer', 'zonal_admin', 'application_officer'],
@@ -33,7 +33,7 @@ const mockAlerts = [
   },
   {
     id: '3',
-    type: 'success',
+    type: 'default',  // Changed from 'success' to 'default'
     title: 'Mortgage Disbursements',
     description: '5 mortgages were successfully disbursed today',
     roles: ['admin', 'super_admin', 'finance_officer', 'treasury_officer'],
@@ -42,7 +42,7 @@ const mockAlerts = [
   },
   {
     id: '4',
-    type: 'error',
+    type: 'destructive',  // Changed from 'error' to 'destructive'
     title: 'Failed Payments',
     description: '3 payment attempts failed in the last 24 hours',
     roles: ['admin', 'finance_officer', 'treasury_officer'],
@@ -51,7 +51,7 @@ const mockAlerts = [
   },
   {
     id: '5',
-    type: 'warning',
+    type: 'default',  // Changed from 'warning' to 'default'
     title: 'Property Inspections',
     description: '7 properties are due for inspection this week',
     roles: ['admin', 'property_officer', 'zonal_admin'],
@@ -82,20 +82,20 @@ const DashboardAlerts: React.FC<DashboardAlertsProps> = ({ role, region }) => {
           {filteredAlerts.map(alert => (
             <Alert
               key={alert.id}
-              variant={alert.type === 'info' ? 'default' : alert.type as 'warning' | 'destructive' | 'default'}
+              variant={alert.type as 'default' | 'destructive'}
               className={`
-                ${alert.type === 'success' ? 'border-green-500 bg-green-50 text-green-800' : ''}
-                ${alert.type === 'warning' ? 'border-yellow-500 bg-yellow-50 text-yellow-800' : ''}
-                ${alert.type === 'error' ? 'border-red-500 bg-red-50 text-red-800' : ''}
-                ${alert.type === 'info' ? 'border-blue-500 bg-blue-50 text-blue-800' : ''}
+                ${alert.type === 'default' && alert.id === '3' ? 'border-green-500 bg-green-50 text-green-800' : ''}
+                ${alert.type === 'default' && (alert.id === '1' || alert.id === '5') ? 'border-yellow-500 bg-yellow-50 text-yellow-800' : ''}
+                ${alert.type === 'destructive' ? 'border-red-500 bg-red-50 text-red-800' : ''}
+                ${alert.type === 'default' && alert.id === '2' ? 'border-blue-500 bg-blue-50 text-blue-800' : ''}
               `}
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-start gap-3">
                   <alert.icon className={`h-5 w-5 ${
-                    alert.type === 'success' ? 'text-green-600' : 
-                    alert.type === 'warning' ? 'text-yellow-600' : 
-                    alert.type === 'error' ? 'text-red-600' : 
+                    alert.id === '3' ? 'text-green-600' : 
+                    (alert.id === '1' || alert.id === '5') ? 'text-yellow-600' : 
+                    alert.id === '4' ? 'text-red-600' : 
                     'text-blue-600'
                   }`} />
                   <div>
