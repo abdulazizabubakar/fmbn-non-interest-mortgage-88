@@ -1,267 +1,268 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer } from '@/components/ui/chart';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell } from 'recharts';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell } from 'recharts';
 import { Progress } from '@/components/ui/progress';
-import { cn } from '@/lib/utils';
+import { ArrowUpRight, ArrowDownRight, AlertTriangle } from 'lucide-react';
 
-const FinanceDashboard: React.FC = () => {
-  // Mock data for finance dashboard
-  const revenueData = [
-    { month: 'Jan', actual: 320, projected: 300 },
-    { month: 'Feb', actual: 350, projected: 320 },
-    { month: 'Mar', actual: 370, projected: 340 },
-    { month: 'Apr', actual: 390, projected: 360 },
-    { month: 'May', actual: 420, projected: 380 },
-    { month: 'Jun', actual: 400, projected: 400 },
-    { month: 'Jul', projected: 420 },
-    { month: 'Aug', projected: 440 },
-    { month: 'Sep', projected: 460 },
-    { month: 'Oct', projected: 480 },
-    { month: 'Nov', projected: 500 },
-    { month: 'Dec', projected: 520 },
+interface FinanceDashboardProps {
+  region?: string;
+}
+
+const FinanceDashboard: React.FC<FinanceDashboardProps> = ({ region = 'Global' }) => {
+  // Mock data for collections
+  const collectionData = [
+    { month: 'Jan', collections: 42500000, target: 45000000 },
+    { month: 'Feb', collections: 38900000, target: 45000000 },
+    { month: 'Mar', collections: 45300000, target: 45000000 },
+    { month: 'Apr', collections: 47800000, target: 45000000 },
+    { month: 'May', collections: 52100000, target: 45000000 },
+    { month: 'Jun', collections: 49600000, target: 45000000 },
   ];
 
-  const cashflowData = [
-    { month: 'Jan', inflow: 520, outflow: 470 },
-    { month: 'Feb', inflow: 540, outflow: 490 },
-    { month: 'Mar', inflow: 570, outflow: 510 },
-    { month: 'Apr', inflow: 590, outflow: 520 },
-    { month: 'May', inflow: 620, outflow: 550 },
+  // Mock data for arrears by zone
+  const arrearsByZone = [
+    { zone: 'North Central', amount: 12500000, percentage: 3.2 },
+    { zone: 'North East', amount: 18700000, percentage: 4.8 },
+    { zone: 'North West', amount: 9800000, percentage: 2.5 },
+    { zone: 'South East', amount: 15200000, percentage: 3.9 },
+    { zone: 'South South', amount: 7500000, percentage: 1.9 },
+    { zone: 'South West', amount: 5200000, percentage: 1.3 },
   ];
 
-  const debtRecoveryData = [
-    { status: 'Recovered', value: 65, color: '#10B981' },
-    { status: 'In Progress', value: 25, color: '#F59E0B' },
-    { status: 'Defaulted', value: 10, color: '#EF4444' },
-  ];
-
-  const regionPerformance = [
-    { region: 'North Central', actual: 92, target: 95 },
-    { region: 'North East', actual: 78, target: 90 },
-    { region: 'North West', actual: 88, target: 93 },
-    { region: 'South East', actual: 84, target: 92 },
-    { region: 'South South', actual: 91, target: 95 },
-    { region: 'South West', actual: 96, target: 97 },
-  ];
-
+  // Format currency
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
       currency: 'NGN',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value * 1000000); // Scaling for millions
-  };
-
-  // Custom tooltip components
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-2 border rounded shadow-sm">
-          <p className="text-sm font-medium">{`${label}`}</p>
-          {payload.map((entry: any, index: number) => (
-            <p key={`item-${index}`} className="text-sm" style={{ color: entry.color }}>
-              {`${entry.name}: ${formatCurrency(entry.value)}`}
-            </p>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-
-  // Custom tooltip for pie chart
-  const CustomPieTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-2 border rounded shadow-sm">
-          <p className="text-sm font-medium">{`${payload[0].name}: ${payload[0].value}%`}</p>
-        </div>
-      );
-    }
-    return null;
+      maximumFractionDigits: 0
+    }).format(value);
   };
 
   return (
     <div className="space-y-6">
-      {/* Revenue Projections */}
       <Card>
         <CardHeader>
-          <CardTitle>Revenue Projections vs Actual</CardTitle>
-          <CardDescription>Financial year performance tracking (values in millions ₦)</CardDescription>
+          <CardTitle>Financial Overview</CardTitle>
+          <CardDescription>Collections, disbursements, and financial health metrics</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px]">
-            <ChartContainer
-              config={{
-                actual: { label: "Actual Revenue", color: "#10B981" },
-                projected: { label: "Projected Revenue", color: "#6B7280" },
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={revenueData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="actual" 
-                    stroke="#10B981" 
-                    strokeWidth={2} 
-                    dot={{ r: 4 }} 
-                    activeDot={{ r: 6 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="projected" 
-                    stroke="#6B7280" 
-                    strokeDasharray="5 5" 
-                    strokeWidth={2} 
-                    dot={{ r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+          <div className="grid grid-cols-4 gap-4">
+            <Card className="bg-blue-50 border-0">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-medium text-muted-foreground">MTD Collections</p>
+                  <span className="text-green-600 flex items-center text-xs font-medium">
+                    <ArrowUpRight className="h-3 w-3 mr-1" />
+                    +15.7%
+                  </span>
+                </div>
+                <p className="text-2xl font-bold mt-1">₦52.1M</p>
+                <p className="text-xs text-muted-foreground mt-1">Target: ₦45M</p>
+                <Progress value={116} className="h-1 mt-2" />
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-green-50 border-0">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-medium text-muted-foreground">YTD Revenue</p>
+                  <span className="text-green-600 flex items-center text-xs font-medium">
+                    <ArrowUpRight className="h-3 w-3 mr-1" />
+                    +8.2%
+                  </span>
+                </div>
+                <p className="text-2xl font-bold mt-1">₦276.2M</p>
+                <p className="text-xs text-muted-foreground mt-1">Annual Target: ₦540M</p>
+                <Progress value={51} className="h-1 mt-2" />
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-amber-50 border-0">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-medium text-muted-foreground">Total Arrears</p>
+                  <span className="text-red-600 flex items-center text-xs font-medium">
+                    <ArrowUpRight className="h-3 w-3 mr-1" />
+                    +2.4%
+                  </span>
+                </div>
+                <p className="text-2xl font-bold mt-1">₦68.9M</p>
+                <p className="text-xs text-muted-foreground mt-1">Accounts in Arrears: 124</p>
+                <Progress value={68} className="h-1 mt-2 bg-amber-100">
+                  <div className="bg-amber-500 h-full rounded-full" />
+                </Progress>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-purple-50 border-0">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-medium text-muted-foreground">Fund Utilization</p>
+                  <span className="text-purple-600 flex items-center text-xs font-medium">
+                    Target: 85%
+                  </span>
+                </div>
+                <p className="text-2xl font-bold mt-1">78.3%</p>
+                <p className="text-xs text-muted-foreground mt-1">Available: ₦124.5M</p>
+                <Progress value={78} className="h-1 mt-2 bg-purple-100">
+                  <div className="bg-purple-500 h-full rounded-full" />
+                </Progress>
+              </CardContent>
+            </Card>
           </div>
         </CardContent>
       </Card>
 
-      {/* Revenue Analysis & Debt Recovery */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Cash Flow Analysis */}
-        <Card className="col-span-1 lg:col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
           <CardHeader>
-            <CardTitle>Cash Flow Analysis</CardTitle>
-            <CardDescription>Monthly cash inflow vs outflow (values in millions ₦)</CardDescription>
+            <CardTitle>Monthly Collections vs Target</CardTitle>
+            <CardDescription>Performance against monthly collection targets</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
-              <ChartContainer
-                config={{
-                  inflow: { label: "Cash Inflow", color: "#3B82F6" },
-                  outflow: { label: "Cash Outflow", color: "#F59E0B" },
-                }}
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={cashflowData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Bar dataKey="inflow" name="Cash Inflow" fill="#3B82F6" />
-                    <Bar dataKey="outflow" name="Cash Outflow" fill="#F59E0B" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartContainer>
-            </div>
-            <div className="mt-4 text-sm text-muted-foreground text-center">
-              Net cash flow (May): {formatCurrency(70)} | YTD: {formatCurrency(330)}
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                  data={collectionData}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient id="colorCollections" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.1} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="month" />
+                  <YAxis
+                    tickFormatter={(value) => `₦${(value / 1000000).toFixed(0)}M`}
+                  />
+                  <Tooltip
+                    formatter={(value: number) => [formatCurrency(value), "Amount"]}
+                  />
+                  <Legend />
+                  <Area
+                    type="monotone"
+                    dataKey="collections"
+                    stroke="#3B82F6"
+                    fillOpacity={1}
+                    fill="url(#colorCollections)"
+                    name="Collections"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="target"
+                    stroke="#10B981"
+                    fill="transparent"
+                    strokeDasharray="5 5"
+                    name="Target"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
-        
-        {/* Debt Recovery Status */}
+
         <Card>
           <CardHeader>
-            <CardTitle>Debt Recovery</CardTitle>
-            <CardDescription>Status of debt recovery efforts</CardDescription>
+            <CardTitle>Arrears by Zone</CardTitle>
+            <CardDescription>Regional breakdown of payment arrears</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[200px]">
+            <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={debtRecoveryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {debtRecoveryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                <BarChart
+                  data={arrearsByZone}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  layout="vertical"
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                  <XAxis
+                    type="number"
+                    tickFormatter={(value) => `₦${(value / 1000000).toFixed(1)}M`}
+                  />
+                  <YAxis
+                    dataKey="zone"
+                    type="category"
+                    width={100}
+                  />
+                  <Tooltip
+                    formatter={(value: number, name: string, props: any) => {
+                      return [formatCurrency(value), "Arrears Amount"];
+                    }}
+                    labelFormatter={(value) => `Zone: ${value}`}
+                  />
+                  <Bar dataKey="amount" name="Arrears Amount">
+                    {arrearsByZone.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.percentage > 4 ? "#EF4444" : entry.percentage > 3 ? "#F59E0B" : "#3B82F6"}
+                      />
                     ))}
-                  </Pie>
-                  <Tooltip content={<CustomPieTooltip />} />
-                </PieChart>
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
-            </div>
-            <div className="mt-4">
-              <div className="text-sm text-center">
-                Total outstanding debt: {formatCurrency(245)}
-              </div>
-              <div className="text-xs text-center text-muted-foreground mt-1">
-                Accounts in legal proceedings: 12
-              </div>
             </div>
           </CardContent>
         </Card>
       </div>
-      
-      {/* Regional Collection Performance */}
+
       <Card>
-        <CardHeader>
-          <CardTitle>Regional Collection Performance</CardTitle>
-          <CardDescription>Payment collection efficiency by region</CardDescription>
+        <CardHeader className="flex flex-row items-center">
+          <div>
+            <CardTitle>At-Risk Accounts</CardTitle>
+            <CardDescription>Accounts with over 60 days in arrears</CardDescription>
+          </div>
+          <AlertTriangle className="h-5 w-5 text-amber-500 ml-auto" />
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Region</TableHead>
-                <TableHead>Actual %</TableHead>
-                <TableHead>Target %</TableHead>
-                <TableHead className="text-right">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {regionPerformance.map((region) => {
-                const performance = (region.actual / region.target) * 100;
-                const status = performance >= 98 ? 'Excellent' :
-                               performance >= 90 ? 'Good' :
-                               performance >= 80 ? 'Average' : 'Below Target';
-                const statusColor = performance >= 98 ? 'bg-green-100 text-green-800' :
-                                   performance >= 90 ? 'bg-blue-100 text-blue-800' :
-                                   performance >= 80 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800';
-                const progressColor = performance >= 98 ? 'bg-green-600' :
-                                     performance >= 90 ? 'bg-blue-600' :
-                                     performance >= 80 ? 'bg-amber-600' : 'bg-red-600';
-                
-                return (
-                  <TableRow key={region.region}>
-                    <TableCell className="font-medium">{region.region}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span>{region.actual}%</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{region.target}%</TableCell>
-                    <TableCell className="text-right">
-                      <Badge className={statusColor}>{status}</Badge>
-                      <div className="mt-1">
-                        <Progress
-                          value={performance}
-                          className="h-1.5"
-                          style={{
-                            ["--progress-background" as any]: progressColor
-                          }}
-                        />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <div className="relative overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-muted-foreground uppercase bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2">Account</th>
+                  <th className="px-4 py-2">Customer</th>
+                  <th className="px-4 py-2">Balance</th>
+                  <th className="px-4 py-2">Days Overdue</th>
+                  <th className="px-4 py-2">Amount Due</th>
+                  <th className="px-4 py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-white border-b">
+                  <td className="px-4 py-3 font-medium text-gray-900">M-2023-1078</td>
+                  <td className="px-4 py-3">Ibrahim Mohammed</td>
+                  <td className="px-4 py-3">₦12,450,000</td>
+                  <td className="px-4 py-3">96</td>
+                  <td className="px-4 py-3">₦840,000</td>
+                  <td className="px-4 py-3">
+                    <span className="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded">Critical</span>
+                  </td>
+                </tr>
+                <tr className="bg-white border-b">
+                  <td className="px-4 py-3 font-medium text-gray-900">M-2023-0896</td>
+                  <td className="px-4 py-3">Fatima Bello</td>
+                  <td className="px-4 py-3">₦8,750,000</td>
+                  <td className="px-4 py-3">78</td>
+                  <td className="px-4 py-3">₦525,000</td>
+                  <td className="px-4 py-3">
+                    <span className="bg-amber-100 text-amber-800 text-xs font-medium px-2 py-0.5 rounded">High Risk</span>
+                  </td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="px-4 py-3 font-medium text-gray-900">M-2023-1241</td>
+                  <td className="px-4 py-3">John Okafor</td>
+                  <td className="px-4 py-3">₦15,200,000</td>
+                  <td className="px-4 py-3">62</td>
+                  <td className="px-4 py-3">₦760,000</td>
+                  <td className="px-4 py-3">
+                    <span className="bg-amber-100 text-amber-800 text-xs font-medium px-2 py-0.5 rounded">High Risk</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -1,138 +1,144 @@
 
 import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, Bell, Calendar, CheckCircle, Clock, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  AlertTriangle, Bell, CheckCircle, Clock, FileText, CalendarClock, CreditCard 
-} from 'lucide-react';
 
 interface NotificationsPanelProps {
-  limit?: number;
+  userRole: string;
 }
 
-const NotificationsPanel: React.FC<NotificationsPanelProps> = ({ limit = 5 }) => {
-  // Mock notifications
+const NotificationsPanel: React.FC<NotificationsPanelProps> = ({ userRole }) => {
+  // Mock notifications data based on user role
   const notifications = [
     {
-      id: '1',
-      title: 'Payment Due Soon',
-      message: '12 customers have payments due in the next 48 hours',
+      id: 'notif-1',
+      type: 'payment-due',
+      title: '8 payments due today',
+      description: 'Reminder notifications have been sent to customers',
       time: '2 hours ago',
-      type: 'reminder',
-      read: false,
-      icon: CalendarClock,
+      priority: 'medium',
+      roles: ['admin', 'finance_officer', 'treasury_officer']
     },
     {
-      id: '2',
-      title: 'New Default Alert',
-      message: '5 accounts have moved to the 30+ days default category',
+      id: 'notif-2',
+      type: 'default-alert',
+      title: '3 accounts entered default status',
+      description: 'Accounts have missed payments for over 90 days',
       time: '4 hours ago',
-      type: 'alert',
-      read: false,
-      icon: AlertTriangle,
+      priority: 'high',
+      roles: ['admin', 'finance_officer', 'manager']
     },
     {
-      id: '3',
-      title: 'Documents Uploaded',
-      message: 'Fatima Aliyu has uploaded property documents for verification',
-      time: '10 hours ago',
-      type: 'info',
-      read: true,
-      icon: FileText,
+      id: 'notif-3',
+      type: 'document-upload',
+      title: 'New documents uploaded',
+      description: '12 mortgage applications awaiting document verification',
+      time: 'Yesterday',
+      priority: 'medium',
+      roles: ['admin', 'application_officer', 'legal_officer']
     },
     {
-      id: '4',
-      title: 'Application Approved',
-      message: '3 new applications have been approved by the credit committee',
-      time: '1 day ago',
-      type: 'success',
-      read: true,
-      icon: CheckCircle,
+      id: 'notif-4',
+      type: 'contract-signing',
+      title: 'Contracts awaiting signature',
+      description: '5 contracts pending customer signatures',
+      time: 'Yesterday',
+      priority: 'low',
+      roles: ['admin', 'legal_officer', 'application_officer']
     },
     {
-      id: '5',
-      title: 'Payment Received',
-      message: 'Large payment of ₦15,000,000 received from Customer #4521',
-      time: '1 day ago',
-      type: 'info',
-      read: true,
-      icon: CreditCard,
-    },
-    {
-      id: '6',
-      title: 'System Maintenance',
-      message: 'Scheduled maintenance will occur tonight from 11 PM to 2 AM',
-      time: '2 days ago',
-      type: 'info',
-      read: true,
-      icon: Clock,
+      id: 'notif-5',
+      type: 'system-alert',
+      title: 'Database backup completed',
+      description: 'Daily backup completed successfully',
+      time: 'Yesterday',
+      priority: 'low',
+      roles: ['admin', 'super_admin']
     }
   ];
-  
-  const displayedNotifications = limit ? notifications.slice(0, limit) : notifications;
-  const unreadCount = notifications.filter(n => !n.read).length;
 
-  const getNotificationStyle = (type: string) => {
-    switch (type) {
-      case 'alert':
-        return { bg: 'bg-red-100', text: 'text-red-600', iconClass: 'text-red-500' };
-      case 'success':
-        return { bg: 'bg-green-100', text: 'text-green-600', iconClass: 'text-green-500' };
-      case 'info':
-        return { bg: 'bg-blue-100', text: 'text-blue-600', iconClass: 'text-blue-500' };
-      case 'reminder':
-        return { bg: 'bg-amber-100', text: 'text-amber-600', iconClass: 'text-amber-500' };
+  // Filter notifications based on user role
+  const filteredNotifications = notifications.filter(notif => 
+    notif.roles.includes(userRole as any) || userRole === 'admin' || userRole === 'super_admin'
+  );
+
+  // Get icon based on notification type
+  const getIcon = (type: string) => {
+    switch(type) {
+      case 'payment-due':
+        return <Calendar className="h-4 w-4 text-blue-500" />;
+      case 'default-alert':
+        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+      case 'document-upload':
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case 'contract-signing':
+        return <Info className="h-4 w-4 text-amber-500" />;
+      case 'system-alert':
+        return <Bell className="h-4 w-4 text-purple-500" />;
       default:
-        return { bg: 'bg-gray-100', text: 'text-gray-600', iconClass: 'text-gray-500' };
+        return <Bell className="h-4 w-4 text-gray-500" />;
+    }
+  };
+
+  // Get background color based on priority
+  const getBgColor = (priority: string) => {
+    switch(priority) {
+      case 'high':
+        return 'bg-red-50';
+      case 'medium':
+        return 'bg-amber-50';
+      case 'low':
+        return 'bg-blue-50';
+      default:
+        return 'bg-gray-50';
     }
   };
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <div>
-          <CardTitle className="text-lg font-medium">Alerts & Notifications</CardTitle>
-          <CardDescription>Recent system alerts and notifications</CardDescription>
-        </div>
-        <div className="relative">
-          <Bell className="h-5 w-5 text-muted-foreground" />
-          {unreadCount > 0 && (
-            <Badge className="absolute -top-1 -right-1 px-1 min-w-[18px] h-[18px] bg-red-500 text-white text-xs flex items-center justify-center rounded-full">
-              {unreadCount}
-            </Badge>
-          )}
-        </div>
+      <CardHeader className="pb-3 flex flex-row items-center justify-between">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <Bell className="h-5 w-5" />
+          Notifications
+        </CardTitle>
+        <span className="text-xs text-muted-foreground">
+          {filteredNotifications.length} new
+        </span>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {displayedNotifications.map((notification) => {
-            const style = getNotificationStyle(notification.type);
-            return (
-              <div 
-                key={notification.id} 
-                className={`flex items-start space-x-3 p-3 rounded-lg ${notification.read ? 'bg-muted/40' : style.bg}`}
-              >
-                <div className={`flex-shrink-0 mt-0.5 ${style.iconClass}`}>
-                  <notification.icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <p className={`font-medium ${!notification.read ? style.text : ''}`}>{notification.title}</p>
-                    <span className="text-xs text-muted-foreground">{notification.time}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{notification.message}</p>
+      <CardContent className="space-y-3 max-h-[350px] overflow-auto">
+        {filteredNotifications.length > 0 ? (
+          filteredNotifications.map((notification) => (
+            <div 
+              key={notification.id} 
+              className={`p-3 rounded-lg border ${getBgColor(notification.priority)} flex gap-3 items-start`}
+            >
+              <div className="mt-0.5">
+                {getIcon(notification.type)}
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-medium">{notification.title}</h4>
+                <p className="text-xs text-muted-foreground mt-1">{notification.description}</p>
+                <div className="flex items-center mt-2 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3 mr-1" /> {notification.time}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-6 text-muted-foreground">
+            <Bell className="h-8 w-8 mx-auto mb-2 opacity-20" />
+            <p>No new notifications</p>
+          </div>
+        )}
       </CardContent>
-      <CardFooter className="border-t px-6 py-3">
-        <Button variant="link" className="w-full text-center">
-          View All Notifications
-        </Button>
-      </CardFooter>
+      {filteredNotifications.length > 0 && (
+        <div className="px-4 pb-3 pt-1">
+          <Button variant="outline" size="sm" className="w-full">
+            View All Notifications
+          </Button>
+        </div>
+      )}
     </Card>
   );
 };
