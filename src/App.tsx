@@ -60,7 +60,7 @@ function App() {
             <Route path="/finance/delinquency" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
             
-            {/* Lessee Portal Route - Updated to point directly to the component */}
+            {/* Lessee Portal Route - Modified to use the component directly without PageContainer */}
             <Route path="/lessee-portal/*" element={<ProtectedRoute requiredRole="lessee"><LesseePortal /></ProtectedRoute>} />
             
             {/* Mortgage Application Routes */}
