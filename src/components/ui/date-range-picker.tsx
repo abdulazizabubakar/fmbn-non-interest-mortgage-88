@@ -17,10 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateRange } from "react-day-picker";
 
 interface DateRangePickerProps {
-  date?: { from: Date; to: Date } | undefined;
-  setDate: (value: { from: Date; to: Date } | undefined) => void;
+  date?: DateRange | undefined;
+  setDate: (value: DateRange | undefined) => void;
   placeholder?: string;
   align?: "start" | "center" | "end";
   showCompare?: boolean;
@@ -108,22 +109,11 @@ export function DateRangePicker({
               initialFocus
               mode="range"
               defaultMonth={date?.from}
-              selected={{
-                from: date?.from || undefined,
-                to: date?.to || undefined,
-              }}
+              selected={date}
               onSelect={(selected) => {
+                setDate(selected);
                 if (selected?.from && selected.to) {
-                  setDate({ 
-                    from: selected.from, 
-                    to: selected.to
-                  });
                   setIsOpen(false);
-                } else if (selected?.from) {
-                  setDate({ 
-                    from: selected.from, 
-                    to: selected.from 
-                  });
                 }
               }}
               numberOfMonths={2}
@@ -144,8 +134,8 @@ export function DateRange({
   placeholder = "Select date range",
   align = "start",
 }: {
-  value?: { from: Date; to: Date } | undefined;
-  onValueChange: (value: { from: Date; to: Date } | undefined) => void;
+  value?: DateRange | undefined;
+  onValueChange: (value: DateRange | undefined) => void;
   className?: string;
   placeholder?: string;
   align?: "start" | "center" | "end";
