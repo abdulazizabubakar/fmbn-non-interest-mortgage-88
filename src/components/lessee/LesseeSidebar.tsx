@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   Home, 
@@ -19,6 +19,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 const LesseeSidebar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { logout } = useAuth();
   
   const menuItems = [
@@ -35,6 +36,7 @@ const LesseeSidebar: React.FC = () => {
   
   const handleLogout = () => {
     logout();
+    navigate('/login');
   };
 
   return (

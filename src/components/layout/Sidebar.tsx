@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   Home, 
@@ -25,9 +25,12 @@ import {
   GitBranch
 } from 'lucide-react';
 import AmanahLogo from '../icons/AmanahLogo';
+import { useAuth } from '@/hooks/useAuth';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   
   const moduleGroups = [
     {
@@ -71,6 +74,11 @@ const Sidebar: React.FC = () => {
     { path: '/security', label: 'Security', icon: <Lock className="h-4 w-4" /> },
     { path: '/settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0 overflow-y-auto shadow-sm">
@@ -134,7 +142,10 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className="mt-auto pt-4 border-t border-sidebar-border/50">
-        <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground transition-colors">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground transition-colors"
+        >
           <LogOut className="h-4 w-4" />
           <span>Logout</span>
         </button>

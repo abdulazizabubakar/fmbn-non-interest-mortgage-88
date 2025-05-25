@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -210,7 +209,7 @@ const InteractiveMetricsGrid: React.FC<InteractiveMetricsGridProps> = ({
               key={metric.id}
               className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${
                 isSelected ? 'ring-2 ring-blue-500 shadow-lg scale-105' : ''
-              } ${realTimeEnabled ? 'animate-pulse' : ''}`}
+              }`}
               onClick={() => setSelectedMetric(isSelected ? null : metric.id)}
             >
               <CardContent className="p-6">
@@ -221,6 +220,9 @@ const InteractiveMetricsGrid: React.FC<InteractiveMetricsGridProps> = ({
                         <Icon className="h-4 w-4" />
                       </div>
                       <h3 className="font-medium text-sm text-gray-600">{metric.title}</h3>
+                      {realTimeEnabled && (
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      )}
                     </div>
                     
                     <div className="space-y-1">
