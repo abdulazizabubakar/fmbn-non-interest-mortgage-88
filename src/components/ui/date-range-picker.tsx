@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 
 interface DateRangePickerProps {
   date?: DateRange | undefined;
