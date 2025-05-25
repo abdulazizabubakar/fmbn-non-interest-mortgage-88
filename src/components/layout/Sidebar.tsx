@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
     {
       label: 'Core Modules',
       items: [
-        { path: '/', label: 'Dashboard', icon: <Home className="h-4 w-4" /> },
+        { path: '/dashboard', label: 'Dashboard', icon: <Home className="h-4 w-4" /> },
         { path: '/customers', label: 'Customers', icon: <Users className="h-4 w-4" /> },
         { path: '/applications', label: 'Applications', icon: <FilePlus className="h-4 w-4" /> },
         { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-4 w-4" /> },
@@ -76,7 +76,7 @@ const Sidebar: React.FC = () => {
     <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0 overflow-y-auto shadow-sm">
       <div className="space-y-6">
         <div className="flex items-center justify-center p-2">
-          <Link to="/" className="flex items-center flex-col">
+          <Link to="/dashboard" className="flex items-center flex-col">
             <AmanahLogo className="h-16 w-auto" />
           </Link>
         </div>
@@ -95,7 +95,7 @@ const Sidebar: React.FC = () => {
                     className={cn(
                       "flex items-center space-x-2 px-3 py-2 rounded-md text-sm transition-colors",
                       location.pathname === item.path || 
-                      (item.path !== '/' && location.pathname.startsWith(item.path))
+                      (item.path !== '/dashboard' && location.pathname.startsWith(item.path))
                         ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                         : "text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
                     )}
