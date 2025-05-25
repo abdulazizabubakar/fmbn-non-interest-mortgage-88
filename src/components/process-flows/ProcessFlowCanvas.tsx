@@ -181,7 +181,7 @@ const ProcessFlowCanvas: React.FC<ProcessFlowCanvasProps> = ({
         <Background 
           color="#f1f5f9" 
           gap={20} 
-          variant="dots" 
+          variant="dot"
           className={isSimulating ? 'animate-pulse' : ''} 
         />
         <Controls 
