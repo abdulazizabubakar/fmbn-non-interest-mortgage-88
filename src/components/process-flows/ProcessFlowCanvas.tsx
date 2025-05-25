@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import {
   ReactFlow,
   Background,
+  BackgroundVariant,
   Controls,
   MiniMap,
   useNodesState,
@@ -181,7 +182,7 @@ const ProcessFlowCanvas: React.FC<ProcessFlowCanvasProps> = ({
         <Background 
           color="#f1f5f9" 
           gap={20} 
-          variant="dot"
+          variant={BackgroundVariant.Dots}
           className={isSimulating ? 'animate-pulse' : ''} 
         />
         <Controls 
