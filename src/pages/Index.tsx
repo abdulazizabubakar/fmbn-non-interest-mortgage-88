@@ -4,7 +4,7 @@ import PageContainer from '@/components/layout/PageContainer';
 import { useAuth } from '@/hooks/useAuth';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
-import MainDashboard from '@/components/dashboard/MainDashboard';
+import DashboardModule from '@/components/dashboard/DashboardModule';
 
 const Index = () => {
   const { user, hasAccessToModule } = useAuth();
@@ -18,9 +18,9 @@ const Index = () => {
   return (
     <PageContainer>
       {hasDashboardAccess ? (
-        <MainDashboard 
-          defaultRole={userRole}
-          defaultRegion={userRegion}
+        <DashboardModule 
+          userRole={userRole}
+          userRegion={userRegion}
         />
       ) : (
         <Alert variant="destructive" className="mt-6 max-w-lg mx-auto">
