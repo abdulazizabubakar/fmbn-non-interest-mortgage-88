@@ -10,6 +10,7 @@ import {
   Node,
   Edge,
   Position,
+  MarkerType,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { ProcessFlow } from '@/types/process-flow';
@@ -57,7 +58,7 @@ const ProcessFlowCanvas: React.FC<ProcessFlowCanvasProps> = ({ processFlow }) =>
         strokeWidth: 2,
       },
       markerEnd: {
-        type: 'arrowclosed' as const,
+        type: MarkerType.ArrowClosed,
         color: edge.condition ? '#f59e0b' : '#6b7280',
       },
     }));
