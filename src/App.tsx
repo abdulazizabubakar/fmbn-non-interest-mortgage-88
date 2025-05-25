@@ -15,6 +15,7 @@ import Applications from './pages/Applications';
 import Finance from './pages/Finance';
 import Messages from './pages/Messages';
 import NotFound from './pages/NotFound';
+import ProcessFlows from './pages/ProcessFlows';
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/hooks/useAuth";
 import LesseePortal from './components/lessee/LesseePortal';
@@ -70,6 +71,9 @@ function App() {
             {/* New Mortgage Management Routes */}
             <Route path="/mortgage-management" element={<ProtectedRoute><MortgageManagement /></ProtectedRoute>} />
             <Route path="/mortgage-management/accounts/:id" element={<ProtectedRoute><MortgageAccountDetails /></ProtectedRoute>} />
+            
+            {/* Process Flows Route */}
+            <Route path="/process-flows" element={<ProtectedRoute><ProcessFlows /></ProtectedRoute>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

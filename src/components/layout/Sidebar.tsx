@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -22,7 +21,8 @@ import {
   AlertTriangle,
   Database,
   TrendingUp,
-  Lock
+  Lock,
+  GitBranch
 } from 'lucide-react';
 import AmanahLogo from '../icons/AmanahLogo';
 
@@ -57,6 +57,7 @@ const Sidebar: React.FC = () => {
     {
       label: 'Other Modules',
       items: [
+        { path: '/process-flows', label: 'Process Flows', icon: <GitBranch className="h-4 w-4" /> },
         { path: '/documents', label: 'Document Center', icon: <FileText className="h-4 w-4" /> },
         { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-4 w-4" /> },
         { path: '/integrations', label: 'Integrations', icon: <Database className="h-4 w-4" /> },
