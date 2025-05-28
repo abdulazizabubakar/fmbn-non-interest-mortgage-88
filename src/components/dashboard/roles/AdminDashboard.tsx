@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import AdminMetricCards from './admin/AdminMetricCards';
-import ApplicationsOverview from './admin/ApplicationsOverview';
-import MortgageDistributionChart from './admin/MortgageDistributionChart';
-import AdminActionCards from './admin/AdminActionCards';
+import AdminMetricCards from '../role-dashboards/admin/AdminMetricCards';
+import ApplicationsOverview from '../role-dashboards/admin/ApplicationsOverview';
+import MortgageDistributionChart from '../role-dashboards/admin/MortgageDistributionChart';
+import AdminActionCards from '../role-dashboards/admin/AdminActionCards';
 
 interface AdminDashboardProps {
   region: string;

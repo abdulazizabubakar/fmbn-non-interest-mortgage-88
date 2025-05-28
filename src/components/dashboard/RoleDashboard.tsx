@@ -19,7 +19,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({ userRole, region }) => {
     switch (userRole) {
       case 'admin':
       case 'super_admin':
-        return <AdminDashboard />;
+        return <AdminDashboard region={region || 'Global'} />;
       case 'zonal_admin':
       case 'officer':
         return <ZonalDashboard region={region} />;
