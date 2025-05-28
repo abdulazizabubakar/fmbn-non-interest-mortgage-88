@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,11 +25,6 @@ import InteractiveMetricsGrid from './InteractiveMetricsGrid';
 import RealTimeDataPanel from './RealTimeDataPanel';
 import CustomizableDashboard from './CustomizableDashboard';
 import AdvancedFiltersPanel from './AdvancedFiltersPanel';
-import RealtimeMetrics from '../RealtimeMetrics';
-import ApplicationsOverview from '../ApplicationsOverview';
-import PropertyInsights from '../PropertyInsights';
-import FinancialOverview from '../FinancialOverview';
-import SystemGrowthChart from './SystemGrowthChart';
 
 interface EnhancedDashboardLayoutProps {
   userRole: string;
@@ -208,29 +204,7 @@ const EnhancedDashboardLayout: React.FC<EnhancedDashboardLayoutProps> = ({
       {/* Main Content */}
       <div className="p-6">
         <Tabs value={activeView} className="w-full">
-          <TabsContent value="overview" className="mt-0 space-y-6">
-            {/* Top Section: Key Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <RealtimeMetrics 
-                userRole={userRole} 
-                region={userRegion}
-                timeframe="monthly"
-              />
-              <ApplicationsOverview detailed={false} />
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <PropertyInsights />
-              <FinancialOverview 
-                userRole={userRole}
-                region={userRegion}
-              />
-            </div>
-
-            {/* Middle Section: System Growth */}
-            <SystemGrowthChart userRole={userRole} />
-
-            {/* Bottom Section: Interactive Metrics Grid */}
+          <TabsContent value="overview" className="mt-0">
             <InteractiveMetricsGrid 
               userRole={userRole} 
               userRegion={userRegion}
