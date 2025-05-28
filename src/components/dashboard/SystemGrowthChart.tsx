@@ -21,24 +21,25 @@ const SystemGrowthChart: React.FC<SystemGrowthChartProps> = ({ userRole, region 
   ];
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>System Growth</CardTitle>
         <CardDescription>Applications, approvals, and disbursements over time</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="h-[300px]">
+      <CardContent className="p-6">
+        <div className="w-full h-[280px]">
           <ChartContainer
             config={{
               applications: { label: "Applications", color: "#93C5FD" },
               approvals: { label: "Approvals", color: "#60A5FA" },
               disbursements: { label: "Disbursements", color: "#2563EB" },
             }}
+            className="w-full h-full"
           >
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={growthData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
               >
                 <defs>
                   <linearGradient id="colorApplications" x1="0" y1="0" x2="0" y2="1">
