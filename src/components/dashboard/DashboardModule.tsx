@@ -25,6 +25,7 @@ import RealtimeMetrics from './RealtimeMetrics';
 import FinancialOverview from './FinancialOverview';
 import ApplicationsOverview from './ApplicationsOverview';
 import PropertyInsights from './PropertyInsights';
+import SystemGrowthChart from './SystemGrowthChart';
 import EnhancedDashboardLayout from './enhanced/EnhancedDashboardLayout';
 
 interface DashboardModuleProps {
@@ -135,11 +136,31 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
         </AlertDescription>
       </Alert>
 
-      {/* Role-specific dashboard */}
-      <RoleDashboard userRole={userRole || 'viewer'} region={userRegion} />
-
       {/* Key Performance Indicators */}
       <DashboardKPIs userRole={userRole || 'viewer'} region={userRegion} />
+
+      {/* Real-time metrics - moved up */}
+      <RealtimeMetrics userRole={userRole || 'viewer'} region={userRegion} timeframe={selectedTimeframe} />
+      
+      {/* Applications and Property cards - moved up */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ApplicationsOverview />
+        <PropertyInsights />
+      </div>
+      
+      {/* Financial Overview - moved up */}
+      <RoleBasedAccess
+        requiredRoles={['admin', 'manager', 'finance_officer', 'treasury_officer']}
+        fallback={null}
+      >
+        <FinancialOverview userRole={userRole || 'admin'} region={userRegion} />
+      </RoleBasedAccess>
+
+      {/* System Growth Chart - positioned after the cards */}
+      <SystemGrowthChart userRole={userRole || 'viewer'} region={userRegion} />
+
+      {/* Role-specific dashboard */}
+      <RoleDashboard userRole={userRole || 'viewer'} region={userRegion} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
@@ -150,21 +171,6 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
           <NotificationsPanel userRole={userRole || 'viewer'} />
         </div>
       </div>
-
-      {/* Real-time metrics */}
-      <RealtimeMetrics userRole={userRole || 'viewer'} region={userRegion} timeframe={selectedTimeframe} />
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ApplicationsOverview />
-        <PropertyInsights />
-      </div>
-      
-      <RoleBasedAccess
-        requiredRoles={['admin', 'manager', 'finance_officer', 'treasury_officer']}
-        fallback={null}
-      >
-        <FinancialOverview userRole={userRole || 'admin'} region={userRegion} />
-      </RoleBasedAccess>
     </div>
   );
 };

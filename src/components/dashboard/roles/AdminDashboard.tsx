@@ -1,140 +1,32 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer } from '@/components/ui/chart';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import AdminMetricCards from './admin/AdminMetricCards';
+import ApplicationsOverview from './admin/ApplicationsOverview';
+import MortgageDistributionChart from './admin/MortgageDistributionChart';
+import AdminActionCards from './admin/AdminActionCards';
 
-// Admin Dashboard focuses on system-wide overview
-const AdminDashboard: React.FC = () => {
-  // Mock data for executive summary
-  const summaryData = [
-    {
-      title: 'Total Mortgage Portfolio',
-      value: '₦45.8B',
-      change: '+12.3%',
-      changeDirection: 'up'
-    },
-    {
-      title: 'Active Leases',
-      value: '1,243',
-      change: '+5.3%',
-      changeDirection: 'up'
-    },
-    {
-      title: 'Average Lease Value',
-      value: '₦36.8M',
-      change: '+2.1%',
-      changeDirection: 'up'
-    },
-    {
-      title: 'Default Rate',
-      value: '3.8%',
-      change: '-0.5%',
-      changeDirection: 'down',
-      isPositive: true
-    }
-  ];
-  
-  // Mock data for system growth
-  const growthData = [
-    { month: 'Jan', applications: 45, approvals: 32, disbursements: 28 },
-    { month: 'Feb', applications: 52, approvals: 38, disbursements: 32 },
-    { month: 'Mar', applications: 61, approvals: 45, disbursements: 40 },
-    { month: 'Apr', applications: 67, approvals: 48, disbursements: 42 },
-    { month: 'May', applications: 75, approvals: 56, disbursements: 50 },
-    { month: 'Jun', applications: 82, approvals: 62, disbursements: 55 }
-  ];
+interface AdminDashboardProps {
+  region: string;
+}
 
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ region }) => {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {summaryData.map((item, index) => (
-          <Card key={index}>
-            <CardContent className="p-4">
-              <p className="text-sm font-medium text-muted-foreground">{item.title}</p>
-              <div className="flex items-baseline justify-between mt-1">
-                <h3 className="text-2xl font-bold">{item.value}</h3>
-                <p className={`text-sm font-medium ${
-                  (item.changeDirection === 'up' && !item.isPositive) || 
-                  (item.changeDirection === 'down' && item.isPositive)
-                    ? 'text-green-600'
-                    : (item.changeDirection === 'up' && item.isPositive) ||
-                      (item.changeDirection === 'down' && !item.isPositive)
-                      ? 'text-red-600'
-                      : 'text-gray-600'
-                }`}>
-                  {item.change}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* Main KPIs */}
+      <AdminMetricCards region={region} timeframe="monthly" />
       
-      <Card>
-        <CardHeader>
-          <CardTitle>System Growth</CardTitle>
-          <CardDescription>Applications, approvals, and disbursements over time</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[300px]">
-            <ChartContainer
-              config={{
-                applications: { label: "Applications", color: "#93C5FD" },
-                approvals: { label: "Approvals", color: "#60A5FA" },
-                disbursements: { label: "Disbursements", color: "#2563EB" },
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
-                  data={growthData}
-                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                >
-                  <defs>
-                    <linearGradient id="colorApplications" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#93C5FD" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#93C5FD" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="colorApprovals" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#60A5FA" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="colorDisbursements" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2563EB" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Area 
-                    type="monotone" 
-                    dataKey="applications" 
-                    stroke="#93C5FD" 
-                    fillOpacity={1} 
-                    fill="url(#colorApplications)" 
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="approvals" 
-                    stroke="#60A5FA" 
-                    fillOpacity={1}
-                    fill="url(#colorApprovals)" 
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="disbursements" 
-                    stroke="#2563EB" 
-                    fillOpacity={1}
-                    fill="url(#colorDisbursements)" 
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Applications Overview */}
+      <ApplicationsOverview region={region} />
+      
+      {/* Dashboard Sections */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Mortgage Distribution */}
+        <MortgageDistributionChart region={region} />
+        
+        {/* Quick Action Cards */}
+        <AdminActionCards region={region} />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="col-span-1">
