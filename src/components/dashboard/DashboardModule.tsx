@@ -142,8 +142,8 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
       {/* Real-time metrics - moved up */}
       <RealtimeMetrics userRole={userRole || 'viewer'} region={userRegion} timeframe={selectedTimeframe} />
       
-      {/* Applications and Property cards - moved up */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Applications and Property cards - now stacked vertically and taking full width */}
+      <div className="grid grid-cols-1 gap-6">
         <ApplicationsOverview />
         <PropertyInsights />
       </div>
