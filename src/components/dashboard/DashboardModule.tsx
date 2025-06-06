@@ -209,7 +209,6 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
       <FloatingActionButton
         onClick={() => console.log('FAB clicked')}
         className="animate-bounce-in"
-        style={{ animationDelay: '1000ms' }}
       />
     </div>
   );
