@@ -15,6 +15,7 @@ import StandardReports from './StandardReports';
 import CustomReports from './CustomReports';
 import ScheduledReports from './ScheduledReports';
 import SavedReports from './SavedReports';
+import { EnhancedCard, EnhancedCardContent } from '@/components/ui/enhanced-card';
 
 const ReportsModule = () => {
   const [activeTab, setActiveTab] = useState('standard');
@@ -24,10 +25,10 @@ const ReportsModule = () => {
   };
 
   const reportStats = [
-    { title: "Reports Available", value: "42", icon: FileText, className: "text-blue-500" },
-    { title: "Reports Generated (Month)", value: "156", icon: BarChart3, className: "text-green-500" },
-    { title: "Scheduled Reports", value: "8", icon: Clock, className: "text-purple-500" },
-    { title: "Saved Reports", value: "15", icon: Calendar, className: "text-amber-500" },
+    { title: "Reports Available", value: "42", icon: FileText, gradient: "blue" as const, iconBg: "bg-blue-100", iconColor: "text-blue-600" },
+    { title: "Reports Generated (Month)", value: "156", icon: BarChart3, gradient: "green" as const, iconBg: "bg-green-100", iconColor: "text-green-600" },
+    { title: "Scheduled Reports", value: "8", icon: Clock, gradient: "purple" as const, iconBg: "bg-purple-100", iconColor: "text-purple-600" },
+    { title: "Saved Reports", value: "15", icon: Calendar, gradient: "orange" as const, iconBg: "bg-orange-100", iconColor: "text-orange-600" },
   ];
   
   return (
@@ -35,17 +36,17 @@ const ReportsModule = () => {
       {/* Stats Cards - Fixed sizing and consistent layout */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {reportStats.map((stat, index) => (
-          <Card key={index} className="shadow-sm hover:shadow-md transition-shadow border-nimms-primary/10">
-            <CardContent className="p-4 flex items-center space-x-4">
-              <div className={`rounded-full p-2 ${stat.className.split('-')[1]}-100`}>
-                <stat.icon className={`h-6 w-6 ${stat.className}`} />
+          <EnhancedCard key={index} gradient={stat.gradient} className="shadow-sm hover:shadow-md transition-shadow">
+            <EnhancedCardContent className="p-4 flex items-center space-x-4">
+              <div className={`rounded-full p-3 ${stat.iconBg}`}>
+                <stat.icon className={`h-6 w-6 ${stat.iconColor}`} />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
-                <h3 className="text-2xl font-bold">{stat.value}</h3>
+                <h3 className="text-2xl font-bold text-gray-800">{stat.value}</h3>
               </div>
-            </CardContent>
-          </Card>
+            </EnhancedCardContent>
+          </EnhancedCard>
         ))}
       </div>
       
