@@ -159,11 +159,13 @@ const Topbar: React.FC = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="relative flex items-center gap-2 px-2">
-                <Avatar className="h-8 w-8 border border-border">
-                  <AvatarImage src="/placeholder.svg" />
-                  <AvatarFallback className="bg-nimms-primary/10 text-nimms-primary">AU</AvatarFallback>
-                </Avatar>
-                <span className="font-medium text-sm hidden md:inline-block">Admin User</span>
+                <>
+                  <Avatar className="h-8 w-8 border border-border">
+                    <AvatarImage src="/placeholder.svg" />
+                    <AvatarFallback className="bg-nimms-primary/10 text-nimms-primary">AU</AvatarFallback>
+                  </Avatar>
+                  <span className="font-medium text-sm hidden md:inline-block">Admin User</span>
+                </>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 shadow-md" align="end">
