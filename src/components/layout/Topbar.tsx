@@ -1,10 +1,9 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Bell, 
   Search, 
   Menu, 
-  X,
   CheckCircle,
   AlertCircle,
   InfoIcon,
@@ -34,9 +33,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const Topbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
   const getNotificationIcon = (type: Notification['type']) => {
@@ -59,14 +58,15 @@ const Topbar: React.FC = () => {
       <div className="flex items-center justify-between max-w-screen-2xl mx-auto">
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="h-9 w-9"
-          >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <SidebarTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="h-9 w-9"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SidebarTrigger>
         </div>
 
         {/* Search bar */}

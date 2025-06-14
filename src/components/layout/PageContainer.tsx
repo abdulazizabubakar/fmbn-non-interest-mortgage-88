@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   SidebarProvider,
-  SidebarTrigger
 } from '@/components/ui/sidebar';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
@@ -44,11 +43,7 @@ const PageContainer: React.FC<PageContainerProps> = ({
         <Sidebar />
         <div className="flex-1 flex flex-col">
           <Topbar />
-          {/* Place the sidebar trigger button in the topbar area for visibility */}
-          <div className="p-2 md:hidden flex items-center">
-            <SidebarTrigger />
-            <span className="ml-2 text-sm text-muted-foreground">Menu</span>
-          </div>
+          {/* Sidebar trigger is now in the Topbar */}
           <main className={cn("flex-1 overflow-auto p-3 md:p-5 lg:p-6 max-w-[1920px] mx-auto w-full", className)}>
             <div className="container mx-auto px-0">
               {children}
