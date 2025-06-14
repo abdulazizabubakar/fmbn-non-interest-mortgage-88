@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { User, Permission, UserRole, ModuleAccess, PermissionAction } from '@/types/user';
 
 // Mock user for development - in a real app, this would come from authentication
@@ -97,7 +97,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // We'll start with null user to simulate being logged out
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -163,16 +162,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
+  const contextValue: AuthContextType = {
+    user,
+    login,
+    logout,
+    isAuthenticated,
+    hasPermission,
+    hasRole,
+    hasAccessToModule
+  };
+
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      login, 
-      logout, 
-      isAuthenticated,
-      hasPermission,
-      hasRole,
-      hasAccessToModule
-    }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
