@@ -13,7 +13,7 @@ import {
   Users, 
   TrendingUp, 
   BarChart3,
-  Building,
+  Mosque,
   Shield,
   Clock,
   AlertTriangle,
@@ -66,7 +66,7 @@ const EnhancedIslamicDashboard: React.FC<EnhancedIslamicDashboardProps> = ({
     { 
       value: 'financing', 
       label: 'Islamic Financing', 
-      icon: <Building className="h-4 w-4" />,
+      icon: <Mosque className="h-4 w-4" />,
       badge: 8
     },
     { 
@@ -89,7 +89,7 @@ const EnhancedIslamicDashboard: React.FC<EnhancedIslamicDashboardProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold gradient-text font-playfair flex items-center space-x-3">
-            <Building className="h-10 w-10 text-fmbn-primary" />
+            <Mosque className="h-10 w-10 text-fmbn-primary" />
             <span>FMBN Islamic Banking Dashboard</span>
           </h1>
           <p className="text-fmbn-primary/70 text-lg font-medium mt-2">
@@ -272,7 +272,7 @@ const EnhancedIslamicDashboard: React.FC<EnhancedIslamicDashboardProps> = ({
               <IslamicCardHeader 
                 title="Islamic Finance Products" 
                 description="Shariah-compliant mortgage solutions"
-                icon={<Building className="h-5 w-5" />}
+                icon={<Mosque className="h-5 w-5" />}
               />
               <IslamicCardContent>
                 <div className="space-y-4">
