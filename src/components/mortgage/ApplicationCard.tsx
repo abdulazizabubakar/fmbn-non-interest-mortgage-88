@@ -24,9 +24,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onViewDe
   };
 
   return (
-    <Card className="overflow-hidden glass-card hover:shadow-2xl border-0 transition-shadow">
+    <Card className="overflow-hidden shadow-lg hover:shadow-2xl border-0 transition-shadow bg-gradient-to-br from-fmbn-light via-white to-blue-50">
       <CardContent className="p-0">
-        <div className="p-4 border-l-4 border-fmbn-primary bg-gradient-to-br from-fmbn-light/70 to-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-xl">
+        <div className="p-4 border-l-4 border-fmbn-primary bg-gradient-to-br from-white/80 via-emerald-50/60 to-fmbn-light/80 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-xl">
           <div className="flex-1">
             <div className="flex items-center justify-between md:justify-start md:space-x-4">
               <h3 className="font-semibold">{application.applicationNumber}</h3>

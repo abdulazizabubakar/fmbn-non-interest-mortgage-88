@@ -95,7 +95,14 @@ const EnhancedDashboardKPIs: React.FC<EnhancedDashboardKPIsProps> = ({ userRole,
             className="animate-scale-in"
             style={{ animationDelay: `${index * 150}ms` }}
           >
-            <div className="glass-card bg-gradient-to-br from-white via-fmbn-light/90 to-fmbn-light/60 shadow-xl">
+            <div className={`
+              glass-card shadow-xl
+              ${kpi.gradient === 'green' && 'bg-gradient-to-br from-green-50 via-white to-green-100'}
+              ${kpi.gradient === 'blue' && 'bg-gradient-to-br from-blue-50 via-white to-blue-100'}
+              ${kpi.gradient === 'purple' && 'bg-gradient-to-br from-purple-50 via-white to-purple-100'}
+              ${kpi.gradient === 'pink' && 'bg-gradient-to-br from-pink-50 via-white to-pink-100'}
+              ${kpi.gradient === 'orange' && 'bg-gradient-to-br from-amber-50 via-white to-amber-100'}
+            `}>
               <MetricCard
                 title={kpi.title}
                 value={kpi.value}
