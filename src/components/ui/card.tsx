@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -9,8 +10,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      // New: branded glass/gradient background & color accent shadow
-      "rounded-2xl bg-gradient-to-br from-fmbn-light via-white to-fmbn-primary/5 border border-fmbn-primary/15 shadow-lg hover:shadow-xl transition-shadow duration-300",
+      "rounded-2xl bg-white/80 dark:bg-background/80 backdrop-blur-md border border-fmbn-primary/10 shadow-xl hover:shadow-2xl transition-shadow duration-300",
       "glass-card",
       className
     )}

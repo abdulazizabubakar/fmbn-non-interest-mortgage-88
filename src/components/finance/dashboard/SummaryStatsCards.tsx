@@ -25,7 +25,7 @@ const SummaryStatsCards: React.FC<SummaryStatsCardsProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="bg-gradient-to-br from-green-50 via-white to-green-100 shadow-lg border-0">
+      <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Total Disbursed</CardTitle>
         </CardHeader>
@@ -39,7 +39,7 @@ const SummaryStatsCards: React.FC<SummaryStatsCardsProps> = ({
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-br from-blue-50 via-white to-fmbn-light/50 shadow-lg border-0">
+      <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Pending Disbursements</CardTitle>
         </CardHeader>
@@ -52,7 +52,7 @@ const SummaryStatsCards: React.FC<SummaryStatsCardsProps> = ({
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-br from-fmbn-light via-white to-emerald-50 shadow-lg border-0">
+      <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Repayment Collection</CardTitle>
         </CardHeader>
@@ -65,7 +65,7 @@ const SummaryStatsCards: React.FC<SummaryStatsCardsProps> = ({
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-br from-amber-50 via-white to-yellow-100 shadow-lg border-0">
+      <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Financial Exceptions</CardTitle>
         </CardHeader>
