@@ -18,7 +18,7 @@ const RegionalMetricsCard: React.FC<RegionalMetricsCardProps> = ({ region }) => 
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <PropertyStatusChart region={region} />
           <PaymentCollectionChart region={region} />
         </div>

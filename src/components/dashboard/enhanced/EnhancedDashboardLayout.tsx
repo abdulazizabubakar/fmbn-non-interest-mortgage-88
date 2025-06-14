@@ -160,7 +160,7 @@ const EnhancedDashboardLayout: React.FC<EnhancedDashboardLayoutProps> = ({
         {/* Navigation Tabs */}
         <div className="px-4 pb-2">
           <Tabs value={activeView} onValueChange={setActiveView}>
-            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:max-w-4xl bg-slate-100">
+            <TabsList className="grid w-full grid-cols-6 lg:max-w-4xl bg-slate-100">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
                 Overview

@@ -108,7 +108,7 @@ const ReportsModule = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="mb-4 grid grid-cols-2 sm:grid-cols-4 w-full md:w-auto">
+            <TabsList className="mb-4 grid grid-cols-4 w-full md:w-auto">
               <TabsTrigger value="standard" className="text-sm">Standard Reports</TabsTrigger>
               <TabsTrigger value="custom" className="text-sm">Custom Reports</TabsTrigger>
               <TabsTrigger value="scheduled" className="text-sm">Scheduled</TabsTrigger>
