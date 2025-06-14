@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -34,6 +33,7 @@ import { SmartSearchBar } from './enhanced/SmartSearchBar';
 import { FloatingActionButton } from '@/components/ui/floating-action-button';
 import { EnhancedCard, EnhancedCardContent, EnhancedCardHeader } from '@/components/ui/enhanced-card';
 import { GlassCard } from '@/components/ui/glass-card';
+import EnhancedIslamicDashboard from './EnhancedIslamicDashboard';
 
 interface DashboardModuleProps {
   userRole: string | null;
@@ -46,8 +46,80 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
 }) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'>('monthly');
   const [useEnhancedDashboard, setUseEnhancedDashboard] = useState(true);
+  const [useIslamicDesign, setUseIslamicDesign] = useState(true);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   
+  // Show Islamic enhanced dashboard option
+  if (useEnhancedDashboard && useIslamicDesign) {
+    return (
+      <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-fmbn-light/50">
+        {/* Islamic Design Toggle Card */}
+        <GlassCard className="border-fmbn-primary/30 shadow-2xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="p-4 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg glow-effect">
+                  <Sparkles className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-fmbn-dark text-2xl gradient-text font-playfair">
+                    Enhanced Islamic Finance Dashboard
+                  </h3>
+                  <p className="text-fmbn-primary font-medium">Modern UI with Islamic finance principles and FMBN branding</p>
+                </div>
+                <Badge className="bg-gradient-to-r from-fmbn-accent to-yellow-500 text-fmbn-dark border-0 animate-float font-bold shadow-lg">
+                  ✨ ISLAMIC DESIGN
+                </Badge>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setCommandPaletteOpen(true)}
+                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
+                >
+                  <Command className="h-4 w-4 mr-2" />
+                  Quick Actions
+                </Button>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="islamic-design"
+                    checked={useIslamicDesign}
+                    onCheckedChange={setUseIslamicDesign}
+                  />
+                  <Label htmlFor="islamic-design" className="text-fmbn-primary font-semibold">
+                    Islamic Design
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="enhanced-dashboard"
+                    checked={useEnhancedDashboard}
+                    onCheckedChange={setUseEnhancedDashboard}
+                  />
+                  <Label htmlFor="enhanced-dashboard" className="text-fmbn-primary font-semibold">
+                    Enhanced Mode
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </GlassCard>
+
+        <EnhancedIslamicDashboard 
+          userRole={userRole || 'viewer'} 
+          userRegion={userRegion} 
+        />
+
+        {/* Command Palette */}
+        <CommandPalette 
+          open={commandPaletteOpen} 
+          onOpenChange={setCommandPaletteOpen} 
+        />
+      </div>
+    );
+  }
+
   // Show enhanced dashboard option
   if (useEnhancedDashboard) {
     return (
@@ -80,6 +152,16 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                   <Command className="h-4 w-4 mr-2" />
                   Quick Actions
                 </Button>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="islamic-design"
+                    checked={useIslamicDesign}
+                    onCheckedChange={setUseIslamicDesign}
+                  />
+                  <Label htmlFor="islamic-design" className="text-fmbn-primary font-semibold">
+                    Islamic Design
+                  </Label>
+                </div>
                 <div className="flex items-center space-x-2">
                   <Switch
                     id="enhanced-dashboard"
@@ -145,6 +227,16 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
               <Search className="h-4 w-4 mr-2" />
               Search (⌘K)
             </Button>
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="islamic-design"
+                checked={useIslamicDesign}
+                onCheckedChange={setUseIslamicDesign}
+              />
+              <Label htmlFor="islamic-design" className="text-sm font-semibold">
+                Islamic Design
+              </Label>
+            </div>
             <div className="flex items-center space-x-2">
               <Switch
                 id="enhanced-dashboard"
