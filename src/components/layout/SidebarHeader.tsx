@@ -14,7 +14,9 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 }) => (
   <div className="pt-6 pb-4 flex items-center justify-center">
     <Link to={linkPath} className="flex items-center flex-col hover:scale-105 transition-transform duration-300">
-      <AmanahLogo className={logoClassName} />
+      <div className="bg-white bg-opacity-90 rounded-xl shadow-md p-4 flex items-center justify-center border border-border">
+        <AmanahLogo className={logoClassName} />
+      </div>
     </Link>
   </div>
 );
