@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -36,43 +37,43 @@ const Sidebar: React.FC = () => {
     {
       label: 'Core Modules',
       items: [
-        { path: '/dashboard', label: 'Dashboard', icon: <Home className="h-4 w-4" /> },
-        { path: '/customers', label: 'Customers', icon: <Users className="h-4 w-4" /> },
-        { path: '/applications', label: 'Applications', icon: <FilePlus className="h-4 w-4" /> },
-        { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-4 w-4" /> },
-        { path: '/properties', label: 'Properties', icon: <Building className="h-4 w-4" /> },
+        { path: '/dashboard', label: 'Dashboard', icon: <Home className="h-5 w-5" /> },
+        { path: '/customers', label: 'Customers', icon: <Users className="h-5 w-5" /> },
+        { path: '/applications', label: 'Applications', icon: <FilePlus className="h-5 w-5" /> },
+        { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
+        { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
       ]
     },
     {
       label: 'Finance Operations',
       items: [
-        { path: '/finance', label: 'Finance Dashboard', icon: <BarChart3 className="h-4 w-4" /> },
-        { path: '/finance/operations', label: 'Operations', icon: <CreditCard className="h-4 w-4" /> },
-        { path: '/finance/disbursements', label: 'Disbursements', icon: <CreditCard className="h-4 w-4" /> },
-        { path: '/finance/repayments', label: 'Repayments', icon: <Calendar className="h-4 w-4" /> },
-        { path: '/finance/subsidies', label: 'Subsidies', icon: <Receipt className="h-4 w-4" /> },
-        { path: '/finance/exceptions', label: 'Exceptions', icon: <AlertTriangle className="h-4 w-4" /> },
-        { path: '/finance/risk', label: 'Risk Assessment', icon: <Shield className="h-4 w-4" /> },
-        { path: '/finance/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-4 w-4" /> },
-        { path: '/finance/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-4 w-4" /> },
+        { path: '/finance', label: 'Finance Dashboard', icon: <BarChart3 className="h-5 w-5" /> },
+        { path: '/finance/operations', label: 'Operations', icon: <CreditCard className="h-5 w-5" /> },
+        { path: '/finance/disbursements', label: 'Disbursements', icon: <CreditCard className="h-5 w-5" /> },
+        { path: '/finance/repayments', label: 'Repayments', icon: <Calendar className="h-5 w-5" /> },
+        { path: '/finance/subsidies', label: 'Subsidies', icon: <Receipt className="h-5 w-5" /> },
+        { path: '/finance/exceptions', label: 'Exceptions', icon: <AlertTriangle className="h-5 w-5" /> },
+        { path: '/finance/risk', label: 'Risk Assessment', icon: <Shield className="h-5 w-5" /> },
+        { path: '/finance/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-5 w-5" /> },
+        { path: '/finance/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-5 w-5" /> },
       ]
     },
     {
       label: 'Other Modules',
       items: [
-        { path: '/process-flows', label: 'Process Flows', icon: <GitBranch className="h-4 w-4" /> },
-        { path: '/documents', label: 'Document Center', icon: <FileText className="h-4 w-4" /> },
-        { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-4 w-4" /> },
-        { path: '/integrations', label: 'Integrations', icon: <Database className="h-4 w-4" /> },
-        { path: '/reports', label: 'Reports', icon: <FileText className="h-4 w-4" /> },
-        { path: '/analytics', label: 'Analytics', icon: <TrendingUp className="h-4 w-4" /> },
+        { path: '/process-flows', label: 'Process Flows', icon: <GitBranch className="h-5 w-5" /> },
+        { path: '/documents', label: 'Document Center', icon: <FileText className="h-5 w-5" /> },
+        { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-5 w-5" /> },
+        { path: '/integrations', label: 'Integrations', icon: <Database className="h-5 w-5" /> },
+        { path: '/reports', label: 'Reports', icon: <FileText className="h-5 w-5" /> },
+        { path: '/analytics', label: 'Analytics', icon: <TrendingUp className="h-5 w-5" /> },
       ]
     },
   ];
 
   const adminItems = [
-    { path: '/security', label: 'Security', icon: <Lock className="h-4 w-4" /> },
-    { path: '/settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
+    { path: '/security', label: 'Security', icon: <Lock className="h-5 w-5" /> },
+    { path: '/settings', label: 'Settings', icon: <Settings className="h-5 w-5" /> },
   ];
 
   const handleLogout = () => {
@@ -81,76 +82,86 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-full md:w-64 bg-sidebar p-4 flex flex-col justify-between border-r border-border md:h-screen md:sticky md:top-0 overflow-y-auto shadow-sm">
-      <div className="space-y-6">
-        <div className="flex items-center justify-center p-2">
-          <Link to="/dashboard" className="flex items-center flex-col">
-            <AmanahLogo className="h-16 w-auto" />
+    <aside className="w-full md:w-64 sidebar-glass flex flex-col justify-between border-none md:h-screen md:sticky md:top-0 overflow-y-auto shadow-lg">
+      <div className="space-y-8">
+        <div className="pt-6 pb-4 flex items-center justify-center">
+          <Link to="/dashboard" className="flex items-center flex-col hover:scale-105 transition-transform duration-300">
+            <AmanahLogo className="h-28 w-auto" />
           </Link>
         </div>
 
-        <nav className="space-y-6">
+        <nav className="space-y-7">
           {moduleGroups.map((group, idx) => (
-            <div key={idx} className="space-y-2">
-              <p className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider px-3 mb-2">
-                {group.label}
-              </p>
+            <div key={idx} className="space-y-2 px-1">
+              <p className="sidebar-label">{group.label}</p>
               <div className="space-y-1">
-                {group.items.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={cn(
-                      "flex items-center space-x-2 px-3 py-2 rounded-md text-sm transition-colors",
-                      location.pathname === item.path || 
-                      (item.path !== '/dashboard' && location.pathname.startsWith(item.path))
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                        : "text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-                    )}
-                  >
-                    <span className="flex items-center justify-center w-5">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </Link>
-                ))}
+                {group.items.map((item) => {
+                  const isActive =
+                    location.pathname === item.path ||
+                    (item.path !== '/dashboard' && location.pathname.startsWith(item.path));
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={cn(
+                        "flex items-center space-x-3 px-4 py-2 rounded-lg font-medium group text-sm transition-all hover:scale-[1.04] hover:shadow-md hover:bg-blue-50/50",
+                        isActive
+                          ? "active-gradient shadow active:scale-[1.01]"
+                          : "text-sidebar-foreground/90 hover:text-blue-700"
+                      )}
+                    >
+                      <span className={cn("w-6 h-6 flex items-center justify-center", isActive && "text-white")}>
+                        {item.icon}
+                      </span>
+                      <span className={cn("tracking-tight", isActive && "text-white font-semibold")}>
+                        {item.label}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           ))}
 
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider px-3 mb-2">
-              Administration
-            </p>
+          <div className="space-y-2 px-1">
+            <p className="sidebar-label">Administration</p>
             <div className="space-y-1">
-              {adminItems.map((item) => (
+              {adminItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
                 <Link
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center space-x-2 px-3 py-2 rounded-md text-sm transition-colors",
-                    location.pathname === item.path
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                      : "text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                    "flex items-center space-x-3 px-4 py-2 rounded-lg font-medium group text-sm transition-all hover:scale-[1.04] hover:shadow-md hover:bg-blue-50/40",
+                    isActive
+                      ? "active-gradient shadow active:scale-[1.01]"
+                      : "text-sidebar-foreground/90 hover:text-blue-700"
                   )}
                 >
-                  <span className="flex items-center justify-center w-5">{item.icon}</span>
-                  <span>{item.label}</span>
+                  <span className={cn("w-6 h-6 flex items-center justify-center", isActive && "text-white")}>
+                    {item.icon}
+                  </span>
+                  <span className={cn("tracking-tight", isActive && "text-white font-semibold")}>
+                    {item.label}
+                  </span>
                 </Link>
-              ))}
+              )})}
             </div>
           </div>
         </nav>
       </div>
 
-      <div className="mt-auto pt-4 border-t border-sidebar-border/50">
+      <div className="mt-auto pt-6 pb-3 px-4 border-t border-blue-100/40">
         <button 
           onClick={handleLogout}
-          className="w-full flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-sidebar-foreground/90 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground transition-colors"
+          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg text-sm text-sidebar-foreground/90 hover:bg-red-50 hover:text-red-700 group transition-all font-medium"
         >
-          <LogOut className="h-4 w-4" />
+          <LogOut className="h-5 w-5" />
           <span>Logout</span>
         </button>
-        <div className="mt-3 px-3 py-2 text-xs text-sidebar-foreground/60">
-          <p>NIMMS v1.0.0</p>
+        <div className="mt-3 px-1 py-2 text-xs text-sidebar-foreground/60 flex flex-col items-center">
+          <p className="tracking-wide">NIMMS v1.0.0</p>
           <p>© 2024 FMBN</p>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -47,20 +46,22 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
   // Show enhanced dashboard option
   if (useEnhancedDashboard) {
     return (
-      <div className="space-y-6 animate-fade-in">
+      <div className="space-y-6 animate-fade-in font-inter">
         {/* Enhanced Toggle Card */}
-        <EnhancedCard gradient="blue" hover className="border-blue-200">
-          <EnhancedCardContent className="p-4">
+        <EnhancedCard gradient="blue" hover className="border-blue-200 shadow-2xl glass-card">
+          <EnhancedCardContent className="p-8">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg">
-                  <Sparkles className="h-5 w-5 text-white" />
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg shadow glow-effect">
+                  <Sparkles className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900">Enhanced Dashboard</h3>
-                  <p className="text-sm text-blue-700">Interactive, real-time dashboard experience</p>
+                  <h3 className="font-bold text-blue-900 text-xl gradient-text font-playfair">
+                    Enhanced Dashboard
+                  </h3>
+                  <p className="text-sm text-blue-700 font-medium">Interactive, real-time dashboard experience</p>
                 </div>
-                <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 animate-float">
+                <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 animate-float font-bold">
                   NEW
                 </Badge>
               </div>
@@ -71,16 +72,16 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                     checked={useEnhancedDashboard}
                     onCheckedChange={setUseEnhancedDashboard}
                   />
-                  <Label htmlFor="enhanced-dashboard" className="text-sm text-blue-700">
+                  <Label htmlFor="enhanced-dashboard" className="text-sm text-blue-700 font-semibold">
                     Enhanced Mode
                   </Label>
                 </div>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50 hover-lift"
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50 hover-lift font-medium"
                 >
-                  <Settings className="h-4 w-4 mr-1" />
+                  <Settings className="h-5 w-5 mr-2" />
                   Customize
                 </Button>
               </div>
@@ -98,17 +99,17 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
 
   // Enhanced Classic dashboard layout
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-inter">
       {/* Enhanced Header with Smart Search */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="animate-slide-in-left">
-            <h1 className="text-3xl font-bold tracking-tight flex items-center space-x-2 gradient-text">
-              <LayoutDashboard className="h-8 w-8 text-blue-600" />
+        <div className="flex items-center justify-between animate-slide-in-left">
+          <div>
+            <h1 className="text-4xl font-extrabold gradient-text font-playfair flex items-center space-x-3">
+              <LayoutDashboard className="h-9 w-9 text-primary" />
               <span>Dashboard</span>
             </h1>
-            <p className="text-muted-foreground mt-1">
-              Welcome to the NIMMS Dashboard - {userRegion} Region
+            <p className="text-muted-foreground mt-1 text-lg font-medium">
+              Welcome to the NIMMS Dashboard - <span className="font-semibold text-primary">{userRegion} Region</span>
             </p>
           </div>
           
@@ -119,7 +120,7 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                 checked={useEnhancedDashboard}
                 onCheckedChange={setUseEnhancedDashboard}
               />
-              <Label htmlFor="enhanced-dashboard" className="text-sm">
+              <Label htmlFor="enhanced-dashboard" className="text-sm font-semibold">
                 Enhanced Dashboard
               </Label>
             </div>
@@ -139,14 +140,16 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
       </div>
 
       {/* Enhanced Upgrade prompt */}
-      <Alert className="border-blue-200 bg-gradient-to-r from-blue-50 to-purple-50 animate-slide-up">
-        <TrendingUp className="h-4 w-4 text-blue-600" />
-        <AlertTitle className="text-blue-900">Try the Enhanced Dashboard</AlertTitle>
-        <AlertDescription className="text-blue-700">
+      <Alert className="border-blue-200 bg-gradient-to-r from-blue-50 to-purple-50 animate-slide-up shadow-md">
+        <TrendingUp className="h-5 w-5 text-blue-600" />
+        <AlertTitle className="text-blue-900 text-lg font-bold font-playfair">
+          Try the Enhanced Dashboard
+        </AlertTitle>
+        <AlertDescription className="text-blue-700 font-medium">
           Experience our new interactive dashboard with real-time data, customizable widgets, and advanced analytics.
           <Button 
             variant="link" 
-            className="p-0 ml-2 text-blue-600 hover:text-blue-800 hover-lift"
+            className="p-0 ml-2 text-blue-600 hover:text-blue-800 hover-lift font-semibold"
             onClick={() => setUseEnhancedDashboard(true)}
           >
             Switch to Enhanced Mode →
@@ -166,10 +169,10 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
       
       {/* Enhanced Applications and Property cards */}
       <div className="grid grid-cols-1 gap-6 animate-fade-in" style={{ animationDelay: '500ms' }}>
-        <div className="hover-lift">
+        <div className="hover-lift glass-card shadow-md">
           <ApplicationsOverview />
         </div>
-        <div className="hover-lift">
+        <div className="hover-lift glass-card shadow-md">
           <PropertyInsights />
         </div>
       </div>
@@ -179,28 +182,27 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
         requiredRoles={['admin', 'manager', 'finance_officer', 'treasury_officer']}
         fallback={null}
       >
-        <div className="animate-fade-in hover-lift" style={{ animationDelay: '600ms' }}>
+        <div className="animate-fade-in hover-lift glass-card" style={{ animationDelay: '600ms' }}>
           <FinancialOverview userRole={userRole || 'admin'} region={userRegion} />
         </div>
       </RoleBasedAccess>
 
       {/* Enhanced System Growth Chart */}
-      <div className="animate-fade-in hover-lift" style={{ animationDelay: '700ms' }}>
+      <div className="animate-fade-in hover-lift glass-card" style={{ animationDelay: '700ms' }}>
         <SystemGrowthChart userRole={userRole || 'viewer'} region={userRegion} />
       </div>
 
       {/* Enhanced Role-specific dashboard */}
-      <div className="animate-fade-in" style={{ animationDelay: '800ms' }}>
+      <div className="animate-fade-in glass-card" style={{ animationDelay: '800ms' }}>
         <RoleDashboard userRole={userRole || 'viewer'} region={userRegion} />
       </div>
 
       {/* Enhanced Action shortcuts and notifications */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '900ms' }}>
-        <div className="md:col-span-2 hover-lift">
+        <div className="md:col-span-2 hover-lift glass-card">
           <ActionShortcuts userRole={userRole || undefined} />
         </div>
-        
-        <div className="hover-lift">
+        <div className="hover-lift glass-card">
           <NotificationsPanel userRole={userRole || 'viewer'} />
         </div>
       </div>
