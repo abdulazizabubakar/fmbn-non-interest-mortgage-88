@@ -81,8 +81,8 @@ const Login = () => {
         {/* Left image side (desktop only, appears above form on mobile) */}
         <div className="md:w-1/2 w-full h-60 md:h-auto relative flex-shrink-0">
           <img
-            src="https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=720&q=80"
-            alt="Islamic Mortgage System"
+            src="https://images.unsplash.com/photo-1551038247-3d9af20df552?auto=format&fit=crop&w=720&q=80"
+            alt="Mosque, symbolizing Non-Interest Mortgage"
             className="object-cover w-full h-full md:rounded-l-3xl md:rounded-none rounded-t-3xl"
             loading="lazy"
             style={{ minHeight: '100%' }}
