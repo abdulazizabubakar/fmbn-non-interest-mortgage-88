@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,13 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Lock, Mail, UserCheck, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, UserCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import AmanahLogo from '@/components/icons/AmanahLogo';
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -71,8 +71,8 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen bg-muted/30">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-2">
-            <ShieldCheck className="h-12 w-12 text-nimms-primary" />
+          <div className="flex items-center justify-center mb-4">
+            <AmanahLogo className="h-16 w-auto" />
           </div>
           <CardTitle className="text-2xl font-bold text-center">
             FMBN Mortgage Management
