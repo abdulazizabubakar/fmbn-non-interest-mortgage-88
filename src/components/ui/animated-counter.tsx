@@ -29,11 +29,8 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       
-      // Easing function for smooth animation
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      const currentValue = value * easeOutCubic;
-      
-      setCount(currentValue);
+      setCount(value * easeOutCubic);
 
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate);
@@ -41,23 +38,18 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     };
 
     animationFrame = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
+    return () => cancelAnimationFrame(animationFrame);
   }, [value, duration]);
 
   const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return num.toLocaleString('en-US', {
       minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    }).format(num);
+      maximumFractionDigits: decimals
+    });
   };
 
   return (
-    <span className={cn('font-bold', className)}>
+    <span className={cn('font-mono', className)}>
       {prefix}{formatNumber(count)}{suffix}
     </span>
   );
