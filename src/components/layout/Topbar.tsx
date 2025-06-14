@@ -1,10 +1,9 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Bell, 
   Search, 
   Menu, 
-  X,
   CheckCircle,
   AlertCircle,
   InfoIcon,
@@ -34,10 +33,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Topbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
   
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
@@ -59,14 +67,15 @@ const Topbar: React.FC = () => {
       <div className="flex items-center justify-between max-w-screen-2xl mx-auto">
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="h-9 w-9"
-          >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <SidebarTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="h-9 w-9"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SidebarTrigger>
         </div>
 
         {/* Search bar */}
@@ -150,11 +159,13 @@ const Topbar: React.FC = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="relative flex items-center gap-2 px-2">
-                <Avatar className="h-8 w-8 border border-border">
-                  <AvatarImage src="/placeholder.svg" />
-                  <AvatarFallback className="bg-nimms-primary/10 text-nimms-primary">AU</AvatarFallback>
-                </Avatar>
-                <span className="font-medium text-sm hidden md:inline-block">Admin User</span>
+                <>
+                  <Avatar className="h-8 w-8 border border-border">
+                    <AvatarImage src="/placeholder.svg" />
+                    <AvatarFallback className="bg-nimms-primary/10 text-nimms-primary">AU</AvatarFallback>
+                  </Avatar>
+                  <span className="font-medium text-sm hidden md:inline-block">Admin User</span>
+                </>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 shadow-md" align="end">
@@ -182,7 +193,7 @@ const Topbar: React.FC = () => {
                   <span>Help Center</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer text-red-500 focus:text-red-500">
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-500 focus:text-red-500">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Logout</span>
                 </DropdownMenuItem>

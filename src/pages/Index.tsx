@@ -2,36 +2,36 @@
 import React from 'react';
 import PageContainer from '@/components/layout/PageContainer';
 import { useAuth } from '@/hooks/useAuth';
+import DashboardModule from '@/components/dashboard/DashboardModule';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
-import DashboardModule from '@/components/dashboard/DashboardModule';
 
 const Index = () => {
-  const { user, hasAccessToModule } = useAuth();
+  const { user } = useAuth();
   
-  // Get user role and region for dashboard customization
-  // Make sure to handle the case when user is null
   const userRole = user?.roles[0] || null;
   const userRegion = user?.region || 'Global';
-  const hasDashboardAccess = hasAccessToModule('dashboard');
+
+  if (!userRole) {
+    return (
+      <PageContainer>
+        <Alert variant="destructive" className="mt-6 max-w-lg mx-auto">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              Could not determine user role. Please try logging in again.
+            </AlertDescription>
+          </Alert>
+      </PageContainer>
+    )
+  }
 
   return (
     <PageContainer>
-      {hasDashboardAccess ? (
-        <DashboardModule 
-          userRole={userRole}
-          userRegion={userRegion}
-        />
-      ) : (
-        <Alert variant="destructive" className="mt-6 max-w-lg mx-auto">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Access Denied</AlertTitle>
-          <AlertDescription>
-            You do not have permission to access the dashboard.
-            Please contact your system administrator if you believe this is an error.
-          </AlertDescription>
-        </Alert>
-      )}
+      <DashboardModule 
+        userRole={userRole}
+        userRegion={userRegion}
+      />
     </PageContainer>
   );
 };
