@@ -15,9 +15,7 @@ const LesseeSidebarHeader: React.FC<LesseeSidebarHeaderProps> = ({
   return (
     <div className="flex items-center justify-center p-2">
       <Link to={linkPath} className="flex items-center flex-col">
-        <div className="bg-white bg-opacity-90 rounded-xl shadow-md p-3 border border-border">
-          <AmanahLogo className={logoClassName} />
-        </div>
+        <AmanahLogo className={logoClassName} />
       </Link>
     </div>
   );

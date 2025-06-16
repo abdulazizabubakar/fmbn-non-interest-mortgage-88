@@ -95,17 +95,15 @@ const EnhancedDashboardKPIs: React.FC<EnhancedDashboardKPIsProps> = ({ userRole,
             className="animate-scale-in"
             style={{ animationDelay: `${index * 150}ms` }}
           >
-            <div className="glass-card bg-gradient-to-br from-white via-fmbn-light/90 to-fmbn-light/60 shadow-xl">
-              <MetricCard
-                title={kpi.title}
-                value={kpi.value}
-                previousValue={kpi.previousValue}
-                icon={kpi.icon}
-                gradient={kpi.gradient}
-                format={kpi.format}
-                size="md"
-              />
-            </div>
+            <MetricCard
+              title={kpi.title}
+              value={kpi.value}
+              previousValue={kpi.previousValue}
+              icon={kpi.icon}
+              gradient={kpi.gradient}
+              format={kpi.format}
+              size="md"
+            />
           </div>
         ))}
       </div>

@@ -30,31 +30,31 @@ const OperationsTabs: React.FC<OperationsTabsProps> = ({ initialTab = 'overview'
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
       <TabsList className="bg-muted/50 p-1 h-auto inline-flex flex-wrap w-full md:w-auto gap-1">
-        <TabsTrigger value="overview" className="h-9 px-4">
+        <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <BarChart className="h-4 w-4 mr-2" />
           Overview
         </TabsTrigger>
-        <TabsTrigger value="payments" className="h-9 px-4">
+        <TabsTrigger value="payments" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <CreditCard className="h-4 w-4 mr-2" />
           Payments
         </TabsTrigger>
-        <TabsTrigger value="disbursements" className="h-9 px-4">
+        <TabsTrigger value="disbursements" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <ArrowDownUp className="h-4 w-4 mr-2" />
           Disbursements
         </TabsTrigger>
-        <TabsTrigger value="refunds" className="h-9 px-4">
+        <TabsTrigger value="refunds" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <DollarSign className="h-4 w-4 mr-2" />
           Refunds
         </TabsTrigger>
-        <TabsTrigger value="reconciliation" className="h-9 px-4">
+        <TabsTrigger value="reconciliation" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <FileText className="h-4 w-4 mr-2" />
           Reconciliation
         </TabsTrigger>
-        <TabsTrigger value="delinquency" className="h-9 px-4">
+        <TabsTrigger value="delinquency" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <AlertTriangle className="h-4 w-4 mr-2" />
           Delinquency
         </TabsTrigger>
-        <TabsTrigger value="treasury" className="h-9 px-4">
+        <TabsTrigger value="treasury" className="data-[state=active]:bg-white data-[state=active]:shadow-sm h-9 px-4">
           <BarChart className="h-4 w-4 mr-2" />
           Treasury
         </TabsTrigger>
