@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,13 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// FMBN Brand Colors
-				'fmbn-primary': 'hsl(var(--fmbn-primary))',
-				'fmbn-secondary': 'hsl(var(--fmbn-secondary))',
-				'fmbn-accent': 'hsl(var(--fmbn-accent))',
-				'fmbn-light': 'hsl(var(--fmbn-light))',
-				'fmbn-dark': 'hsl(var(--fmbn-dark))',
-				// Legacy support
 				nimms: {
 					primary: '#00685e',
 					secondary: '#0079a1',
@@ -165,12 +157,8 @@ export default {
 					'50%': { transform: 'translateY(-10px)' }
 				},
 				'glow': {
-					'0%, 100%': { 
-						boxShadow: '0 0 20px hsl(var(--fmbn-primary) / 0.3)' 
-					},
-					'50%': { 
-						boxShadow: '0 0 30px hsl(var(--fmbn-primary) / 0.6), 0 0 40px hsl(var(--fmbn-secondary) / 0.3)' 
-					}
+					'0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' },
+					'50%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.8)' }
 				}
 			},
 			animation: {

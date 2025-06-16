@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -43,52 +42,45 @@
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 172 30% 25%;
     --sidebar-ring: 196 100% 31%;
-
-    /* FMBN Brand Colors */
-    --fmbn-primary: 172 100% 20%;
-    --fmbn-secondary: 196 100% 31%;
-    --fmbn-accent: 38 100% 48%;
-    --fmbn-light: 152 30% 97%;
-    --fmbn-dark: 172 60% 12%;
   }
 
   .dark {
-    --background: 172 60% 8%;
+    --background: 172 60% 12%;
     --foreground: 172 20% 94%;
 
-    --card: 172 50% 10%;
+    --card: 172 50% 15%;
     --card-foreground: 172 20% 94%;
 
-    --popover: 172 50% 10%;
+    --popover: 172 50% 15%;
     --popover-foreground: 172 20% 94%;
 
-    --primary: 172 100% 25%;
+    --primary: 172 100% 20%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 196 100% 35%;
+    --secondary: 196 100% 31%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 172 30% 15%;
+    --muted: 172 30% 20%;
     --muted-foreground: 172 20% 70%;
 
-    --accent: 38 100% 52%;
+    --accent: 38 100% 48%;
     --accent-foreground: 172 60% 12%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 172 20% 94%;
 
-    --border: 172 30% 20%;
-    --input: 172 30% 20%;
-    --ring: 172 100% 25%;
+    --border: 172 30% 25%;
+    --input: 172 30% 25%;
+    --ring: 172 100% 20%;
 
-    --sidebar-background: 172 60% 5%;
+    --sidebar-background: 172 60% 8%;
     --sidebar-foreground: 172 20% 94%;
-    --sidebar-primary: 38 100% 52%;
+    --sidebar-primary: 38 100% 48%;
     --sidebar-primary-foreground: 172 60% 12%;
-    --sidebar-accent: 172 30% 12%;
+    --sidebar-accent: 172 30% 15%;
     --sidebar-accent-foreground: 172 20% 94%;
-    --sidebar-border: 172 30% 12%;
-    --sidebar-ring: 196 100% 35%;
+    --sidebar-border: 172 30% 15%;
+    --sidebar-ring: 196 100% 31%;
   }
 
   * {
@@ -98,17 +90,14 @@
   body {
     @apply bg-background text-foreground font-inter antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: linear-gradient(135deg, hsl(var(--fmbn-light)) 0%, hsl(var(--background)) 100%);
   }
-  
   h1, h2, h3, h4, h5 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     letter-spacing: 0.01em;
   }
-  
   .gradient-text {
-    background-image: linear-gradient(90deg, hsl(var(--fmbn-primary)) 25%, hsl(var(--fmbn-secondary)) 80%);
+    background-image: linear-gradient(90deg, #2d7ff9 25%, #8f34f7 80%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -119,7 +108,7 @@
     scroll-behavior: smooth;
   }
 
-  /* Custom scrollbar with FMBN colors */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -130,59 +119,51 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--fmbn-primary) / 0.3);
+    background: hsl(var(--muted-foreground) / 0.3);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--fmbn-primary) / 0.5);
+    background: hsl(var(--muted-foreground) / 0.5);
   }
 }
 
 @layer components {
-  .fmbn-heading {
-    @apply text-2xl font-bold text-fmbn-primary sm:text-3xl md:text-4xl;
+  .nimms-heading {
+    @apply text-2xl font-bold text-nimms-primary sm:text-3xl md:text-4xl;
   }
   
-  .fmbn-subheading {
-    @apply text-xl font-semibold text-fmbn-secondary sm:text-2xl;
+  .nimms-subheading {
+    @apply text-xl font-semibold text-nimms-secondary sm:text-2xl;
   }
   
-  .fmbn-card {
+  .nimms-card {
     @apply rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md;
-    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--fmbn-light)) 100%);
-    border-color: hsl(var(--fmbn-primary) / 0.1);
   }
   
-  .fmbn-stat-card {
-    @apply fmbn-card flex flex-col items-center justify-center text-center;
+  .nimms-stat-card {
+    @apply nimms-card flex flex-col items-center justify-center text-center;
   }
   
-  .fmbn-input-container {
+  .nimms-input-container {
     @apply space-y-2;
   }
   
-  .fmbn-label {
+  .nimms-label {
     @apply block text-sm font-medium text-foreground;
   }
   
-  .fmbn-dashboard-section {
+  .nimms-dashboard-section {
     @apply space-y-4;
   }
 
-  /* Enhanced components with FMBN branding */
+  /* Enhanced components */
   .glass-card {
     @apply backdrop-blur-md bg-white/20 border-white/30 shadow-xl;
-    background: linear-gradient(135deg, 
-      hsl(var(--fmbn-light) / 0.8) 0%, 
-      hsl(var(--card) / 0.9) 50%, 
-      hsl(var(--fmbn-primary) / 0.05) 100%
-    );
-    border-color: hsl(var(--fmbn-primary) / 0.2);
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-fmbn-primary to-fmbn-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
   }
 
   .hover-lift {
@@ -192,7 +173,7 @@
   .shimmer {
     background: linear-gradient(90deg, 
       transparent 0%, 
-      hsl(var(--fmbn-primary) / 0.1) 50%, 
+      rgba(255,255,255,0.4) 50%, 
       transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
@@ -204,19 +185,13 @@
 
   .glow-effect {
     @apply animate-glow;
-    box-shadow: 0 0 20px hsl(var(--fmbn-primary) / 0.3);
   }
 
-  /* Interactive elements with FMBN colors */
+  /* Interactive elements */
   .interactive-card {
     @apply transition-all duration-300 cursor-pointer;
     @apply hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02];
     @apply active:scale-[0.98] active:translate-y-0;
-    border-color: hsl(var(--fmbn-primary) / 0.1);
-  }
-
-  .interactive-card:hover {
-    box-shadow: 0 20px 40px hsl(var(--fmbn-primary) / 0.15);
   }
 
   .pulse-border {
@@ -226,12 +201,7 @@
   .pulse-border::before {
     content: '';
     @apply absolute inset-0 rounded-lg;
-    background: linear-gradient(45deg, 
-      hsl(var(--fmbn-primary)), 
-      hsl(var(--fmbn-secondary)), 
-      hsl(var(--fmbn-accent)),
-      hsl(var(--fmbn-primary))
-    );
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6);
     background-size: 200% 200%;
     animation: gradient-pulse 2s ease-in-out infinite;
     z-index: -1;
@@ -240,14 +210,9 @@
     mask-composite: subtract;
   }
 
-  /* Loading states with FMBN colors */
+  /* Loading states */
   .skeleton {
-    @apply animate-pulse;
-    background: linear-gradient(90deg, 
-      hsl(var(--fmbn-light)), 
-      hsl(var(--fmbn-primary) / 0.1), 
-      hsl(var(--fmbn-light))
-    );
+    @apply animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200;
     background-size: 200% 100%;
   }
 
@@ -271,8 +236,7 @@
 
   .ripple::before {
     content: '';
-    @apply absolute top-1/2 left-1/2 w-0 h-0 rounded-full;
-    background: hsl(var(--fmbn-primary) / 0.2);
+    @apply absolute top-1/2 left-1/2 w-0 h-0 rounded-full bg-white/20;
     @apply transition-all duration-500 -translate-x-1/2 -translate-y-1/2;
   }
 
@@ -280,43 +244,17 @@
     @apply w-full h-full;
   }
 
-  /* FMBN specific styling */
-  .fmbn-card, .glass-card, .interactive-card {
-    background: linear-gradient(135deg, 
-      hsl(var(--card)) 0%, 
-      hsl(var(--fmbn-light)) 50%, 
-      hsl(var(--card)) 100%
-    );
-    @apply backdrop-blur-xl border shadow-lg hover:shadow-xl duration-300 rounded-xl transition-all;
-    border-color: hsl(var(--fmbn-primary) / 0.2);
+  .nimms-card, .glass-card, .interactive-card {
+    @apply bg-white/70 backdrop-blur-xl border border-blue-100 shadow-lg hover:shadow-xl duration-300 rounded-xl transition-all;
   }
-  
   .sidebar-glass {
-    @apply backdrop-blur-lg shadow-xl border;
-    background: linear-gradient(180deg, 
-      hsl(var(--fmbn-primary)) 0%, 
-      hsl(var(--fmbn-dark)) 100%
-    );
-    border-color: hsl(var(--fmbn-primary) / 0.3);
+    @apply backdrop-blur-lg bg-white/80 shadow-xl border border-blue-100;
   }
-  
   .active-gradient {
-    @apply bg-gradient-to-r from-fmbn-accent to-fmbn-secondary text-white;
+    @apply bg-gradient-to-r from-blue-600 to-nimms-secondary text-white;
   }
-  
   .sidebar-label {
     @apply text-xs font-bold tracking-widest text-sidebar-foreground/80 uppercase mb-2 pl-3;
-  }
-
-  /* FMBN Button Styles */
-  .fmbn-button-primary {
-    @apply bg-gradient-to-r from-fmbn-primary to-fmbn-secondary hover:from-fmbn-primary/90 hover:to-fmbn-secondary/90;
-    @apply text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300;
-  }
-
-  .fmbn-button-secondary {
-    @apply bg-gradient-to-r from-fmbn-accent to-yellow-500 hover:from-fmbn-accent/90 hover:to-yellow-500/90;
-    @apply text-fmbn-dark border-0 shadow-lg hover:shadow-xl transition-all duration-300;
   }
 }
 
@@ -338,13 +276,13 @@
   80%, 100% { content: '.'; }
 }
 
-/* Focus styles with FMBN colors */
+/* Focus styles */
 @layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-fmbn-primary focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
   }
 
   .focus-ring-inset {
-    @apply focus:outline-none focus:ring-2 focus:ring-fmbn-primary focus:ring-inset;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset;
   }
 }

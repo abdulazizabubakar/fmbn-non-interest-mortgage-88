@@ -19,7 +19,7 @@ interface EnhancedDashboardKPIsProps {
 }
 
 const EnhancedDashboardKPIs: React.FC<EnhancedDashboardKPIsProps> = ({ userRole, region }) => {
-  // Enhanced KPI data with FMBN styling
+  // Enhanced KPI data with better formatting and trends
   const kpiData = [
     {
       title: 'Active Portfolios',
@@ -75,7 +75,7 @@ const EnhancedDashboardKPIs: React.FC<EnhancedDashboardKPIsProps> = ({ userRole,
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold gradient-text font-playfair">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
             Key Performance Indicators
           </h2>
           <p className="text-muted-foreground mt-1">
@@ -83,8 +83,8 @@ const EnhancedDashboardKPIs: React.FC<EnhancedDashboardKPIsProps> = ({ userRole,
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-fmbn-primary rounded-full animate-pulse" />
-          <span className="text-sm text-fmbn-primary font-medium">Live Data</span>
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-sm text-green-600 font-medium">Live Data</span>
         </div>
       </div>
 
