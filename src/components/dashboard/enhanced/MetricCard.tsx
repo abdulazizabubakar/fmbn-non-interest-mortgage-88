@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
 import ChartRenderer from './ChartRenderer';
@@ -32,47 +31,54 @@ const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   const Icon = metric.icon;
 
-  const getIconColor = (color: string) => {
+  const getGradientColors = (color: string) => {
     const colors = {
-      blue: 'text-blue-600 bg-blue-100',
-      green: 'text-green-600 bg-green-100',
-      purple: 'text-purple-600 bg-purple-100',
-      indigo: 'text-indigo-600 bg-indigo-100',
-      emerald: 'text-emerald-600 bg-emerald-100',
-      red: 'text-red-600 bg-red-100'
+      blue: { from: '#3b82f6', to: '#60a5fa', iconBg: 'bg-white/20', iconText: 'text-white' },
+      green: { from: '#10b981', to: '#34d399', iconBg: 'bg-white/20', iconText: 'text-white' },
+      purple: { from: '#8b5cf6', to: '#a78bfa', iconBg: 'bg-white/20', iconText: 'text-white' },
+      indigo: { from: '#6366f1', to: '#818cf8', iconBg: 'bg-white/20', iconText: 'text-white' },
+      emerald: { from: '#059669', to: '#10b981', iconBg: 'bg-white/20', iconText: 'text-white' },
+      red: { from: '#ef4444', to: '#f87171', iconBg: 'bg-white/20', iconText: 'text-white' }
     };
-    return colors[color as keyof typeof colors] || 'text-gray-600 bg-gray-100';
+    return colors[color as keyof typeof colors] || colors.blue;
   };
 
+  const { from, to, iconBg, iconText } = getGradientColors(metric.color);
+
   return (
-    <Card 
-      className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${
-        isSelected ? 'ring-2 ring-blue-500 shadow-lg scale-105' : ''
+    <div
+      className={`relative rounded-2xl overflow-hidden transition-all duration-300 ease-out group hover:shadow-2xl hover:-translate-y-2 cursor-pointer ${
+        isSelected ? 'ring-4 ring-offset-2 ring-offset-background ring-blue-500 shadow-2xl -translate-y-2' : 'shadow-lg'
       }`}
       onClick={onSelect}
+      style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
     >
-      <CardContent className="p-6">
+      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+
+      <div className="relative z-10 p-6 text-white">
         <div className="flex items-start justify-between">
           <div className="space-y-2 flex-1">
-            <div className="flex items-center space-x-2">
-              <div className={`p-2 rounded-lg ${getIconColor(metric.color)}`}>
-                <Icon className="h-4 w-4" />
+            <div className="flex items-center space-x-3">
+              <div className={`p-3 rounded-xl ${iconBg} ${iconText}`}>
+                <Icon className="h-5 w-5" />
               </div>
-              <h3 className="font-medium text-sm text-gray-600">{metric.title}</h3>
+              <h3 className="font-medium text-base">{metric.title}</h3>
               {realTimeEnabled && (
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <div className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </div>
               )}
             </div>
             
             <div className="space-y-1">
-              <p className="text-2xl font-bold">{metric.value}</p>
+              <p className="text-3xl font-bold drop-shadow-md">{metric.value}</p>
               <div className="flex items-center space-x-2">
                 <Badge 
-                  variant={metric.trend === 'up' ? 'default' : 'secondary'}
-                  className={`text-xs ${
+                  className={`text-xs border-0 font-semibold ${
                     metric.trend === 'up' 
-                      ? 'bg-green-100 text-green-700 border-green-200' 
-                      : 'bg-red-100 text-red-700 border-red-200'
+                      ? 'bg-white/30 text-white' 
+                      : 'bg-red-900/50 text-white'
                   }`}
                 >
                   {metric.trend === 'up' ? (
@@ -84,8 +90,8 @@ const MetricCard: React.FC<MetricCardProps> = ({
                 </Badge>
                 {realTimeEnabled && (
                   <div className="flex items-center space-x-1">
-                    <Activity className="h-3 w-3 text-green-500" />
-                    <span className="text-xs text-green-600">Live</span>
+                    <Activity className="h-3 w-3 text-green-300" />
+                    <span className="text-xs text-green-200">Live</span>
                   </div>
                 )}
               </div>
@@ -93,13 +99,13 @@ const MetricCard: React.FC<MetricCardProps> = ({
           </div>
         </div>
         
-        <div className="mt-4">
+        <div className="mt-4 h-12">
           <ChartRenderer metric={metric} animationKey={animationKey} />
         </div>
         
-        <p className="text-xs text-gray-500 mt-2">{metric.description}</p>
-      </CardContent>
-    </Card>
+        <p className="text-xs text-white/80 mt-2 h-8">{metric.description}</p>
+      </div>
+    </div>
   );
 };
 
