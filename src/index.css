@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -171,9 +172,13 @@
 
   /* Enhanced components with FMBN branding */
   .glass-card {
-    @apply backdrop-blur-md bg-white/80 border border-fmbn-primary/10 shadow-lg rounded-2xl;
-    background: linear-gradient(135deg, hsl(var(--fmbn-light) / 0.7) 0%, hsl(var(--card) / 0.96) 60%, hsl(var(--fmbn-primary) / 0.08) 100%);
-    box-shadow: 0 4px 24px 0 hsl(var(--fmbn-primary) / 0.10), 0 1.5px 6px 0 hsl(var(--fmbn-primary) / 0.05);
+    @apply backdrop-blur-md bg-white/20 border-white/30 shadow-xl;
+    background: linear-gradient(135deg, 
+      hsl(var(--fmbn-light) / 0.8) 0%, 
+      hsl(var(--card) / 0.9) 50%, 
+      hsl(var(--fmbn-primary) / 0.05) 100%
+    );
+    border-color: hsl(var(--fmbn-primary) / 0.2);
   }
 
   .gradient-text {

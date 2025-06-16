@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { format } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,9 +25,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onViewDe
   };
 
   return (
-    <Card className="overflow-hidden glass-card hover:shadow-2xl border-0 transition-shadow">
+    <Card className="overflow-hidden hover:shadow transition-shadow">
       <CardContent className="p-0">
-        <div className="p-4 border-l-4 border-fmbn-primary bg-gradient-to-br from-fmbn-light/70 to-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-xl">
+        <div className="p-4 border-l-4 border-nimms-primary flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center justify-between md:justify-start md:space-x-4">
               <h3 className="font-semibold">{application.applicationNumber}</h3>
