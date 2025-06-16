@@ -6,11 +6,11 @@ import { DollarSign, ArrowDownUp, AlertTriangle } from 'lucide-react';
 const SummaryCards: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <Card className="shadow-sm border-nimms-primary/10 hover:border-nimms-primary/20 transition-colors">
+      <Card className="glass-card shadow-xl border-0 hover:shadow-2xl transition-shadow bg-gradient-to-br from-green-50 via-white to-fmbn-light/60 dark:from-fmbn-dark/40 dark:via-fmbn-dark/60">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total Collections</CardTitle>
-          <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-            <DollarSign className="h-4 w-4 text-green-600" />
+          <div className="h-8 w-8 rounded-full bg-green-200 flex items-center justify-center shadow">
+            <DollarSign className="h-4 w-4 text-green-700" />
           </div>
         </CardHeader>
         <CardContent>
@@ -21,11 +21,11 @@ const SummaryCards: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-      <Card className="shadow-sm border-nimms-primary/10 hover:border-nimms-primary/20 transition-colors">
+      <Card className="glass-card shadow-xl border-0 hover:shadow-2xl transition-shadow bg-gradient-to-br from-blue-50 via-white to-fmbn-light/60 dark:from-fmbn-dark/40 dark:via-fmbn-dark/60">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Disbursements</CardTitle>
-          <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-            <ArrowDownUp className="h-4 w-4 text-blue-600" />
+          <div className="h-8 w-8 rounded-full bg-blue-200 flex items-center justify-center shadow">
+            <ArrowDownUp className="h-4 w-4 text-blue-700" />
           </div>
         </CardHeader>
         <CardContent>
@@ -36,11 +36,11 @@ const SummaryCards: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-      <Card className="shadow-sm border-nimms-primary/10 hover:border-nimms-primary/20 transition-colors">
+      <Card className="glass-card shadow-xl border-0 hover:shadow-2xl transition-shadow bg-gradient-to-br from-amber-50 via-white to-fmbn-light/60 dark:from-fmbn-dark/40 dark:via-fmbn-dark/60">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Delinquency Rate</CardTitle>
-          <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
+          <div className="h-8 w-8 rounded-full bg-amber-200 flex items-center justify-center shadow">
+            <AlertTriangle className="h-4 w-4 text-amber-700" />
           </div>
         </CardHeader>
         <CardContent>
