@@ -72,7 +72,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   id="realtime"
                   checked={realTimeEnabled}
                   onCheckedChange={setRealTimeEnabled}
-                  size="sm"
                 />
                 <Label htmlFor="realtime" className="text-sm font-medium">Live</Label>
                 {realTimeEnabled && (

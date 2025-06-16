@@ -10,6 +10,7 @@ interface ModernCardProps {
   variant?: 'default' | 'gradient' | 'glass' | 'elevated';
   interactive?: boolean;
   glow?: boolean;
+  style?: React.CSSProperties;
 }
 
 const ModernCard: React.FC<ModernCardProps> = ({
@@ -17,7 +18,8 @@ const ModernCard: React.FC<ModernCardProps> = ({
   className,
   variant = 'default',
   interactive = false,
-  glow = false
+  glow = false,
+  style
 }) => {
   const variants = {
     default: 'bg-white border-gray-200/50',
@@ -35,13 +37,16 @@ const ModernCard: React.FC<ModernCardProps> = ({
     : '';
 
   return (
-    <Card className={cn(
-      'border rounded-2xl transition-all duration-300',
-      variants[variant],
-      interactiveStyles,
-      glowStyles,
-      className
-    )}>
+    <Card 
+      className={cn(
+        'border rounded-2xl transition-all duration-300',
+        variants[variant],
+        interactiveStyles,
+        glowStyles,
+        className
+      )}
+      style={style}
+    >
       {children}
     </Card>
   );
