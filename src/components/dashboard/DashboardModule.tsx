@@ -51,22 +51,22 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
   // Show enhanced dashboard option
   if (useEnhancedDashboard) {
     return (
-      <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-        {/* Enhanced Toggle Card with Glassmorphism */}
-        <GlassCard className="border-blue-200 shadow-2xl">
+      <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-fmbn-light/50">
+        {/* Enhanced Toggle Card with FMBN Branding */}
+        <GlassCard className="border-fmbn-primary/30 shadow-2xl">
           <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg glow-effect">
+                <div className="p-4 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg glow-effect">
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-blue-900 text-2xl gradient-text font-playfair">
-                    Enhanced Dashboard Experience
+                  <h3 className="font-bold text-fmbn-dark text-2xl gradient-text font-playfair">
+                    Enhanced FMBN Dashboard
                   </h3>
-                  <p className="text-blue-700 font-medium">Interactive, real-time analytics with advanced visualizations</p>
+                  <p className="text-fmbn-primary font-medium">Interactive, real-time analytics with Federal Mortgage Bank branding</p>
                 </div>
-                <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 animate-float font-bold shadow-lg">
+                <Badge className="bg-gradient-to-r from-fmbn-accent to-yellow-500 text-fmbn-dark border-0 animate-float font-bold shadow-lg">
                   ✨ NEW
                 </Badge>
               </div>
@@ -75,7 +75,7 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                   variant="outline" 
                   size="sm" 
                   onClick={() => setCommandPaletteOpen(true)}
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50 hover-lift font-medium shadow-sm"
+                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
                 >
                   <Command className="h-4 w-4 mr-2" />
                   Quick Actions
@@ -86,14 +86,14 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                     checked={useEnhancedDashboard}
                     onCheckedChange={setUseEnhancedDashboard}
                   />
-                  <Label htmlFor="enhanced-dashboard" className="text-blue-700 font-semibold">
+                  <Label htmlFor="enhanced-dashboard" className="text-fmbn-primary font-semibold">
                     Enhanced Mode
                   </Label>
                 </div>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50 hover-lift font-medium shadow-sm"
+                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
                 >
                   <Settings className="h-5 w-5 mr-2" />
                   Customize
@@ -117,21 +117,21 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
     );
   }
 
-  // Enhanced Classic dashboard layout with better styling
+  // Enhanced Classic dashboard layout with FMBN branding
   return (
-    <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white">
-      {/* Enhanced Header with Smart Search */}
+    <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-white">
+      {/* Enhanced Header with FMBN Branding */}
       <div className="space-y-4">
         <div className="flex items-center justify-between animate-slide-in-left">
           <div className="space-y-2">
             <h1 className="text-5xl font-extrabold gradient-text font-playfair flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
+              <div className="p-3 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg">
                 <LayoutDashboard className="h-10 w-10 text-white" />
               </div>
-              <span>NIMMS Dashboard</span>
+              <span>FMBN Dashboard</span>
             </h1>
             <p className="text-muted-foreground text-xl font-medium pl-16">
-              Welcome to the NIMMS Dashboard - <span className="font-bold text-primary bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{userRegion} Region</span>
+              Federal Mortgage Bank of Nigeria - <span className="font-bold text-fmbn-primary gradient-text">{userRegion} Region</span>
             </p>
           </div>
           
@@ -140,7 +140,7 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
               variant="outline" 
               size="sm" 
               onClick={() => setCommandPaletteOpen(true)}
-              className="border-blue-200 text-blue-700 hover:bg-blue-50 hover-lift font-medium shadow-sm"
+              className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
             >
               <Search className="h-4 w-4 mr-2" />
               Search (⌘K)
@@ -155,7 +155,7 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                 Enhanced Dashboard
               </Label>
             </div>
-            <Badge variant="outline" className="bg-gradient-to-r from-yellow-50 to-orange-50 text-orange-700 border-orange-200 animate-bounce-in font-semibold">
+            <Badge variant="outline" className="bg-gradient-to-r from-fmbn-accent/20 to-yellow-50 text-fmbn-dark border-fmbn-accent/30 animate-bounce-in font-semibold">
               Classic Mode
             </Badge>
           </div>
@@ -170,25 +170,25 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
         </div>
       </div>
 
-      {/* Enhanced Upgrade prompt */}
+      {/* Enhanced Upgrade prompt with FMBN styling */}
       <GlassCard className="animate-slide-up shadow-xl">
         <CardContent className="p-6">
           <Alert className="border-0 bg-transparent">
             <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl">
+              <div className="p-3 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl">
                 <TrendingUp className="h-6 w-6 text-white" />
               </div>
               <div className="flex-1">
-                <AlertTitle className="text-blue-900 text-xl font-bold font-playfair">
-                  Unlock Advanced Analytics
+                <AlertTitle className="text-fmbn-dark text-xl font-bold font-playfair">
+                  Unlock Advanced FMBN Analytics
                 </AlertTitle>
-                <AlertDescription className="text-blue-700 font-medium text-base">
-                  Experience our new interactive dashboard with real-time data, customizable widgets, AI insights, and advanced analytics.
+                <AlertDescription className="text-fmbn-primary font-medium text-base">
+                  Experience our new interactive dashboard with real-time data, customizable widgets, AI insights, and advanced mortgage analytics.
                 </AlertDescription>
               </div>
               <Button 
                 onClick={() => setUseEnhancedDashboard(true)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
+                className="fmbn-button-primary font-semibold"
               >
                 Try Enhanced Mode →
               </Button>
@@ -259,10 +259,10 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
         </div>
       </div>
 
-      {/* Enhanced Floating Action Button */}
+      {/* Enhanced Floating Action Button with FMBN colors */}
       <FloatingActionButton
         onClick={() => setCommandPaletteOpen(true)}
-        className="animate-bounce-in bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl"
+        className="animate-bounce-in fmbn-button-primary shadow-xl"
         icon={<Command className="h-6 w-6" />}
       />
 
