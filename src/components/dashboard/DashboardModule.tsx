@@ -1,21 +1,21 @@
+
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Settings, Command } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { CommandPalette } from '@/components/ui/command-palette';
-import EnhancedDashboard from './EnhancedDashboard';
 import { 
   LayoutDashboard, 
-  Sparkles as SparklesIcon, 
+  Sparkles, 
   TrendingUp, 
-  Settings as SettingsIcon,
+  Settings,
   BarChart3,
   Activity,
   Search,
-  Command as CommandIcon
+  Command
 } from 'lucide-react';
 import EnhancedDashboardKPIs from './EnhancedDashboardKPIs';
 import ActionShortcuts from './ActionShortcuts';
@@ -44,29 +44,30 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
   userRole,
   userRegion = 'Global'
 }) => {
+  const [selectedTimeframe, setSelectedTimeframe] = useState<'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'>('monthly');
   const [useEnhancedDashboard, setUseEnhancedDashboard] = useState(true);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   
-  // Show enhanced dashboard by default
+  // Show enhanced dashboard option
   if (useEnhancedDashboard) {
     return (
-      <div className="space-y-6 animate-fade-in">
-        {/* Enhanced Toggle Card */}
-        <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <CardContent className="p-6">
+      <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-fmbn-light/50">
+        {/* Enhanced Toggle Card with FMBN Branding */}
+        <GlassCard className="border-fmbn-primary/30 shadow-2xl">
+          <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl">
-                  <Sparkles className="h-6 w-6 text-white" />
+                <div className="p-4 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg glow-effect">
+                  <Sparkles className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-xl">
+                  <h3 className="font-bold text-fmbn-dark text-2xl gradient-text font-playfair">
                     Enhanced FMBN Dashboard
                   </h3>
-                  <p className="text-slate-600">Modern, interactive analytics with real-time updates</p>
+                  <p className="text-fmbn-primary font-medium">Interactive, real-time analytics with Federal Mortgage Bank branding</p>
                 </div>
-                <Badge className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-0">
-                  ✨ ACTIVE
+                <Badge className="bg-gradient-to-r from-fmbn-accent to-yellow-500 text-fmbn-dark border-0 animate-float font-bold shadow-lg">
+                  ✨ NEW
                 </Badge>
               </div>
               <div className="flex items-center space-x-4">
@@ -74,7 +75,7 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                   variant="outline" 
                   size="sm" 
                   onClick={() => setCommandPaletteOpen(true)}
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
                 >
                   <Command className="h-4 w-4 mr-2" />
                   Quick Actions
@@ -85,28 +86,29 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
                     checked={useEnhancedDashboard}
                     onCheckedChange={setUseEnhancedDashboard}
                   />
-                  <Label htmlFor="enhanced-dashboard" className="font-semibold">
+                  <Label htmlFor="enhanced-dashboard" className="text-fmbn-primary font-semibold">
                     Enhanced Mode
                   </Label>
                 </div>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
                 >
-                  <Settings className="h-4 w-4 mr-2" />
+                  <Settings className="h-5 w-5 mr-2" />
                   Customize
                 </Button>
               </div>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <EnhancedDashboard 
+        <EnhancedDashboardLayout 
           userRole={userRole || 'viewer'} 
           userRegion={userRegion} 
         />
 
+        {/* Command Palette */}
         <CommandPalette 
           open={commandPaletteOpen} 
           onOpenChange={setCommandPaletteOpen} 
