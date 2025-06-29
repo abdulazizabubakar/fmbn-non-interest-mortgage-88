@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -82,14 +80,14 @@ const Login = () => {
         {/* Left image side (desktop only, appears above form on mobile) */}
         <div className="md:w-1/2 w-full h-60 md:h-auto relative flex-shrink-0">
           <img
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=720&q=80"
-            alt="Modern workspace with laptop and documents - Professional Banking"
+            src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?auto=format&fit=crop&w=720&q=80"
+            alt="Mosque under a starry sky - Non-Interest Mortgage"
             className="object-cover w-full h-full md:rounded-l-3xl md:rounded-none rounded-t-3xl"
             loading="lazy"
             style={{ minHeight: '100%' }}
           />
           {/* Overlay for subtle color and readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-fmbn-primary/30 via-white/20 to-fmbn-light/10 pointer-events-none rounded-t-3xl md:rounded-l-3xl md:rounded-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-fmbn-primary/60 via-white/0 to-fmbn-light/40 pointer-events-none rounded-t-3xl md:rounded-l-3xl md:rounded-none" />
           <div className="hidden md:block absolute inset-0 flex flex-col items-center justify-center">
             <AmanahLogo className="h-20 w-20 mb-3" />
             <h1 className="text-lg font-playfair font-semibold text-white text-center tracking-tight drop-shadow-lg">
@@ -235,4 +233,3 @@ const Login = () => {
 };
 
 export default Login;
-
