@@ -92,7 +92,7 @@ export const chartData = {
 export const recentActivities = [
   {
     id: 1,
-    type: 'application',
+    type: 'application' as const,
     title: 'New mortgage application submitted',
     description: 'Application #MA-2024-001234 for ₦25,000,000',
     time: '2 minutes ago',
@@ -101,7 +101,7 @@ export const recentActivities = [
   },
   {
     id: 2,
-    type: 'approval',
+    type: 'approval' as const,
     title: 'Mortgage application approved',
     description: 'Final approval for Application #MA-2024-001228',
     time: '15 minutes ago',
@@ -110,7 +110,7 @@ export const recentActivities = [
   },
   {
     id: 3,
-    type: 'disbursement',
+    type: 'disbursement' as const,
     title: 'Funds disbursed successfully',
     description: '₦18,500,000 disbursed for Property PID-789456',
     time: '1 hour ago',
@@ -119,7 +119,7 @@ export const recentActivities = [
   },
   {
     id: 4,
-    type: 'document',
+    type: 'document' as const,
     title: 'Document verification completed',
     description: 'All documents verified for Application #MA-2024-001225',
     time: '2 hours ago',
@@ -128,7 +128,7 @@ export const recentActivities = [
   },
   {
     id: 5,
-    type: 'payment',
+    type: 'payment' as const,
     title: 'Monthly payment received',
     description: '₦185,000 payment processed for Account #AC-456789',
     time: '3 hours ago',
@@ -138,10 +138,10 @@ export const recentActivities = [
 ];
 
 export const quickStats = [
-  { label: 'Approval Rate', value: '94.2%', status: 'excellent' },
-  { label: 'Avg. Processing Time', value: '12.3 days', status: 'good' },
-  { label: 'Default Rate', value: '2.1%', status: 'good' },
-  { label: 'Collection Rate', value: '97.8%', status: 'excellent' },
-  { label: 'Customer Satisfaction', value: '4.6/5', status: 'excellent' },
-  { label: 'System Uptime', value: '99.98%', status: 'excellent' }
+  { label: 'Approval Rate', value: '94.2%', status: 'excellent' as const },
+  { label: 'Avg. Processing Time', value: '12.3 days', status: 'good' as const },
+  { label: 'Default Rate', value: '2.1%', status: 'good' as const },
+  { label: 'Collection Rate', value: '97.8%', status: 'excellent' as const },
+  { label: 'Customer Satisfaction', value: '4.6/5', status: 'excellent' as const },
+  { label: 'System Uptime', value: '99.98%', status: 'excellent' as const }
 ];
