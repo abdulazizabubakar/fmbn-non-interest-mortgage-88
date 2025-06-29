@@ -1,11 +1,11 @@
-
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   Home, Users, FileText, BarChart3, Settings, LogOut, Briefcase,
   ClipboardList, Building, MessageSquare, FilePlus, Receipt, CreditCard,
-  Shield, Calendar, Gavel, AlertTriangle, Database, TrendingUp, Lock, GitBranch
+  Shield, Calendar, Gavel, AlertTriangle, Database, TrendingUp, Lock, GitBranch,
+  Handshake
 } from 'lucide-react';
 
 interface SidebarNavigationProps {
@@ -21,6 +21,7 @@ const moduleGroups = [
       { path: '/applications', label: 'Applications', icon: <FilePlus className="h-5 w-5" /> },
       { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
       { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
+      { path: '/developer-management', label: 'Partners & Developers', icon: <Handshake className="h-5 w-5" /> },
     ]
   },
   {

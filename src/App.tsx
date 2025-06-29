@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
@@ -28,6 +27,9 @@ import MortgageApplicationDetails from './pages/MortgageApplicationDetails';
 // New Mortgage Management routes
 import MortgageManagement from './pages/MortgageManagement';
 import MortgageAccountDetails from './pages/MortgageAccountDetails';
+
+// Developer Management Route
+import DeveloperManagement from './pages/DeveloperManagement';
 
 function App() {
   return (
@@ -71,6 +73,9 @@ function App() {
             {/* New Mortgage Management Routes */}
             <Route path="/mortgage-management" element={<ProtectedRoute><MortgageManagement /></ProtectedRoute>} />
             <Route path="/mortgage-management/accounts/:id" element={<ProtectedRoute><MortgageAccountDetails /></ProtectedRoute>} />
+            
+            {/* Developer Management Route */}
+            <Route path="/developer-management" element={<ProtectedRoute><DeveloperManagement /></ProtectedRoute>} />
             
             {/* Process Flows Route */}
             <Route path="/process-flows" element={<ProtectedRoute><ProcessFlows /></ProtectedRoute>} />

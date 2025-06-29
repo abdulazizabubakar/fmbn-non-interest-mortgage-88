@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -22,7 +23,8 @@ import {
   Database,
   TrendingUp,
   Lock,
-  GitBranch
+  GitBranch,
+  Handshake
 } from 'lucide-react';
 import AmanahLogo from '../icons/AmanahLogo';
 import { useAuth } from '@/hooks/useAuth';
@@ -43,6 +45,7 @@ const Sidebar: React.FC = () => {
         { path: '/applications', label: 'Applications', icon: <FilePlus className="h-5 w-5" /> },
         { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
         { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
+        { path: '/developer-management', label: 'Partners & Developers', icon: <Handshake className="h-5 w-5" /> },
       ]
     },
     {
