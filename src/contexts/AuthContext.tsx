@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { UserRole } from '@/types/user';
+import { UserRole, ModuleAccess, PermissionAction } from '@/types/user';
 
 interface User {
   id: string;
@@ -15,7 +15,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   hasRole: (role: UserRole) => boolean;
   hasAccessToModule: (module: string) => boolean;
-  login: (credentials: any) => Promise<void>;
+  hasPermission: (module: ModuleAccess, action: PermissionAction) => boolean;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => void;
 }
 
@@ -62,12 +63,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return isAuthenticated;
   };
 
-  const login = async (credentials: any) => {
+  const hasPermission = (module: ModuleAccess, action: PermissionAction): boolean => {
+    // For demo purposes, allow all permissions for authenticated users
+    // This would normally check user's actual permissions
+    return isAuthenticated;
+  };
+
+  const login = async (email: string, password: string): Promise<User> => {
     // Mock login implementation
     const mockUser: User = {
       id: '1',
       name: 'Admin User',
-      email: credentials.email || 'admin@nimms.gov.ng',
+      email: email || 'admin@nimms.gov.ng',
       roles: ['admin'],
       region: 'All Regions'
     };
@@ -75,6 +82,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(mockUser);
     setIsAuthenticated(true);
     localStorage.setItem('authToken', 'mock-token');
+    
+    return mockUser;
   };
 
   const logout = () => {
@@ -88,6 +97,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAuthenticated,
     hasRole,
     hasAccessToModule,
+    hasPermission,
     login,
     logout
   };
