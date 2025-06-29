@@ -1,4 +1,3 @@
-
 import { Mortgage, StatCard } from '@/types';
 import { Property } from '@/types/property';
 import { Customer } from '@/types/customer';
@@ -317,65 +316,131 @@ export const mockCustomers: Customer[] = [
 // Mock properties
 export const mockProperties: Property[] = [
   {
-    id: 'P001',
-    name: 'Ahmadu Bello Residence',
-    address: '25 Ahmadu Bello Way, Abuja',
-    state: 'FCT',
-    type: 'apartment',
-    value: 30000000,
-    buildYear: 2015,
-    area: 120,
-    features: ['3 Bedrooms', '2 Bathrooms', 'Parking', 'Security'],
-    images: ['/placeholder.svg', '/placeholder.svg'],
-  },
-  {
-    id: 'P002',
-    name: 'Ibrahim Babangida Complex',
-    address: '7 Ibrahim Babangida Boulevard, Kano',
-    state: 'Kano',
-    type: 'duplex',
-    value: 25000000,
-    buildYear: 2018,
-    area: 150,
-    features: ['4 Bedrooms', '3 Bathrooms', 'Garden', 'Security'],
-    images: ['/placeholder.svg', '/placeholder.svg'],
-  },
-  {
-    id: 'P003',
-    name: 'Awolowo Heights',
-    address: '12 Awolowo Road, Lagos',
+    id: 'PROP-001',
+    name: 'Sunset Villa Estate',
+    type: 'apartment' as const,
+    address: '15 Adeola Odeku Street, Victoria Island, Lagos',
     state: 'Lagos',
-    type: 'townhouse',
-    value: 40000000,
+    lga: 'Lagos Island',
+    coordinates: {
+      latitude: 6.4281,
+      longitude: 3.4219
+    },
+    value: 45000000,
     buildYear: 2020,
-    area: 180,
-    features: ['5 Bedrooms', '4 Bathrooms', 'Garden', 'Swimming Pool', 'Security'],
-    images: ['/placeholder.svg', '/placeholder.svg'],
+    area: 2500,
+    features: ['Swimming Pool', 'Gym', '24/7 Security', 'Parking', 'Generator'],
+    images: [
+      'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop'
+    ]
   },
   {
-    id: 'P004',
-    name: 'Gowon Estate',
-    address: '45 Yakubu Gowon Street, Port Harcourt',
+    id: 'PROP-002',
+    name: 'Green Valley Heights',
+    type: 'duplex' as const,
+    address: '8 Gwarinpa Estate, Abuja',
+    state: 'FCT',
+    lga: 'Abuja Municipal',
+    coordinates: {
+      latitude: 9.1092,
+      longitude: 7.4165
+    },
+    value: 65000000,
+    buildYear: 2019,
+    area: 3200,
+    features: ['Garden', 'Balcony', 'Study Room', 'Servant Quarters', 'Solar Panel'],
+    images: [
+      'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop'
+    ]
+  },
+  {
+    id: 'PROP-003',
+    name: 'Harmony Towers',
+    type: 'apartment' as const,
+    address: '22 Nassarawa GRA, Kano',
+    state: 'Kano',
+    lga: 'Kano Municipal',
+    coordinates: {
+      latitude: 12.0022,
+      longitude: 8.5919
+    },
+    value: 32000000,
+    buildYear: 2021,
+    area: 1800,
+    features: ['Elevator', 'CCTV', 'Water Treatment', 'Playground'],
+    images: [
+      'https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=500&h=300&fit=crop'
+    ]
+  },
+  {
+    id: 'PROP-004',
+    name: 'Royal Gardens',
+    type: 'bungalow' as const,
+    address: '5 GRA Phase 2, Port Harcourt, Rivers',
     state: 'Rivers',
-    type: 'bungalow',
-    value: 18000000,
-    buildYear: 2010,
-    area: 100,
-    features: ['3 Bedrooms', '2 Bathrooms', 'Garden'],
-    images: ['/placeholder.svg', '/placeholder.svg'],
+    lga: 'Port Harcourt',
+    coordinates: {
+      latitude: 4.8156,
+      longitude: 7.0498
+    },
+    value: 38000000,
+    buildYear: 2018,
+    area: 2200,
+    features: ['Large Compound', 'Boys Quarters', 'Borehole', 'Fence'],
+    images: [
+      'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop'
+    ]
   },
   {
-    id: 'P005',
-    name: 'Shagari Villa',
-    address: '9 Shehu Shagari Way, Sokoto',
-    state: 'Sokoto',
-    type: 'duplex',
-    value: 35000000,
+    id: 'PROP-005',
+    name: 'Paradise Heights',
+    type: 'apartment' as const,
+    address: '12 Kubwa Express, Abuja',
+    state: 'FCT',
+    lga: 'Bwari',
+    coordinates: {
+      latitude: 9.0765,
+      longitude: 7.3986
+    },
+    value: 28000000,
     buildYear: 2022,
-    area: 200,
-    features: ['5 Bedrooms', '4 Bathrooms', 'Garden', 'Security'],
-    images: ['/placeholder.svg', '/placeholder.svg'],
+    area: 1600,
+    features: ['Modern Kitchen', 'Air Conditioning', 'Tiles', 'Water Heater'],
+    images: [
+      'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=500&h=300&fit=crop'
+    ]
   },
+  {
+    id: 'PROP-006',
+    name: 'Golden Estate',
+    type: 'duplex' as const,
+    address: '18 Kaduna North, Kaduna',
+    state: 'Kaduna',
+    lga: 'Kaduna North',
+    coordinates: {
+      latitude: 10.5105,
+      longitude: 7.4165
+    },
+    value: 42000000,
+    buildYear: 2020,
+    area: 2800,
+    features: ['Spacious Rooms', 'Car Port', 'Family Lounge', 'Store Room'],
+    images: [
+      'https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=500&h=300&fit=crop'
+    ]
+  }
 ];
 
 // Mock notifications
