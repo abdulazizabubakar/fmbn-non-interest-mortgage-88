@@ -6,34 +6,25 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { CommandPalette } from '@/components/ui/command-palette';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   LayoutDashboard, 
-  Sparkles, 
   TrendingUp, 
   Settings,
   BarChart3,
   Activity,
-  Search,
-  Command
+  Users,
+  FileText,
+  CreditCard,
+  Home,
+  AlertTriangle,
+  Calendar,
+  Filter,
+  Download,
+  Bell,
+  RefreshCw
 } from 'lucide-react';
-import EnhancedDashboardKPIs from './EnhancedDashboardKPIs';
-import ActionShortcuts from './ActionShortcuts';
-import { RoleBasedAccess } from '@/components/auth/RoleBasedAccess';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertTriangle } from 'lucide-react';
-import RoleDashboard from './RoleDashboard';
-import NotificationsPanel from './NotificationsPanel';
-import RealtimeMetrics from './RealtimeMetrics';
-import FinancialOverview from './FinancialOverview';
-import ApplicationsOverview from './ApplicationsOverview';
-import PropertyInsights from './PropertyInsights';
-import SystemGrowthChart from './SystemGrowthChart';
-import EnhancedDashboardLayout from './enhanced/EnhancedDashboardLayout';
-import { SmartSearchBar } from './enhanced/SmartSearchBar';
-import { FloatingActionButton } from '@/components/ui/floating-action-button';
-import { EnhancedCard, EnhancedCardContent, EnhancedCardHeader } from '@/components/ui/enhanced-card';
-import { GlassCard } from '@/components/ui/glass-card';
+import { useAuth } from '@/hooks/useAuth';
 
 interface DashboardModuleProps {
   userRole: string | null;
@@ -42,235 +33,352 @@ interface DashboardModuleProps {
 
 const DashboardModule: React.FC<DashboardModuleProps> = ({ 
   userRole,
-  userRegion = 'Global'
+  userRegion = 'All Regions'
 }) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'>('monthly');
-  const [useEnhancedDashboard, setUseEnhancedDashboard] = useState(true);
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-  
-  // Show enhanced dashboard option
-  if (useEnhancedDashboard) {
-    return (
-      <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-fmbn-light/50">
-        {/* Enhanced Toggle Card with FMBN Branding */}
-        <GlassCard className="border-fmbn-primary/30 shadow-2xl">
-          <CardContent className="p-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="p-4 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg glow-effect">
-                  <Sparkles className="h-8 w-8 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-fmbn-dark text-2xl gradient-text font-playfair">
-                    Enhanced FMBN Dashboard
-                  </h3>
-                  <p className="text-fmbn-primary font-medium">Interactive, real-time analytics with Federal Mortgage Bank branding</p>
-                </div>
-                <Badge className="bg-gradient-to-r from-fmbn-accent to-yellow-500 text-fmbn-dark border-0 animate-float font-bold shadow-lg">
-                  ✨ NEW
-                </Badge>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setCommandPaletteOpen(true)}
-                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
-                >
-                  <Command className="h-4 w-4 mr-2" />
-                  Quick Actions
-                </Button>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="enhanced-dashboard"
-                    checked={useEnhancedDashboard}
-                    onCheckedChange={setUseEnhancedDashboard}
-                  />
-                  <Label htmlFor="enhanced-dashboard" className="text-fmbn-primary font-semibold">
-                    Enhanced Mode
-                  </Label>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
-                >
-                  <Settings className="h-5 w-5 mr-2" />
-                  Customize
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </GlassCard>
+  const [activeView, setActiveView] = useState('overview');
+  const [autoRefresh, setAutoRefresh] = useState(true);
 
-        <EnhancedDashboardLayout 
-          userRole={userRole || 'viewer'} 
-          userRegion={userRegion} 
-        />
+  // Mock KPI data
+  const kpiData = [
+    {
+      title: 'Total Applications',
+      value: '2,456',
+      change: '+12.5%',
+      trend: 'up',
+      icon: FileText,
+      color: 'blue'
+    },
+    {
+      title: 'Active Mortgages',
+      value: '1,843',
+      change: '+8.2%',
+      trend: 'up',
+      icon: Home,
+      color: 'green'
+    },
+    {
+      title: 'Monthly Collections',
+      value: '₦4.2B',
+      change: '+15.3%',
+      trend: 'up',
+      icon: CreditCard,
+      color: 'purple'
+    },
+    {
+      title: 'Portfolio Value',
+      value: '₦87.5B',
+      change: '+6.7%',
+      trend: 'up',
+      icon: TrendingUp,
+      color: 'orange'
+    },
+    {
+      title: 'Active Users',
+      value: '3,204',
+      change: '+4.1%',
+      trend: 'up',
+      icon: Users,
+      color: 'pink'
+    },
+    {
+      title: 'Risk Alerts',
+      value: '23',
+      change: '-18.2%',
+      trend: 'down',
+      icon: AlertTriangle,
+      color: 'red'
+    }
+  ];
 
-        {/* Command Palette */}
-        <CommandPalette 
-          open={commandPaletteOpen} 
-          onOpenChange={setCommandPaletteOpen} 
-        />
-      </div>
-    );
-  }
+  const getKpiCardColor = (color: string) => {
+    const colors = {
+      blue: 'border-l-blue-500 bg-blue-50/50',
+      green: 'border-l-green-500 bg-green-50/50',
+      purple: 'border-l-purple-500 bg-purple-50/50',
+      orange: 'border-l-orange-500 bg-orange-50/50',
+      pink: 'border-l-pink-500 bg-pink-50/50',
+      red: 'border-l-red-500 bg-red-50/50'
+    };
+    return colors[color as keyof typeof colors] || colors.blue;
+  };
 
-  // Enhanced Classic dashboard layout with FMBN branding
+  const getIconColor = (color: string) => {
+    const colors = {
+      blue: 'text-blue-600',
+      green: 'text-green-600',
+      purple: 'text-purple-600',
+      orange: 'text-orange-600',
+      pink: 'text-pink-600',
+      red: 'text-red-600'
+    };
+    return colors[color as keyof typeof colors] || colors.blue;
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in font-inter min-h-screen bg-gradient-to-br from-fmbn-light via-background to-white">
-      {/* Enhanced Header with FMBN Branding */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between animate-slide-in-left">
-          <div className="space-y-2">
-            <h1 className="text-5xl font-extrabold gradient-text font-playfair flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl shadow-lg">
-                <LayoutDashboard className="h-10 w-10 text-white" />
+    <div className="min-h-screen bg-gray-50/50 p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header Section */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+              <div className="p-2 bg-blue-600 rounded-lg">
+                <LayoutDashboard className="h-8 w-8 text-white" />
               </div>
-              <span>FMBN Dashboard</span>
+              NIMMS Dashboard
             </h1>
-            <p className="text-muted-foreground text-xl font-medium pl-16">
-              Federal Mortgage Bank of Nigeria - <span className="font-bold text-fmbn-primary gradient-text">{userRegion} Region</span>
+            <p className="text-gray-600 mt-2">
+              Federal Mortgage Bank of Nigeria - {userRegion}
             </p>
           </div>
           
-          <div className="flex items-center space-x-4 animate-slide-in-right">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setCommandPaletteOpen(true)}
-              className="border-fmbn-primary/30 text-fmbn-primary hover:bg-fmbn-light hover-lift font-medium shadow-sm"
-            >
-              <Search className="h-4 w-4 mr-2" />
-              Search (⌘K)
-            </Button>
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <Switch
-                id="enhanced-dashboard"
-                checked={useEnhancedDashboard}
-                onCheckedChange={setUseEnhancedDashboard}
+                id="auto-refresh"
+                checked={autoRefresh}
+                onCheckedChange={setAutoRefresh}
               />
-              <Label htmlFor="enhanced-dashboard" className="text-sm font-semibold">
-                Enhanced Dashboard
+              <Label htmlFor="auto-refresh" className="text-sm font-medium">
+                Auto Refresh
               </Label>
+              {autoRefresh && (
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              )}
             </div>
-            <Badge variant="outline" className="bg-gradient-to-r from-fmbn-accent/20 to-yellow-50 text-fmbn-dark border-fmbn-accent/30 animate-bounce-in font-semibold">
-              Classic Mode
-            </Badge>
+            
+            <Select value={selectedTimeframe} onValueChange={(value: any) => setSelectedTimeframe(value)}>
+              <SelectTrigger className="w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="daily">Daily</SelectItem>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="quarterly">Quarterly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Filter
+            </Button>
+            
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
           </div>
         </div>
 
-        {/* Smart Search Bar */}
-        <div className="flex justify-center animate-scale-in" style={{ animationDelay: '200ms' }}>
-          <SmartSearchBar 
-            className="w-full max-w-3xl shadow-lg"
-            onSearch={(query) => console.log('Searching for:', query)}
-          />
-        </div>
-      </div>
-
-      {/* Enhanced Upgrade prompt with FMBN styling */}
-      <GlassCard className="animate-slide-up shadow-xl">
-        <CardContent className="p-6">
-          <Alert className="border-0 bg-transparent">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-br from-fmbn-primary to-fmbn-secondary rounded-xl">
-                <TrendingUp className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <AlertTitle className="text-fmbn-dark text-xl font-bold font-playfair">
-                  Unlock Advanced FMBN Analytics
-                </AlertTitle>
-                <AlertDescription className="text-fmbn-primary font-medium text-base">
-                  Experience our new interactive dashboard with real-time data, customizable widgets, AI insights, and advanced mortgage analytics.
-                </AlertDescription>
-              </div>
-              <Button 
-                onClick={() => setUseEnhancedDashboard(true)}
-                className="fmbn-button-primary font-semibold"
+        {/* KPI Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {kpiData.map((kpi, index) => {
+            const IconComponent = kpi.icon;
+            return (
+              <Card 
+                key={index} 
+                className={`border-l-4 ${getKpiCardColor(kpi.color)} transition-all duration-200 hover:shadow-md`}
               >
-                Try Enhanced Mode →
-              </Button>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <IconComponent className={`h-6 w-6 ${getIconColor(kpi.color)}`} />
+                    <span className={`text-sm font-medium ${
+                      kpi.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {kpi.change}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900 mb-1">
+                      {kpi.value}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {kpi.title}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Main Content Tabs */}
+        <Tabs value={activeView} onValueChange={setActiveView} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 lg:max-w-4xl bg-white border">
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="applications" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Applications
+            </TabsTrigger>
+            <TabsTrigger value="mortgages" className="flex items-center gap-2">
+              <Home className="h-4 w-4" />
+              Mortgages
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <Activity className="h-4 w-4" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              Reports
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Settings
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Main Chart */}
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5" />
+                    Portfolio Performance
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80 bg-gray-50 rounded-lg flex items-center justify-center">
+                    <p className="text-gray-500">Interactive chart will be rendered here</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Quick Stats */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Quick Statistics</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center py-2 border-b">
+                    <span className="text-sm text-gray-600">Approval Rate</span>
+                    <span className="font-semibold text-green-600">94.2%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b">
+                    <span className="text-sm text-gray-600">Avg. Processing Time</span>
+                    <span className="font-semibold">12.3 days</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b">
+                    <span className="text-sm text-gray-600">Default Rate</span>
+                    <span className="font-semibold text-red-600">2.1%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-sm text-gray-600">Collection Rate</span>
+                    <span className="font-semibold text-blue-600">97.8%</span>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </Alert>
-        </CardContent>
-      </GlassCard>
 
-      {/* Enhanced Key Performance Indicators */}
-      <div className="animate-fade-in" style={{ animationDelay: '300ms' }}>
-        <EnhancedDashboardKPIs userRole={userRole || 'viewer'} region={userRegion} />
+            {/* Recent Activity */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Activity className="h-5 w-5" />
+                  Recent Activity
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[1, 2, 3, 4, 5].map((item) => (
+                    <div key={item} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">Application #{2000 + item} submitted</p>
+                        <p className="text-xs text-gray-500">{item} minutes ago</p>
+                      </div>
+                      <Badge variant="outline">New</Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="applications">
+            <Card>
+              <CardHeader>
+                <CardTitle>Application Management</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Application management interface will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="mortgages">
+            <Card>
+              <CardHeader>
+                <CardTitle>Mortgage Portfolio</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Mortgage portfolio management interface will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <Card>
+              <CardHeader>
+                <CardTitle>Advanced Analytics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Advanced analytics and reporting tools will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="reports">
+            <Card>
+              <CardHeader>
+                <CardTitle>Reports & Documentation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Report generation and documentation tools will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <Card>
+              <CardHeader>
+                <CardTitle>Dashboard Settings</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Auto Refresh</h3>
+                      <p className="text-sm text-gray-600">Automatically refresh dashboard data</p>
+                    </div>
+                    <Switch checked={autoRefresh} onCheckedChange={setAutoRefresh} />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Dark Mode</h3>
+                      <p className="text-sm text-gray-600">Switch to dark theme</p>
+                    </div>
+                    <Switch />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Notifications</h3>
+                      <p className="text-sm text-gray-600">Enable push notifications</p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
-
-      {/* Enhanced Real-time metrics */}
-      <div className="animate-fade-in" style={{ animationDelay: '400ms' }}>
-        <GlassCard className="shadow-lg">
-          <RealtimeMetrics userRole={userRole || 'viewer'} region={userRegion} timeframe={selectedTimeframe} />
-        </GlassCard>
-      </div>
-      
-      {/* Enhanced Applications and Property cards */}
-      <div className="grid grid-cols-1 gap-6 animate-fade-in" style={{ animationDelay: '500ms' }}>
-        <GlassCard className="hover-lift shadow-lg">
-          <ApplicationsOverview />
-        </GlassCard>
-        <GlassCard className="hover-lift shadow-lg">
-          <PropertyInsights />
-        </GlassCard>
-      </div>
-      
-      {/* Enhanced Financial Overview */}
-      <RoleBasedAccess
-        requiredRoles={['admin', 'manager', 'finance_officer', 'treasury_officer']}
-        fallback={null}
-      >
-        <div className="animate-fade-in hover-lift" style={{ animationDelay: '600ms' }}>
-          <GlassCard className="shadow-lg">
-            <FinancialOverview userRole={userRole || 'admin'} region={userRegion} />
-          </GlassCard>
-        </div>
-      </RoleBasedAccess>
-
-      {/* Enhanced System Growth Chart */}
-      <div className="animate-fade-in hover-lift" style={{ animationDelay: '700ms' }}>
-        <GlassCard className="shadow-lg">
-          <SystemGrowthChart userRole={userRole || 'viewer'} region={userRegion} />
-        </GlassCard>
-      </div>
-
-      {/* Enhanced Role-specific dashboard */}
-      <div className="animate-fade-in" style={{ animationDelay: '800ms' }}>
-        <GlassCard className="shadow-lg">
-          <RoleDashboard userRole={userRole || 'viewer'} region={userRegion} />
-        </GlassCard>
-      </div>
-
-      {/* Enhanced Action shortcuts and notifications */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '900ms' }}>
-        <div className="md:col-span-2 hover-lift">
-          <GlassCard className="shadow-lg">
-            <ActionShortcuts userRole={userRole || undefined} />
-          </GlassCard>
-        </div>
-        <div className="hover-lift">
-          <GlassCard className="shadow-lg">
-            <NotificationsPanel userRole={userRole || 'viewer'} />
-          </GlassCard>
-        </div>
-      </div>
-
-      {/* Enhanced Floating Action Button with FMBN colors */}
-      <FloatingActionButton
-        onClick={() => setCommandPaletteOpen(true)}
-        className="animate-bounce-in fmbn-button-primary shadow-xl"
-        icon={<Command className="h-6 w-6" />}
-      />
-
-      {/* Command Palette */}
-      <CommandPalette 
-        open={commandPaletteOpen} 
-        onOpenChange={setCommandPaletteOpen} 
-      />
     </div>
   );
 };
