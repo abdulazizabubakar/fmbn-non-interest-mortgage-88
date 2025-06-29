@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
@@ -15,6 +16,7 @@ import Finance from './pages/Finance';
 import Messages from './pages/Messages';
 import NotFound from './pages/NotFound';
 import ProcessFlows from './pages/ProcessFlows';
+import Monitoring from './pages/Monitoring';
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/hooks/useAuth";
 import LesseePortal from './components/lessee/LesseePortal';
@@ -62,6 +64,7 @@ function App() {
             <Route path="/finance/compliance" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
             <Route path="/finance/delinquency" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+            <Route path="/monitoring" element={<ProtectedRoute><Monitoring /></ProtectedRoute>} />
             
             {/* Lessee Portal Route - Modified to use the component directly without PageContainer */}
             <Route path="/lessee-portal/*" element={<ProtectedRoute requiredRole="lessee"><LesseePortal /></ProtectedRoute>} />

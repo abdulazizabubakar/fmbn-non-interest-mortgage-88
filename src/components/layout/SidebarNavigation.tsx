@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -5,7 +6,7 @@ import {
   Home, Users, FileText, BarChart3, Settings, LogOut, Briefcase,
   ClipboardList, Building, MessageSquare, FilePlus, Receipt, CreditCard,
   Shield, Calendar, Gavel, AlertTriangle, Database, TrendingUp, Lock, GitBranch,
-  Handshake
+  Handshake, Monitor
 } from 'lucide-react';
 
 interface SidebarNavigationProps {
@@ -42,6 +43,7 @@ const moduleGroups = [
     label: 'Other Modules',
     items: [
       { path: '/process-flows', label: 'Process Flows', icon: <GitBranch className="h-5 w-5" /> },
+      { path: '/monitoring', label: 'Monitoring & Reporting', icon: <Monitor className="h-5 w-5" /> },
       { path: '/documents', label: 'Document Center', icon: <FileText className="h-5 w-5" /> },
       { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-5 w-5" /> },
       { path: '/integrations', label: 'Integrations', icon: <Database className="h-5 w-5" /> },
