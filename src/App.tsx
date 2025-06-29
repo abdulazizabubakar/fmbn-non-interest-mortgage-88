@@ -136,9 +136,7 @@ function App() {
           } />
           <Route path="/process-flows" element={
             <ProtectedRoute>
-              <Process
-
-Flows />
+              <ProcessFlows />
             </ProtectedRoute>
           } />
           <Route path="/integrations" element={
