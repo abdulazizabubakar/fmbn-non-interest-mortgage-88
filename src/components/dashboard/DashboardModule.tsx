@@ -8,22 +8,31 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   LayoutDashboard, 
-  Settings,
   BarChart3,
   Activity,
   FileText,
   Home,
-  Calendar,
   Filter,
   Download,
   RefreshCw
 } from 'lucide-react';
 
-// Import our new components
+// Import existing components
 import KPIGrid from './components/KPIGrid';
 import DashboardCharts from './components/DashboardCharts';
 import ActivityFeed from './components/ActivityFeed';
 import QuickStats from './components/QuickStats';
+
+// Import new enhanced visualizations
+import PortfolioTrendsChart from './enhanced-visualizations/PortfolioTrendsChart';
+import ApplicationFunnelChart from './enhanced-visualizations/ApplicationFunnelChart';
+import RegionalHeatmap from './enhanced-visualizations/RegionalHeatmap';
+import RiskAnalyticsDashboard from './enhanced-visualizations/RiskAnalyticsDashboard';
+
+// Import new tab content components
+import ApplicationsTabContent from './applications/ApplicationsTabContent';
+import MortgagesTabContent from './mortgages/MortgagesTabContent';
+import AnalyticsTabContent from './analytics/AnalyticsTabContent';
 
 // Import sample data
 import { mockKPIData, chartData, recentActivities, quickStats } from '@/data/dashboardData';
@@ -109,9 +118,9 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
         {/* KPI Cards Grid */}
         <KPIGrid kpiData={mockKPIData} />
 
-        {/* Main Content Tabs */}
+        {/* Main Content Tabs - Settings and Reports tabs removed */}
         <Tabs value={activeView} onValueChange={setActiveView} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 lg:max-w-4xl bg-white border shadow-sm">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 lg:max-w-2xl bg-white border shadow-sm">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
               Overview
@@ -128,23 +137,28 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
               <Activity className="h-4 w-4" />
               Analytics
             </TabsTrigger>
-            <TabsTrigger value="reports" className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              Reports
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Settings
-            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            {/* Charts Section */}
+            {/* Enhanced Overview with New Visualizations */}
+            
+            {/* Original Charts Section */}
             <DashboardCharts 
               monthlyData={chartData.monthlyPerformance}
               propertyData={chartData.propertyTypes}
               regionalData={chartData.regionalDistribution}
             />
+
+            {/* New Enhanced Visualizations */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <PortfolioTrendsChart />
+              <ApplicationFunnelChart />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <RegionalHeatmap />
+              <RiskAnalyticsDashboard />
+            </div>
 
             {/* Bottom Section with Activity and Stats */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -158,103 +172,15 @@ const DashboardModule: React.FC<DashboardModuleProps> = ({
           </TabsContent>
 
           <TabsContent value="applications">
-            <Card>
-              <CardHeader>
-                <CardTitle>Application Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">Application management interface</p>
-                  <p className="text-sm text-gray-500">Detailed application tracking and management tools will be implemented here.</p>
-                </div>
-              </CardContent>
-            </Card>
+            <ApplicationsTabContent />
           </TabsContent>
 
           <TabsContent value="mortgages">
-            <Card>
-              <CardHeader>
-                <CardTitle>Mortgage Portfolio</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Home className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">Mortgage portfolio management</p>
-                  <p className="text-sm text-gray-500">Comprehensive mortgage tracking and portfolio analysis tools.</p>
-                </div>
-              </CardContent>
-            </Card>
+            <MortgagesTabContent />
           </TabsContent>
 
           <TabsContent value="analytics">
-            <Card>
-              <CardHeader>
-                <CardTitle>Advanced Analytics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Activity className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">Advanced analytics and insights</p>
-                  <p className="text-sm text-gray-500">Deep analytics, predictive modeling, and business intelligence tools.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="reports">
-            <Card>
-              <CardHeader>
-                <CardTitle>Reports & Documentation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">Report generation and scheduling</p>
-                  <p className="text-sm text-gray-500">Automated report generation, scheduling, and document management.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Dashboard Settings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Auto Refresh</h3>
-                      <p className="text-sm text-gray-600">Automatically refresh dashboard data</p>
-                    </div>
-                    <Switch checked={autoRefresh} onCheckedChange={setAutoRefresh} />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Dark Mode</h3>
-                      <p className="text-sm text-gray-600">Switch to dark theme</p>
-                    </div>
-                    <Switch />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Notifications</h3>
-                      <p className="text-sm text-gray-600">Enable push notifications</p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Export Settings</h3>
-                      <p className="text-sm text-gray-600">Configure data export preferences</p>
-                    </div>
-                    <Button variant="outline" size="sm">Configure</Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <AnalyticsTabContent />
           </TabsContent>
         </Tabs>
       </div>
