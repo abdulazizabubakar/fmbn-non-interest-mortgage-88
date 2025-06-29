@@ -89,37 +89,67 @@ const MonitoringModule = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="mb-4 grid grid-cols-3 lg:grid-cols-6 w-full">
-              <TabsTrigger value="kpi-dashboard" className="text-xs">KPI Dashboard</TabsTrigger>
-              <TabsTrigger value="heatmaps" className="text-xs">Geo Heatmaps</TabsTrigger>
-              <TabsTrigger value="shariah" className="text-xs">Shariah Metrics</TabsTrigger>
-              <TabsTrigger value="regulatory" className="text-xs">Regulatory</TabsTrigger>
-              <TabsTrigger value="analytics" className="text-xs">Analytics</TabsTrigger>
-              <TabsTrigger value="benchmarking" className="text-xs">Benchmarking</TabsTrigger>
+            <TabsList className="mb-4 grid grid-cols-3 lg:grid-cols-6 w-full bg-muted/50 p-1 rounded-lg">
+              <TabsTrigger 
+                value="kpi-dashboard" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                KPI Dashboard
+              </TabsTrigger>
+              <TabsTrigger 
+                value="heatmaps" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                Geo Heatmaps
+              </TabsTrigger>
+              <TabsTrigger 
+                value="shariah" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                Shariah Metrics
+              </TabsTrigger>
+              <TabsTrigger 
+                value="regulatory" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                Regulatory
+              </TabsTrigger>
+              <TabsTrigger 
+                value="analytics" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                Analytics
+              </TabsTrigger>
+              <TabsTrigger 
+                value="benchmarking" 
+                className="text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-all"
+              >
+                Benchmarking
+              </TabsTrigger>
             </TabsList>
             
             <div className="pt-2">
-              <TabsContent value="kpi-dashboard">
+              <TabsContent value="kpi-dashboard" className="mt-0">
                 <KPIDashboards />
               </TabsContent>
               
-              <TabsContent value="heatmaps">
+              <TabsContent value="heatmaps" className="mt-0">
                 <GeographicalHeatmaps />
               </TabsContent>
               
-              <TabsContent value="shariah">
+              <TabsContent value="shariah" className="mt-0">
                 <ShariahComplianceMetrics />
               </TabsContent>
               
-              <TabsContent value="regulatory">
+              <TabsContent value="regulatory" className="mt-0">
                 <RegulatoryReporting />
               </TabsContent>
               
-              <TabsContent value="analytics">
+              <TabsContent value="analytics" className="mt-0">
                 <AdvancedAnalytics />
               </TabsContent>
               
-              <TabsContent value="benchmarking">
+              <TabsContent value="benchmarking" className="mt-0">
                 <PerformanceBenchmarking />
               </TabsContent>
             </div>

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -312,6 +313,61 @@
   .fmbn-button-secondary {
     @apply bg-gradient-to-r from-fmbn-accent to-yellow-500 hover:from-fmbn-accent/90 hover:to-yellow-500/90;
     @apply text-fmbn-dark border-0 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  /* Enhanced Tab Styling for System-wide Consistency */
+  .fmbn-tabs-list {
+    @apply bg-muted/30 p-1 rounded-lg border border-border/50;
+  }
+
+  .fmbn-tab-trigger {
+    @apply relative px-4 py-2 rounded-md font-medium text-sm transition-all duration-200;
+    @apply text-muted-foreground hover:text-foreground;
+    @apply hover:bg-background/50;
+  }
+
+  .fmbn-tab-trigger[data-state="active"] {
+    @apply bg-primary text-primary-foreground shadow-sm;
+    @apply border border-primary/20;
+    background: linear-gradient(135deg, hsl(var(--fmbn-primary)) 0%, hsl(var(--fmbn-secondary)) 100%);
+  }
+
+  .fmbn-tab-trigger[data-state="active"]::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2;
+    @apply w-1/2 h-0.5 bg-primary-foreground rounded-full;
+  }
+
+  /* Active Tab Indicator Animation */
+  .fmbn-tab-trigger[data-state="active"] {
+    animation: tab-activate 0.2s ease-out;
+  }
+
+  @keyframes tab-activate {
+    from {
+      transform: scale(0.95);
+      opacity: 0.8;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Tab Content Animation */
+  .fmbn-tab-content {
+    animation: tab-content-enter 0.3s ease-out;
+  }
+
+  @keyframes tab-content-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
