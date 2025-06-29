@@ -5,8 +5,7 @@ import { cn } from '@/lib/utils';
 import { 
   Home, Users, FileText, BarChart3, Settings, LogOut, Briefcase,
   ClipboardList, Building, MessageSquare, FilePlus, Receipt, CreditCard,
-  Shield, Calendar, Gavel, AlertTriangle, Database, TrendingUp, Lock, GitBranch,
-  UserCheck, PieChart, Activity
+  Shield, Calendar, Gavel, AlertTriangle, Database, TrendingUp, Lock, GitBranch
 } from 'lucide-react';
 
 interface SidebarNavigationProps {
@@ -22,7 +21,6 @@ const moduleGroups = [
       { path: '/applications', label: 'Applications', icon: <FilePlus className="h-5 w-5" /> },
       { path: '/mortgages', label: 'Mortgages', icon: <Briefcase className="h-5 w-5" /> },
       { path: '/properties', label: 'Properties', icon: <Building className="h-5 w-5" /> },
-      { path: '/partners', label: 'Partners', icon: <UserCheck className="h-5 w-5" /> },
     ]
   },
   {
@@ -37,15 +35,6 @@ const moduleGroups = [
       { path: '/finance/risk', label: 'Risk Assessment', icon: <Shield className="h-5 w-5" /> },
       { path: '/finance/compliance', label: 'Shariah Compliance', icon: <Gavel className="h-5 w-5" /> },
       { path: '/finance/delinquency', label: 'Delinquency', icon: <AlertTriangle className="h-5 w-5" /> },
-      { path: '/financial-analytics', label: 'Financial Analytics', icon: <PieChart className="h-5 w-5" /> },
-    ]
-  },
-  {
-    label: 'Reporting & Analytics',
-    items: [
-      { path: '/monitoring-reporting', label: 'Monitoring & Reporting', icon: <Activity className="h-5 w-5" /> },
-      { path: '/reports', label: 'Reports', icon: <FileText className="h-5 w-5" /> },
-      { path: '/analytics', label: 'Analytics', icon: <TrendingUp className="h-5 w-5" /> },
     ]
   },
   {
@@ -55,6 +44,8 @@ const moduleGroups = [
       { path: '/documents', label: 'Document Center', icon: <FileText className="h-5 w-5" /> },
       { path: '/messages', label: 'Messages', icon: <MessageSquare className="h-5 w-5" /> },
       { path: '/integrations', label: 'Integrations', icon: <Database className="h-5 w-5" /> },
+      { path: '/reports', label: 'Reports', icon: <FileText className="h-5 w-5" /> },
+      { path: '/analytics', label: 'Analytics', icon: <TrendingUp className="h-5 w-5" /> },
     ]
   },
 ];
