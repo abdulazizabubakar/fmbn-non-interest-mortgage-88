@@ -327,8 +327,7 @@
   }
 
   .fmbn-tab-trigger[data-state="active"] {
-    @apply bg-primary text-primary-foreground shadow-sm;
-    @apply border border-primary/20;
+    @apply text-primary-foreground shadow-sm border border-primary/20;
     background: linear-gradient(135deg, hsl(var(--fmbn-primary)) 0%, hsl(var(--fmbn-secondary)) 100%);
   }
 
